@@ -10,6 +10,7 @@ project(
 )
 
 
+
 files = files(
   'src/General.cpp',
   'src/ACE/actions.cpp',
@@ -26,33 +27,47 @@ endif
 
 
 
-SDK = subproject('mSDK-core', required: true)
-mmfs2 = dependency('SDK', fallback: 'mSDK-core')
+mSDK_core   = subproject('mSDK-core', required: true)
+mSDK_dep    = dependency('mSDK', fallback: 'mSDK-core')
+
+mSDK_inc    = mSDK_core.get_variable('mSDK_include')
+
+common      = mSDK_core.get_variable('common')
+edittime    = mSDK_core.get_variable('edittime')
+runtime     = mSDK_core.get_variable('runtime')
+unicode     = mSDK_core.get_variable('unicode')
+
+edittime_rc = mSDK_core.get_variable('edittime_rc')
+runtime_rc  = mSDK_core.get_variable('runtime_rc')
 
 
-res = import('windows').compile_resources(
+
+extension_edittime_res = import('windows').compile_resources(
   'src/Ext.rc',
-  args: ['/DEDITOR'],
-  include_directories: include_directories('subprojects/mSDK-core/inc')
+  args: edittime_rc,
+  include_directories: mSDK_inc,
 )
-
 
 extension_edittime_unicode = shared_library(
   'extension_edittime_unicode',
   files,
-  res,
-  cpp_args: SDK.get_variable('edititme_args') + SDK.get_variable('unicode_args'),
-  dependencies: mmfs2,
+  extension_edittime_res,
+  cpp_args: common + edittime + unicode,
+  dependencies: mSDK_dep,
   name_suffix: 'mfx',
   vs_module_defs: 'src/Ext.def',
 )
 
+
+
+extension_runtime_res = extension_edittime_res
+
 extension_runtime_unicode = shared_library(
   'extension_runtime_unicode',
   files,
-  res,
-  cpp_args: SDK.get_variable('runtime_args') + SDK.get_variable('unicode_args'),
-  dependencies: mmfs2,
+  extension_runtime_res,
+  cpp_args: common + runtime + unicode,
+  dependencies: mSDK_dep,
   name_suffix: 'mfx',
   vs_module_defs: 'src/Ext.def',
 )

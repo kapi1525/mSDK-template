@@ -11,7 +11,7 @@
 
 // DEBUGGER /////////////////////////////////////////////////////////////////
 
-#if !defined(RUN_ONLY)
+#if !defined(RUNTIME)
 // Identifiers of items displayed in the debugger
 enum
 {
@@ -37,7 +37,7 @@ WORD DebugTree[]=
     DB_END
 };
 
-#endif // !defined(RUN_ONLY)
+#endif // !defined(RUNTIME)
 
 
 // --------------------
@@ -467,11 +467,11 @@ LRESULT CALLBACK DLLExport WindowProc(LPRH rhPtr, HWND hWnd, UINT nMsg, WPARAM w
 //
 LPWORD WINAPI DLLExport GetDebugTree(LPRDATA rdPtr)
 {
-#if !defined(RUN_ONLY)
+#if !defined(RUNTIME)
     return DebugTree;
 #else
     return NULL;
-#endif // !defined(RUN_ONLY)
+#endif // !defined(RUNTIME)
 }
 
 // -----------------
@@ -481,7 +481,7 @@ LPWORD WINAPI DLLExport GetDebugTree(LPRDATA rdPtr)
 //
 void WINAPI DLLExport GetDebugItem(LPTSTR pBuffer, LPRDATA rdPtr, int id)
 {
-#if !defined(RUN_ONLY)
+#if !defined(RUNTIME)
 
     // Example
     // -------
@@ -512,7 +512,7 @@ void WINAPI DLLExport GetDebugItem(LPTSTR pBuffer, LPRDATA rdPtr, int id)
     }
 */
 
-#endif // !defined(RUN_ONLY)
+#endif // !defined(RUNTIME)
 }
 
 // -----------------
@@ -522,7 +522,7 @@ void WINAPI DLLExport GetDebugItem(LPTSTR pBuffer, LPRDATA rdPtr, int id)
 //
 void WINAPI DLLExport EditDebugItem(LPRDATA rdPtr, int id)
 {
-#if !defined(RUN_ONLY)
+#if !defined(RUNTIME)
 
     // Example
     // -------
@@ -558,7 +558,7 @@ void WINAPI DLLExport EditDebugItem(LPRDATA rdPtr, int id)
         break;
     }
 */
-#endif // !defined(RUN_ONLY)
+#endif // !defined(RUNTIME)
 }
 
 
