@@ -1,8 +1,5 @@
 
 EXPORTS
-    GetInfos				@2
-    LoadObject				@6
-    UnloadObject			@7
     PutObject				@8
     RemoveObject			@9
 ;	MakeIconEx				@11
@@ -14,10 +11,6 @@ EXPORTS
 ;	EditorDisplay			@20
     IsTransparent			@21
     PrepareToWriteObject	@22
-    UpdateFileNames			@23
-;	EnumElts				@24
-    Initialize				@25
-    Free					@26
 ;	ExportTexts				@27
 ;	ImportTexts				@28
 ;	GetSubType				@29
@@ -34,7 +27,6 @@ EXPORTS
     GetTextClr				@42
     SetTextClr				@43
 
-    GetDependencies			@44
     GetFilters				@45
 
 ;	conditionsTable			@47
@@ -47,7 +39,6 @@ EXPORTS
     DisplayRunObject		@53
     PauseRunObject			@57
     ContinueRunObject		@58
-    GetRunObjectInfos		@59
 
     GetConditionMenu		@60
     GetActionMenu			@61
@@ -67,7 +58,6 @@ EXPORTS
     GetConditionInfos	    @75
     GetActionInfos     		@76
     GetExpressionInfos     	@77
-    UpdateEditStructure		@78
     GetRunObjectDataSize	@80
 ;	SaveBackground			@81
 ;	RestoreBackground		@82

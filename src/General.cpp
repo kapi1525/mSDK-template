@@ -6,7 +6,7 @@ HINSTANCE hInstLib;
 
 
 // DLL entry point
-BOOL WINAPI DllMain(HINSTANCE hDLL, DWORD dwReason, LPVOID lpReserved) {
+BOOL FusionAPI DllMain(HINSTANCE hDLL, DWORD dwReason, LPVOID lpReserved) {
     switch (dwReason) {
     case DLL_PROCESS_ATTACH:
         hInstLib = hDLL; 	// Store HINSTANCE, it will be needed when loading resources from rc file.
@@ -22,19 +22,23 @@ BOOL WINAPI DllMain(HINSTANCE hDLL, DWORD dwReason, LPVOID lpReserved) {
 
 
 // Called when extension is loaded into memory
-extern "C" int WINAPI DLLExport Initialize(mv* mV, int quiet) {
+extern "C" int FusionAPI Initialize(mv* mV, int quiet) {
+    #pragma MFXExport
     return 0;
 }
 
 // Called just before extension is unloaded
-extern "C" int WINAPI DLLExport Free(mv* mV) {
+extern "C" int FusionAPI Free(mv* mV) {
+    #pragma MFXExport
     return 0;
 }
 
 
 
 // This function tells Fusion some basic information about your extension
-extern "C" DWORD WINAPI DLLExport GetInfos(int info) {
+extern "C" DWORD FusionAPI GetInfos(int info) {
+    #pragma MFXExport
+
     switch (info)
     {
     case KGI_VERSION:
@@ -67,8 +71,9 @@ extern "C" DWORD WINAPI DLLExport GetInfos(int info) {
 
 // Tells Fusion everything about your extension
 // Actions Condition Expressions etc
-short WINAPI DLLExport GetRunObjectInfos(mv _far *mV, fpKpxRunInfos infoPtr)
-{
+short FusionAPI GetRunObjectInfos(mv _far *mV, fpKpxRunInfos infoPtr) {
+    #pragma MFXExport
+
     infoPtr->conditions = (LPBYTE)ConditionJumps;
     infoPtr->actions = (LPBYTE)ActionJumps;
     infoPtr->expressions = (LPBYTE)ExpressionJumps;
@@ -103,20 +108,23 @@ LPCTSTR szDep[] = {
 };
 
 // This function returns names of external modules(eg: DLLs) that should be included with built applications
-LPCTSTR* WINAPI DLLExport GetDependencies() {
+LPCTSTR* FusionAPI GetDependencies() {
+    #pragma MFXExport
     return szDep;	// szDep;
 }
 
 
 
 // Called for each object when its read from MFA or EXE file
-int	WINAPI DLLExport LoadObject(mv* mV, LPCSTR fileName, EDITDATA* edPtr, int reserved) {
+int	FusionAPI LoadObject(mv* mV, LPCSTR fileName, EDITDATA* edPtr, int reserved) {
+    #pragma MFXExport
     return 0;
 }
 
 // Counter part of above function
 // Called before object is deleted from frame
-void WINAPI DLLExport UnloadObject(mv* mV, EDITDATA* edPtr, int reserved) {
+void FusionAPI UnloadObject(mv* mV, EDITDATA* edPtr, int reserved) {
+    #pragma MFXExport
 }
 
 
@@ -124,7 +132,8 @@ void WINAPI DLLExport UnloadObject(mv* mV, EDITDATA* edPtr, int reserved) {
 // Called when objects editdata must be updated to neewer version
 // OldEdPtr is old editdata, extension header is allways first use it to get old editdata version
 // Called both in editor and at runtime
-HGLOBAL WINAPI DLLExport UpdateEditStructure(mv __far *mV, void __far * OldEdPtr) {
+HGLOBAL FusionAPI UpdateEditStructure(mv __far *mV, void __far * OldEdPtr) {
+    #pragma MFXExport
     // We do nothing here
     return 0;
 }
@@ -132,18 +141,17 @@ HGLOBAL WINAPI DLLExport UpdateEditStructure(mv __far *mV, void __far * OldEdPtr
 // If you store file names in editdata they have to be updated when application is moved to different directory
 // Call lpfnUpdate() to update them
 // Called both in editor and at runtime
-void WINAPI DLLExport UpdateFileNames(mv _far *mV, LPTSTR appName, EDITDATA* edPtr, void (WINAPI * lpfnUpdate)(LPTSTR, LPTSTR))
-{
+void FusionAPI UpdateFileNames(mv _far *mV, LPTSTR appName, EDITDATA* edPtr, void (FusionAPI * lpfnUpdate)(LPTSTR, LPTSTR)) {
+    #pragma MFXExport
 }
 
 
 
 // Uncomment this function if you need to store an image in editdata
-// Note: do not forget to enable the function in the .def file 
-// if you remove the comments below.
 /*
-int WINAPI DLLExport EnumElts (mv __far *mV, EDITDATA* edPtr, ENUMELTPROC enumProc, ENUMELTPROC undoProc, LPARAM lp1, LPARAM lp2)
-{  
+int FusionAPI EnumElts(mv __far *mV, EDITDATA* edPtr, ENUMELTPROC enumProc, ENUMELTPROC undoProc, LPARAM lp1, LPARAM lp2) {
+    #pragma MFXExport
+
     int error = 0;
 
     // Replace wImgIdx with the name of the WORD variable you create within the edit structure
