@@ -4,8 +4,8 @@
 // #pragma message ("*************************************************************")
 
 #define IDENTIFIER	MAKEID(S,A,M,3)		// REQUIRED: you MUST replace the letters in the MAKEID macro by others
-										// and then remove the #pragma message above. If you do not do this, MMF2
-										// could confuse your object with another in the event editor.
+                                        // and then remove the #pragma message above. If you do not do this, MMF2
+                                        // could confuse your object with another in the event editor.
 
 // ------------------------------
 // DEFINITION OF CONDITIONS CODES
@@ -34,10 +34,10 @@
 
 typedef struct tagEDATA_V1
 {
-	// Header - required
-	extHeader		eHeader;
+    // Header - required
+    extHeader		eHeader;
 
-	// Object's data
+    // Object's data
 //	short			swidth;
 //	short			sheight;
 
@@ -60,16 +60,16 @@ typedef EDITDATA *			LPEDATA;
 
 typedef struct tagRDATA
 {
-	// Main header - required
-	headerObject	rHo;					// Header
+    // Main header - required
+    headerObject	rHo;					// Header
 
-	// Optional headers - depend on the OEFLAGS value, see documentation and examples for more info
+    // Optional headers - depend on the OEFLAGS value, see documentation and examples for more info
 //	rCom			rc;				// Common structure for movements & animations
 //	rMvt			rm;				// Movements
 //	rSpr			rs;				// Sprite (displayable objects)
 //	rVal			rv;				// Alterable values
 
-	// Object's runtime data
+    // Object's runtime data
 
 } RUNDATA;
 typedef	RUNDATA	*			LPRDATA;

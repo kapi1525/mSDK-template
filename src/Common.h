@@ -3,7 +3,7 @@
 #define COMMON_H
 
 #if defined(_DEBUG) && defined(_WIN32)
-	#define	_CRTDBG_MAP_ALLOC	1
+    #define	_CRTDBG_MAP_ALLOC	1
 #endif
 
 #define	IN_EXT_VERSION2
