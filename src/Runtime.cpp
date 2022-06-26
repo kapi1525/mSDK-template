@@ -389,15 +389,15 @@ void WINAPI SetRunObjectTextColor(RUNDATA* rdPtr, COLORREF rgb) {
 // callRunTimeFunction(rdPtr, RFUNCTION_SUBCLASSWINDOW, 0, 0);
 // See the documentation and the Simple Control example for more info.
 //
-LPRDATA GetRdPtr(HWND hwnd, LPRH rhPtr) {
-    return (LPRDATA)GetProp(hwnd, (LPCSTR)rhPtr->rh4.rh4AtomRd);
+RUNDATA* GetRdPtr(HWND hwnd, LPRH rhPtr) {
+    return (RUNDATA*)GetProp(hwnd, (LPCSTR)rhPtr->rh4.rh4AtomRd);
 }
 
 // Called from the window proc of hMainWin and hEditWin.
 // You can intercept the messages and/or tell the main proc to ignore them.
 //
 LRESULT CALLBACK DLLExport WindowProc(LPRH rhPtr, HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam) {
-    LPRDATA rdPtr = NULL;
+    RUNDATA* rdPtr = NULL;
 
     switch (nMsg) {
 

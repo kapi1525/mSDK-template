@@ -42,7 +42,6 @@ typedef struct tagEDATA_V1
 //	short			sheight;
 
 } EDITDATA;
-typedef EDITDATA *			LPEDATA;
 
 // Object versions
 #define	KCX_CURRENT_VERSION			1
@@ -72,7 +71,6 @@ typedef struct tagRDATA
     // Object's runtime data
 
 } RUNDATA;
-typedef	RUNDATA	*			LPRDATA;
 
 // Size when editing the object under level editor
 // -----------------------------------------------

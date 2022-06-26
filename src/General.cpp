@@ -110,13 +110,13 @@ LPCTSTR* WINAPI DLLExport GetDependencies() {
 
 
 // Called for each object when its read from MFA or EXE file
-int	WINAPI DLLExport LoadObject(mv* mV, LPCSTR fileName, LPEDATA edPtr, int reserved) {
+int	WINAPI DLLExport LoadObject(mv* mV, LPCSTR fileName, EDITDATA* edPtr, int reserved) {
     return 0;
 }
 
 // Counter part of above function
 // Called before object is deleted from frame
-void WINAPI DLLExport UnloadObject(mv* mV, LPEDATA edPtr, int reserved) {
+void WINAPI DLLExport UnloadObject(mv* mV, EDITDATA* edPtr, int reserved) {
 }
 
 
@@ -132,7 +132,7 @@ HGLOBAL WINAPI DLLExport UpdateEditStructure(mv __far *mV, void __far * OldEdPtr
 // If you store file names in editdata they have to be updated when application is moved to different directory
 // Call lpfnUpdate() to update them
 // Called both in editor and at runtime
-void WINAPI DLLExport UpdateFileNames(mv _far *mV, LPTSTR appName, LPEDATA edPtr, void (WINAPI * lpfnUpdate)(LPTSTR, LPTSTR))
+void WINAPI DLLExport UpdateFileNames(mv _far *mV, LPTSTR appName, EDITDATA* edPtr, void (WINAPI * lpfnUpdate)(LPTSTR, LPTSTR))
 {
 }
 
@@ -142,7 +142,7 @@ void WINAPI DLLExport UpdateFileNames(mv _far *mV, LPTSTR appName, LPEDATA edPtr
 // Note: do not forget to enable the function in the .def file 
 // if you remove the comments below.
 /*
-int WINAPI DLLExport EnumElts (mv __far *mV, LPEDATA edPtr, ENUMELTPROC enumProc, ENUMELTPROC undoProc, LPARAM lp1, LPARAM lp2)
+int WINAPI DLLExport EnumElts (mv __far *mV, EDITDATA* edPtr, ENUMELTPROC enumProc, ENUMELTPROC undoProc, LPARAM lp1, LPARAM lp2)
 {  
     int error = 0;
 

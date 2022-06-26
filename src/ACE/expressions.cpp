@@ -23,7 +23,7 @@ short expressionsInfos[] = {
 
 
 
-long WINAPI DLLExport Expression(LPRDATA rdPtr,long param1) {
+long WINAPI DLLExport Expression(RUNDATA* rdPtr,long param1) {
     long p1 = CNC_GetFirstExpressionParameter(rdPtr, param1, TYPE_INT);
     long p2 = CNC_GetNextExpressionParameter(rdPtr, param1, TYPE_INT);
     long p3 = CNC_GetNextExpressionParameter(rdPtr, param1, TYPE_INT);
@@ -34,7 +34,7 @@ long WINAPI DLLExport Expression(LPRDATA rdPtr,long param1) {
 
 
 //Reverse the string passed in.
-long WINAPI DLLExport Expression2(LPRDATA rdPtr,long param1) {
+long WINAPI DLLExport Expression2(RUNDATA* rdPtr,long param1) {
     char *temp;
 
     long p1 = CNC_GetFirstExpressionParameter(rdPtr, param1, TYPE_STRING);
@@ -54,7 +54,7 @@ long WINAPI DLLExport Expression2(LPRDATA rdPtr,long param1) {
 
 
 //Divide the float by 2.
-long WINAPI DLLExport Expression3(LPRDATA rdPtr,long param1) {
+long WINAPI DLLExport Expression3(RUNDATA* rdPtr,long param1) {
     long p1 = CNC_GetFirstExpressionParameter(rdPtr, param1, TYPE_FLOAT);
 
     //Floats are tricky.  If you want to pass in a float, you must do the
@@ -74,7 +74,7 @@ long WINAPI DLLExport Expression3(LPRDATA rdPtr,long param1) {
 
 
 
-long (WINAPI * ExpressionJumps[])(LPRDATA rdPtr, long param) = {     
+long (WINAPI * ExpressionJumps[])(RUNDATA* rdPtr, long param) = {     
     Expression,
     Expression2,
     Expression3,

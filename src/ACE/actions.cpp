@@ -17,7 +17,7 @@ short actionsInfos[] = {
 
 
 
-short WINAPI DLLExport Action(LPRDATA rdPtr, long param1, long param2) {
+short WINAPI DLLExport Action(RUNDATA* rdPtr, long param1, long param2) {
     // Actions work just like Conditions
 
     // Use directly param1 and/or param2 if this action has 1 or 2 parameters
@@ -33,7 +33,7 @@ short WINAPI DLLExport Action(LPRDATA rdPtr, long param1, long param2) {
 
 
 
-short (WINAPI * ActionJumps[])(LPRDATA rdPtr, long param1, long param2) = {
+short (WINAPI * ActionJumps[])(RUNDATA* rdPtr, long param1, long param2) = {
     Action,
     0
 };

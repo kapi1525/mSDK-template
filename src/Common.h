@@ -30,9 +30,9 @@ extern short conditionsInfos[];
 extern short actionsInfos[];
 extern short expressionsInfos[];
 
-long (WINAPI * ConditionJumps[])(LPRDATA rdPtr, long param1, long param2);
-short (WINAPI * ActionJumps[])(LPRDATA rdPtr, long param1, long param2);
-long (WINAPI * ExpressionJumps[])(LPRDATA rdPtr, long param);
+long (WINAPI * ConditionJumps[])(RUNDATA* rdPtr, long param1, long param2);
+short (WINAPI * ActionJumps[])(RUNDATA* rdPtr, long param1, long param2);
+long (WINAPI * ExpressionJumps[])(RUNDATA* rdPtr, long param);
 
 
 // Used to ensure the MMF version is 1.5, you can safely ignore this
