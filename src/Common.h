@@ -15,6 +15,7 @@
 #endif
 
 // General includes
+#include "mSDK.h"
 #include "ccxhdr.h"
 #include "Surface.h"
 
