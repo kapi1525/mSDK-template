@@ -1,0 +1,3 @@
+[submodule "subprojects/mSDK-core"]
+	path = subprojects/mSDK-core
+	url = https://github.com/kapigames/mSDK-core
