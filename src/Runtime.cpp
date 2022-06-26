@@ -11,7 +11,7 @@
 
 // DEBUGGER /////////////////////////////////////////////////////////////////
 
-#if !defined(RUNTIME)
+#ifdef EDITTIME
 // Identifiers of items displayed in the debugger
 enum
 {
@@ -45,8 +45,7 @@ WORD DebugTree[]=
 // --------------------
 // Returns the size of the runtime datazone of the object
 // 
-ushort WINAPI DLLExport GetRunObjectDataSize(fprh rhPtr, LPEDATA edPtr)
-{
+unsigned short WINAPI DLLExport GetRunObjectDataSize(RunHeader* rhPtr, EDITDATA* edPtr) {
     return(sizeof(RUNDATA));
 }
 
@@ -56,8 +55,7 @@ ushort WINAPI DLLExport GetRunObjectDataSize(fprh rhPtr, LPEDATA edPtr)
 // ---------------
 // The routine where the object is actually created
 // 
-short WINAPI DLLExport CreateRunObject(LPRDATA rdPtr, LPEDATA edPtr, fpcob cobPtr)
-{
+short WINAPI DLLExport CreateRunObject(RUNDATA* rdPtr, EDITDATA* edPtr, createObjectInfo* cobPtr) {
 /*
    This routine runs when your object is created, as you might have guessed.
    It is here that you must transfer any data you need in rdPtr from edPtr,
@@ -75,8 +73,7 @@ short WINAPI DLLExport CreateRunObject(LPRDATA rdPtr, LPEDATA edPtr, fpcob cobPt
 // ----------------
 // Destroys the run-time object
 // 
-short WINAPI DLLExport DestroyRunObject(LPRDATA rdPtr, long fast)
-{
+short WINAPI DLLExport DestroyRunObject(RUNDATA* rdPtr, long fast) {
 /*
    When your object is destroyed (either with a Destroy action or at the end of
    the frame) this routine is called. You must free any resources you have allocated!
@@ -91,8 +88,7 @@ short WINAPI DLLExport DestroyRunObject(LPRDATA rdPtr, long fast)
 // ----------------
 // Called (if you want) each loop, this routine makes the object live
 // 
-short WINAPI DLLExport HandleRunObject(LPRDATA rdPtr)
-{
+short WINAPI DLLExport HandleRunObject(RUNDATA* rdPtr) {
 /*
    If your extension will draw to the MMF window you should first 
    check if anything about its display has changed :
@@ -130,8 +126,7 @@ short WINAPI DLLExport HandleRunObject(LPRDATA rdPtr)
 // ----------------
 // Draw the object in the application screen.
 // 
-short WINAPI DLLExport DisplayRunObject(LPRDATA rdPtr)
-{
+short WINAPI DLLExport DisplayRunObject(RUNDATA* rdPtr) {
 /*
    If you return REFLAG_DISPLAY in HandleRunObject this routine will run.
 */
@@ -150,8 +145,7 @@ short WINAPI DLLExport DisplayRunObject(LPRDATA rdPtr)
 // Note: do not forget to enable the function in the .def file 
 // if you remove the comments below.
 /*
-cSurface* WINAPI DLLExport GetRunObjectSurface(LPRDATA rdPtr)
-{
+cSurface* WINAPI DLLExport GetRunObjectSurface(RUNDATA* rdPtr) {
     return NULL;
 }
 */
@@ -168,8 +162,7 @@ cSurface* WINAPI DLLExport GetRunObjectSurface(LPRDATA rdPtr)
 // if you remove the comments below.
 //
 /*
-LPSMASK WINAPI DLLExport GetRunObjectCollisionMask(LPRDATA rdPtr, LPARAM lParam)
-{
+LPSMASK WINAPI DLLExport GetRunObjectCollisionMask(RUNDATA* rdPtr, LPARAM lParam) {
     // Typical example for active objects
     // ----------------------------------
     // Opaque? collide with box
@@ -209,8 +202,7 @@ LPSMASK WINAPI DLLExport GetRunObjectCollisionMask(LPRDATA rdPtr, LPARAM lParam)
 // ----------------
 // Enters the pause mode
 // 
-short WINAPI DLLExport PauseRunObject(LPRDATA rdPtr)
-{
+short WINAPI DLLExport PauseRunObject(RUNDATA* rdPtr) {
     // Ok
     return 0;
 }
@@ -221,8 +213,7 @@ short WINAPI DLLExport PauseRunObject(LPRDATA rdPtr)
 // -----------------
 // Quits the pause mode
 //
-short WINAPI DLLExport ContinueRunObject(LPRDATA rdPtr)
-{
+short WINAPI DLLExport ContinueRunObject(RUNDATA* rdPtr) {
     // Ok
     return 0;
 }
@@ -233,19 +224,13 @@ short WINAPI DLLExport ContinueRunObject(LPRDATA rdPtr)
 // Saves the object to disk
 // 
 
-BOOL WINAPI SaveRunObject(LPRDATA rdPtr, HANDLE hf)
-{            
+BOOL WINAPI SaveRunObject(RUNDATA* rdPtr, HANDLE hf) {
     BOOL bOK = FALSE;
-
-#ifndef VITALIZE
 
     // Save the object's data here
 
     // OK
     bOK = TRUE;
-
-#endif // VITALIZE
-
     return bOK;
 }
 
@@ -254,8 +239,7 @@ BOOL WINAPI SaveRunObject(LPRDATA rdPtr, HANDLE hf)
 // -----------------
 // Loads the object from disk
 // 
-BOOL WINAPI LoadRunObject(LPRDATA rdPtr, HANDLE hf)
-{            
+BOOL WINAPI LoadRunObject(RUNDATA* rdPtr, HANDLE hf) {
     BOOL bOK=FALSE;
 
     // Load the object's data here
@@ -281,8 +265,7 @@ BOOL WINAPI LoadRunObject(LPRDATA rdPtr, HANDLE hf)
 // Called when the application starts or restarts.
 // Useful for storing global data
 // 
-void WINAPI DLLExport StartApp(mv _far *mV, CRunApp* pApp)
-{
+void WINAPI DLLExport StartApp(mv* mV, CRunApp* pApp) {
     // Example
     // -------
     // Delete global data (if restarts application)
@@ -299,8 +282,7 @@ void WINAPI DLLExport StartApp(mv _far *mV, CRunApp* pApp)
 // -------------------
 // Called when the application ends.
 // 
-void WINAPI DLLExport EndApp(mv _far *mV, CRunApp* pApp)
-{
+void WINAPI DLLExport EndApp(mv* mV, CRunApp* pApp) {
     // Example
     // -------
     // Delete global data
@@ -317,8 +299,7 @@ void WINAPI DLLExport EndApp(mv _far *mV, CRunApp* pApp)
 // -------------------
 // Called when the frame starts or restarts.
 // 
-void WINAPI DLLExport StartFrame(mv _far *mV, DWORD dwReserved, int nFrameIndex)
-{
+void WINAPI DLLExport StartFrame(mv* mV, DWORD dwReserved, int nFrameIndex) {
 }
 
 // -------------------
@@ -326,8 +307,7 @@ void WINAPI DLLExport StartFrame(mv _far *mV, DWORD dwReserved, int nFrameIndex)
 // -------------------
 // Called when the frame ends.
 // 
-void WINAPI DLLExport EndFrame(mv _far *mV, DWORD dwReserved, int nFrameIndex)
-{
+void WINAPI DLLExport EndFrame(mv* mV, DWORD dwReserved, int nFrameIndex) {
 }
 
 // ============================================================================
@@ -346,8 +326,7 @@ void WINAPI DLLExport EndFrame(mv _far *mV, DWORD dwReserved, int nFrameIndex)
   // Note: do not forget to enable the functions in the .def file 
   // if you remove the comments below.
 
-void WINAPI GetRunObjectFont(LPRDATA rdPtr, LOGFONT* pLf)
-{
+void WINAPI GetRunObjectFont(RUNDATA* rdPtr, LOGFONT* pLf) {
     // Example
     // -------
     // GetObject(rdPtr->m_hFont, sizeof(LOGFONT), pLf);
@@ -358,8 +337,7 @@ void WINAPI GetRunObjectFont(LPRDATA rdPtr, LOGFONT* pLf)
 // -------------------
 // Change the font used by the object.
 // 
-void WINAPI SetRunObjectFont(LPRDATA rdPtr, LOGFONT* pLf, RECT* pRc)
-{
+void WINAPI SetRunObjectFont(RUNDATA* rdPtr, LOGFONT* pLf, RECT* pRc) {
     // Example
     // -------
 //	HFONT hFont = CreateFontIndirect(pLf);
@@ -378,8 +356,7 @@ void WINAPI SetRunObjectFont(LPRDATA rdPtr, LOGFONT* pLf, RECT* pRc)
 // ---------------------
 // Return the text color of the object.
 // 
-COLORREF WINAPI GetRunObjectTextColor(LPRDATA rdPtr)
-{
+COLORREF WINAPI GetRunObjectTextColor(RUNDATA* rdPtr) {
     // Example
     // -------
     return 0;	// rdPtr->m_dwColor;
@@ -390,8 +367,7 @@ COLORREF WINAPI GetRunObjectTextColor(LPRDATA rdPtr)
 // ---------------------
 // Change the text color of the object.
 // 
-void WINAPI SetRunObjectTextColor(LPRDATA rdPtr, COLORREF rgb)
-{
+void WINAPI SetRunObjectTextColor(RUNDATA* rdPtr, COLORREF rgb) {
     // Example
     // -------
     rdPtr->m_dwColor = rgb;
@@ -413,16 +389,14 @@ void WINAPI SetRunObjectTextColor(LPRDATA rdPtr, COLORREF rgb)
 // callRunTimeFunction(rdPtr, RFUNCTION_SUBCLASSWINDOW, 0, 0);
 // See the documentation and the Simple Control example for more info.
 //
-LPRDATA GetRdPtr(HWND hwnd, LPRH rhPtr)
-{
+LPRDATA GetRdPtr(HWND hwnd, LPRH rhPtr) {
     return (LPRDATA)GetProp(hwnd, (LPCSTR)rhPtr->rh4.rh4AtomRd);
 }
 
 // Called from the window proc of hMainWin and hEditWin.
 // You can intercept the messages and/or tell the main proc to ignore them.
 //
-LRESULT CALLBACK DLLExport WindowProc(LPRH rhPtr, HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
-{
+LRESULT CALLBACK DLLExport WindowProc(LPRH rhPtr, HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam) {
     LPRDATA rdPtr = NULL;
 
     switch (nMsg) {
@@ -465,13 +439,12 @@ LRESULT CALLBACK DLLExport WindowProc(LPRH rhPtr, HWND hWnd, UINT nMsg, WPARAM w
 // -----------------
 // This routine returns the address of the debugger tree
 //
-LPWORD WINAPI DLLExport GetDebugTree(LPRDATA rdPtr)
-{
-#if !defined(RUNTIME)
+LPWORD WINAPI DLLExport GetDebugTree(RUNDATA* rdPtr) {
+#ifdef EDITTIME
     return DebugTree;
 #else
     return NULL;
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 }
 
 // -----------------
@@ -479,9 +452,8 @@ LPWORD WINAPI DLLExport GetDebugTree(LPRDATA rdPtr)
 // -----------------
 // This routine returns the text of a given item.
 //
-void WINAPI DLLExport GetDebugItem(LPTSTR pBuffer, LPRDATA rdPtr, int id)
-{
-#if !defined(RUNTIME)
+void WINAPI DLLExport GetDebugItem(LPTSTR pBuffer, RUNDATA* rdPtr, int id) {
+#ifdef EDITTIME
 
     // Example
     // -------
@@ -512,7 +484,7 @@ void WINAPI DLLExport GetDebugItem(LPTSTR pBuffer, LPRDATA rdPtr, int id)
     }
 */
 
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 }
 
 // -----------------
@@ -520,9 +492,8 @@ void WINAPI DLLExport GetDebugItem(LPTSTR pBuffer, LPRDATA rdPtr, int id)
 // -----------------
 // This routine allows to edit editable items.
 //
-void WINAPI DLLExport EditDebugItem(LPRDATA rdPtr, int id)
-{
-#if !defined(RUNTIME)
+void WINAPI DLLExport EditDebugItem(RUNDATA* rdPtr, int id) {
+#ifdef EDITTIME
 
     // Example
     // -------
@@ -560,5 +531,3 @@ void WINAPI DLLExport EditDebugItem(LPRDATA rdPtr, int id)
 */
 #endif // !defined(RUNTIME)
 }
-
-
