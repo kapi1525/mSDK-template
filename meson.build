@@ -10,7 +10,6 @@ project(
 )
 
 
-
 files = files(
   'src/General.cpp',
   'src/ACE/actions.cpp',
@@ -19,11 +18,6 @@ files = files(
   'src/Runtime.cpp',
   'src/Edittime.cpp',
 )
-
-
-if meson.get_compiler('cpp').get_linker_id() == 'link'
-  add_global_link_arguments('/NOIMPLIB', language: 'cpp')    # Disable creation of .lib import library as Fusion dosent need them
-endif
 
 
 
@@ -42,7 +36,7 @@ runtime_rc  = mSDK_core.get_variable('runtime_rc')
 
 
 
-extension_edittime_res = import('windows').compile_resources(
+extension_res = import('windows').compile_resources(
   'src/Ext.rc',
   args: edittime_rc,
   include_directories: mSDK_inc,
@@ -50,8 +44,7 @@ extension_edittime_res = import('windows').compile_resources(
 
 extension_edittime_unicode = shared_library(
   'extension_edittime_unicode',
-  files,
-  extension_edittime_res,
+  files, extension_res,
   cpp_args: common + edittime + unicode,
   dependencies: mSDK_dep,
   name_suffix: 'mfx',
@@ -60,15 +53,11 @@ extension_edittime_unicode = shared_library(
 
 
 
-extension_runtime_res = extension_edittime_res
-
 extension_runtime_unicode = shared_library(
   'extension_runtime_unicode',
-  files,
-  extension_runtime_res,
+  files, extension_res,
   cpp_args: common + runtime + unicode,
   dependencies: mSDK_dep,
   name_suffix: 'mfx',
   vs_module_defs: 'src/Ext.def',
 )
-
