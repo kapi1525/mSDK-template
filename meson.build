@@ -18,6 +18,11 @@ files = files(
 )
 
 
+if meson.get_compiler('cpp').get_linker_id() == 'link'
+  add_global_link_arguments('/NOIMPLIB', language: 'cpp')    # Disable creation of .lib import library as Fusion dosent need them
+endif
+
+
 
 SDK = subproject('mSDK-core', required: true)
 mmfs2 = dependency('SDK', fallback: 'mSDK-core')
