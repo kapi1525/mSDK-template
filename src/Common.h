@@ -1,22 +1,13 @@
+#pragma once
 
-#ifndef COMMON_H
-#define COMMON_H
 
-#if defined(_DEBUG) && defined(_WIN32)
-    #define	_CRTDBG_MAP_ALLOC	1
-#endif
+// Minimum Fusion version that is required by your extension
+// #define TGFEXT   // The Games Factory, Fusion Standard and Fusion Developer
+#define	MMFEXT      // Fusion Standard and Fusion Developer
+// #define PROEXT   // Only Fusion Developer
 
-#define	IN_EXT_VERSION2
-#define	COXSDK
 
-// ----------------------------------------------
-// VERSION AND BUILD YOUR EXTENSION CAN WORK WITH
-// ----------------------------------------------
-//#define TGFEXT		// TGF, MMF Standard and MMF Pro
-#define	MMFEXT			// MMF Standard and MMF Pro
-//#define PROEXT		// MMF Pro only
-
-// Build number of the minimum required version of MMF
+// Minimum required Fusion build
 #ifdef _UNICODE
 #define	MINBUILD	249
 #else
@@ -24,13 +15,14 @@
 #endif
 
 // General includes
-#include	"ccxhdr.h"
-#include	"Surface.h"
+#include "ccxhdr.h"
+#include "Surface.h"
 
 // Specific to this cox
-#include	"resource.h"
-#include	"main.h"
-#include	"TigsExt.hpp"
+#include "resource.h"
+#include "main.h"
+#include "TigsExt.hpp"
+
 
 // Globals and Prototypes
 extern HINSTANCE hInstLib;
@@ -42,13 +34,12 @@ long (WINAPI * ConditionJumps[])(LPRDATA rdPtr, long param1, long param2);
 short (WINAPI * ActionJumps[])(LPRDATA rdPtr, long param1, long param2);
 long (WINAPI * ExpressionJumps[])(LPRDATA rdPtr, long param);
 
+
 // Used to ensure the MMF version is 1.5, you can safely ignore this
-#if defined(MMFEXT)
+#ifdef MMFEXT
 #define	IS_COMPATIBLE(v) (v->mvGetVersion != NULL && (v->mvGetVersion() & MMFBUILD_MASK) >= MINBUILD && (v->mvGetVersion() & MMFVERSION_MASK) >= MMFVERSION_20 && ((v->mvGetVersion() & MMFVERFLAG_MASK) & MMFVERFLAG_HOME) == 0)
 #elif defined(PROEXT)
 #define IS_COMPATIBLE(v) (v->mvGetVersion != NULL && (v->mvGetVersion() & MMFBUILD_MASK) >= MINBUILD && (v->mvGetVersion() & MMFVERSION_MASK) >= MMFVERSION_20 && ((v->mvGetVersion() & MMFVERFLAG_MASK) & MMFVERFLAG_PRO) != 0)
 #else
 #define	IS_COMPATIBLE(v) (v->mvGetVersion != NULL && (v->mvGetVersion() & MMFBUILD_MASK) >= MINBUILD && (v->mvGetVersion() & MMFVERSION_MASK) >= MMFVERSION_20)
-#endif
-
 #endif
