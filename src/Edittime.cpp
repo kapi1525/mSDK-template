@@ -78,7 +78,7 @@ typedef struct tagSetP
 // Info displayed in the object's About properties
 // Note: ObjComment is also displayed in the Quick Description box in the Insert Object dialog box
 //
-void WINAPI	DLLExport GetObjInfos (mv _far *mV, EDITDATA* edPtr, LPTSTR ObjName, LPTSTR ObjAuthor, LPTSTR ObjCopyright, LPTSTR ObjComment, LPTSTR ObjHttp)
+void FusionAPI	DLLExport GetObjInfos (mv _far *mV, EDITDATA* edPtr, LPTSTR ObjName, LPTSTR ObjAuthor, LPTSTR ObjCopyright, LPTSTR ObjComment, LPTSTR ObjHttp)
 {
 #ifndef RUNTIME
     // Name
@@ -103,7 +103,7 @@ void WINAPI	DLLExport GetObjInfos (mv _far *mV, EDITDATA* edPtr, LPTSTR ObjName,
 // -----------------
 // Returns the help filename of the object.
 //
-LPCTSTR WINAPI GetHelpFileName()
+LPCTSTR FusionAPI GetHelpFileName()
 {
 #ifndef RUNTIME
     // Return a file without path if your help file can be loaded by the MMF help file.
@@ -176,7 +176,7 @@ WORD BmpToImg(int bmID, npAppli idApp, short HotX = 0, short HotY = 0, short Act
 // If you need to draw the icon manually, remove the comments around this function and in the .def file.
 //
 /*
-int WINAPI DLLExport MakeIconEx ( mv _far *mV, cSurface* pIconSf, LPTSTR lpName, fpObjInfo oiPtr, EDITDATA* edPtr )
+int FusionAPI DLLExport MakeIconEx ( mv _far *mV, cSurface* pIconSf, LPTSTR lpName, fpObjInfo oiPtr, EDITDATA* edPtr )
 {
     int error = -1;
 #ifndef RUNTIME
@@ -320,7 +320,7 @@ BOOL CALLBACK DLLExport setupProc(HWND hDlg,uint msgType,WPARAM wParam,LPARAM lP
 // Called when you choose "Create new object". It should display the setup box 
 // and initialize everything in the datazone.
 
-int WINAPI DLLExport CreateObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr)
+int FusionAPI DLLExport CreateObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr)
 {
 #ifndef RUNTIME
     // Check compatibility
@@ -350,7 +350,7 @@ int WINAPI DLLExport CreateObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr)
 // --------------------
 // Called when the user selects the Edit command in the object's popup menu
 //
-BOOL WINAPI EditObject (mv _far *mV, fpObjInfo oiPtr, fpLevObj loPtr, EDITDATA* edPtr)
+BOOL FusionAPI EditObject (mv _far *mV, fpObjInfo oiPtr, fpLevObj loPtr, EDITDATA* edPtr)
 {
 #ifndef RUNTIME
     // Check compatibility
@@ -376,7 +376,7 @@ BOOL WINAPI EditObject (mv _far *mV, fpObjInfo oiPtr, fpLevObj loPtr, EDITDATA* 
 //
 // Note: remove the comments if your object can be resized (and remove the comments in the .def file)
 /*
-BOOL WINAPI SetEditSize(LPMV mv, EDITDATA* edPtr, int cx, int cy)
+BOOL FusionAPI SetEditSize(LPMV mv, EDITDATA* edPtr, int cx, int cy)
 {
 #ifndef RUNTIME
     edPtr->swidth = cx;
@@ -391,7 +391,7 @@ BOOL WINAPI SetEditSize(LPMV mv, EDITDATA* edPtr, int cx, int cy)
 // --------------------
 // Called when each individual object is dropped in the frame.
 //
-void WINAPI	DLLExport PutObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr, ushort cpt)
+void FusionAPI	DLLExport PutObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr, ushort cpt)
 {
 #ifndef RUNTIME
 #endif // !defined(RUNTIME)
@@ -402,7 +402,7 @@ void WINAPI	DLLExport PutObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr, us
 // --------------------
 // Called when each individual object is removed from the frame.
 //
-void WINAPI	DLLExport RemoveObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr, ushort cpt)
+void FusionAPI	DLLExport RemoveObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr, ushort cpt)
 {
 #ifndef RUNTIME
     // Is the last object removed?
@@ -418,7 +418,7 @@ void WINAPI	DLLExport RemoveObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr,
 // --------------------
 // Called when an object is created from another one (note: should be called CloneObject instead...)
 //
-void WINAPI DLLExport DuplicateObject(mv __far *mV, fpObjInfo oiPtr, EDITDATA* edPtr)
+void FusionAPI DLLExport DuplicateObject(mv __far *mV, fpObjInfo oiPtr, EDITDATA* edPtr)
 {
 #ifndef RUNTIME
 #endif // !defined(RUNTIME)
@@ -429,7 +429,7 @@ void WINAPI DLLExport DuplicateObject(mv __far *mV, fpObjInfo oiPtr, EDITDATA* e
 // --------------------
 // Returns the size of the rectangle of the object in the frame editor.
 //
-void WINAPI DLLExport GetObjectRect(mv _far *mV, RECT FAR *rc, fpLevObj loPtr, EDITDATA* edPtr)
+void FusionAPI DLLExport GetObjectRect(mv _far *mV, RECT FAR *rc, fpLevObj loPtr, EDITDATA* edPtr)
 {
 #ifndef RUNTIME
     rc->right = rc->left + 32;	// edPtr->swidth;
@@ -450,7 +450,7 @@ void WINAPI DLLExport GetObjectRect(mv _far *mV, RECT FAR *rc, fpLevObj loPtr, E
 // If you need to draw the icon manually, remove the comments around this function and in the .def file.
 //
 /*
-void WINAPI DLLExport EditorDisplay(mv _far *mV, fpObjInfo oiPtr, fpLevObj loPtr, EDITDATA* edPtr, RECT FAR *rc)
+void FusionAPI DLLExport EditorDisplay(mv _far *mV, fpObjInfo oiPtr, fpLevObj loPtr, EDITDATA* edPtr, RECT FAR *rc)
 {
 #ifndef RUNTIME
 
@@ -487,7 +487,7 @@ void WINAPI DLLExport EditorDisplay(mv _far *mV, fpObjInfo oiPtr, fpLevObj loPtr
 // This routine tells CC&C if the mouse pointer is over a transparent zone of the object.
 // 
 
-extern "C" BOOL WINAPI DLLExport IsTransparent(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr, int dx, int dy)
+extern "C" BOOL FusionAPI DLLExport IsTransparent(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr, int dx, int dy)
 {
 #ifndef RUNTIME
     // Write your code here
@@ -500,7 +500,7 @@ extern "C" BOOL WINAPI DLLExport IsTransparent(mv _far *mV, fpLevObj loPtr, EDIT
 // --------------------
 // Just before writing the datazone when saving the application, CC&C calls this routine.
 // 
-void WINAPI	DLLExport PrepareToWriteObject(mv _far *mV, EDITDATA* edPtr, fpObjInfo adoi)
+void FusionAPI	DLLExport PrepareToWriteObject(mv _far *mV, EDITDATA* edPtr, fpObjInfo adoi)
 {
 #ifndef RUNTIME
     // Write your code here
@@ -511,7 +511,7 @@ void WINAPI	DLLExport PrepareToWriteObject(mv _far *mV, EDITDATA* edPtr, fpObjIn
 // GetFilters
 // --------------------
 
-BOOL WINAPI GetFilters(LPMV mV, EDITDATA* edPtr, DWORD dwFlags, LPVOID pReserved)
+BOOL FusionAPI GetFilters(LPMV mV, EDITDATA* edPtr, DWORD dwFlags, LPVOID pReserved)
 {
 #ifndef RUNTIME
     // If your extension uses image filters
@@ -531,7 +531,7 @@ BOOL WINAPI GetFilters(LPMV mV, EDITDATA* edPtr, DWORD dwFlags, LPVOID pReserved
 // Triggers when a file is dropped onto the frame
 // Return TRUE if you can create an object from the given file
 //
-BOOL WINAPI	DLLExport UsesFile (LPMV mV, LPTSTR fileName)
+BOOL FusionAPI	DLLExport UsesFile (LPMV mV, LPTSTR fileName)
 {
     BOOL r = FALSE;
 #ifndef RUNTIME
@@ -565,7 +565,7 @@ BOOL WINAPI	DLLExport UsesFile (LPMV mV, LPTSTR fileName)
 // --------------------
 // Creates a new object from file
 //
-void WINAPI	DLLExport CreateFromFile (LPMV mV, LPTSTR fileName, EDITDATA* edPtr)
+void FusionAPI	DLLExport CreateFromFile (LPMV mV, LPTSTR fileName, EDITDATA* edPtr)
 {
 #ifndef RUNTIME
     // Initialize your extension data from the given file
@@ -588,7 +588,7 @@ void WINAPI	DLLExport CreateFromFile (LPMV mV, LPTSTR fileName, EDITDATA* edPtr)
 // --------------------
 // Inserts properties into the properties of the object.
 //
-BOOL WINAPI DLLExport GetProperties(LPMV mV, EDITDATA* edPtr, BOOL bMasterItem)
+BOOL FusionAPI DLLExport GetProperties(LPMV mV, EDITDATA* edPtr, BOOL bMasterItem)
 {
 #ifndef RUNTIME
     mvInsertProps(mV, edPtr, Properties, PROPID_TAB_GENERAL, TRUE);
@@ -603,7 +603,7 @@ BOOL WINAPI DLLExport GetProperties(LPMV mV, EDITDATA* edPtr, BOOL bMasterItem)
 // --------------------
 // Called when the properties are removed from the property window.
 //
-void WINAPI DLLExport ReleaseProperties(LPMV mV, EDITDATA* edPtr, BOOL bMasterItem)
+void FusionAPI DLLExport ReleaseProperties(LPMV mV, EDITDATA* edPtr, BOOL bMasterItem)
 {
 #ifndef RUNTIME
     // Write your code here
@@ -616,7 +616,7 @@ void WINAPI DLLExport ReleaseProperties(LPMV mV, EDITDATA* edPtr, BOOL bMasterIt
 // Called when a property is initialized and its creation parameter is NULL (in the PropData).
 // Allows you, for example, to change the content of a combobox property according to specific settings in the EDITDATA structure.
 //
-LPARAM WINAPI DLLExport GetPropCreateParam(LPMV mV, EDITDATA* edPtr, UINT nPropID)
+LPARAM FusionAPI DLLExport GetPropCreateParam(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 {
 #ifndef RUNTIME
     // Example
@@ -641,7 +641,7 @@ LPARAM WINAPI DLLExport GetPropCreateParam(LPMV mV, EDITDATA* edPtr, UINT nPropI
 // Called after a property has been initialized.
 // Allows you, for example, to free memory allocated in GetPropCreateParam.
 //
-void WINAPI DLLExport ReleasePropCreateParam(LPMV mV, EDITDATA* edPtr, UINT nPropID, LPARAM lParam)
+void FusionAPI DLLExport ReleasePropCreateParam(LPMV mV, EDITDATA* edPtr, UINT nPropID, LPARAM lParam)
 {
 #ifndef RUNTIME
 #endif // !defined(RUNTIME)
@@ -653,7 +653,7 @@ void WINAPI DLLExport ReleasePropCreateParam(LPMV mV, EDITDATA* edPtr, UINT nPro
 // Returns the value of properties that have a value.
 // Note: see GetPropCheck for checkbox properties
 //
-LPVOID WINAPI DLLExport GetPropValue(LPMV mV, EDITDATA* edPtr, UINT nPropID)
+LPVOID FusionAPI DLLExport GetPropValue(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 {
 #ifndef RUNTIME
     // Example
@@ -681,7 +681,7 @@ LPVOID WINAPI DLLExport GetPropValue(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 // --------------------
 // Returns the checked state of properties that have a check box.
 //
-BOOL WINAPI DLLExport GetPropCheck(LPMV mV, EDITDATA* edPtr, UINT nPropID)
+BOOL FusionAPI DLLExport GetPropCheck(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 {
 #ifndef RUNTIME
     // Example
@@ -702,7 +702,7 @@ BOOL WINAPI DLLExport GetPropCheck(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 // --------------------
 // This routine is called by MMF after a property has been modified.
 //
-void WINAPI DLLExport SetPropValue(LPMV mV, EDITDATA* edPtr, UINT nPropID, LPVOID lParam)
+void FusionAPI DLLExport SetPropValue(LPMV mV, EDITDATA* edPtr, UINT nPropID, LPVOID lParam)
 {
 #ifndef RUNTIME
     // Gets the pointer to the CPropValue structure
@@ -765,7 +765,7 @@ void WINAPI DLLExport SetPropValue(LPMV mV, EDITDATA* edPtr, UINT nPropID, LPVOI
 // --------------------
 // This routine is called by MMF when the user modifies a checkbox in the properties.
 //
-void WINAPI DLLExport SetPropCheck(LPMV mV, EDITDATA* edPtr, UINT nPropID, BOOL nCheck)
+void FusionAPI DLLExport SetPropCheck(LPMV mV, EDITDATA* edPtr, UINT nPropID, BOOL nCheck)
 {
 #ifndef RUNTIME
     // Example
@@ -786,7 +786,7 @@ void WINAPI DLLExport SetPropCheck(LPMV mV, EDITDATA* edPtr, UINT nPropID, BOOL 
 // --------------------
 // This routine is called when the user clicks the button of a Button or EditButton property.
 //
-BOOL WINAPI DLLExport EditProp(LPMV mV, EDITDATA* edPtr, UINT nPropID)
+BOOL FusionAPI DLLExport EditProp(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 {
 #ifndef RUNTIME
 
@@ -809,7 +809,7 @@ BOOL WINAPI DLLExport EditProp(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 // --------------------
 // This routine returns the enabled state of a property.
 //
-BOOL WINAPI IsPropEnabled(LPMV mV, EDITDATA* edPtr, UINT nPropID)
+BOOL FusionAPI IsPropEnabled(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 {
 #ifndef RUNTIME
     // Example
@@ -837,7 +837,7 @@ BOOL WINAPI IsPropEnabled(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 // --------------------
 // Return the text capabilities of the object under the frame editor.
 //
-DWORD WINAPI DLLExport GetTextCaps(mv _far *mV, EDITDATA* edPtr)
+DWORD FusionAPI DLLExport GetTextCaps(mv _far *mV, EDITDATA* edPtr)
 {
     return 0;	// (TEXT_ALIGN_LEFT|TEXT_ALIGN_HCENTER|TEXT_ALIGN_RIGHT|TEXT_ALIGN_TOP|TEXT_ALIGN_VCENTER|TEXT_ALIGN_BOTTOM|TEXT_FONT|TEXT_COLOR);
 }
@@ -848,7 +848,7 @@ DWORD WINAPI DLLExport GetTextCaps(mv _far *mV, EDITDATA* edPtr)
 // Return the font used the object.
 // Note: the pStyle and cbSize parameters are obsolete and passed for compatibility reasons only.
 //
-BOOL WINAPI DLLExport GetTextFont(mv _far *mV, EDITDATA* edPtr, LPLOGFONT plf, LPTSTR pStyle, UINT cbSize)
+BOOL FusionAPI DLLExport GetTextFont(mv _far *mV, EDITDATA* edPtr, LPLOGFONT plf, LPTSTR pStyle, UINT cbSize)
 {
 #if !defined(RUNTIME)
     // Example: copy LOGFONT structure from EDITDATA
@@ -864,7 +864,7 @@ BOOL WINAPI DLLExport GetTextFont(mv _far *mV, EDITDATA* edPtr, LPLOGFONT plf, L
 // Change the font used the object.
 // Note: the pStyle parameter is obsolete and passed for compatibility reasons only.
 //
-BOOL WINAPI DLLExport SetTextFont(mv _far *mV, EDITDATA* edPtr, LPLOGFONT plf, LPCTSTR pStyle)
+BOOL FusionAPI DLLExport SetTextFont(mv _far *mV, EDITDATA* edPtr, LPLOGFONT plf, LPCTSTR pStyle)
 {
 #if !defined(RUNTIME)
     // Example: copy LOGFONT structure to EDITDATA
@@ -879,7 +879,7 @@ BOOL WINAPI DLLExport SetTextFont(mv _far *mV, EDITDATA* edPtr, LPLOGFONT plf, L
 // --------------------
 // Get the text color of the object.
 //
-COLORREF WINAPI DLLExport GetTextClr(mv _far *mV, EDITDATA* edPtr)
+COLORREF FusionAPI DLLExport GetTextClr(mv _far *mV, EDITDATA* edPtr)
 {
     // Example
     return 0;	// edPtr->fontColor;
@@ -890,7 +890,7 @@ COLORREF WINAPI DLLExport GetTextClr(mv _far *mV, EDITDATA* edPtr)
 // --------------------
 // Set the text color of the object.
 //
-void WINAPI DLLExport SetTextClr(mv _far *mV, EDITDATA* edPtr, COLORREF color)
+void FusionAPI DLLExport SetTextClr(mv _far *mV, EDITDATA* edPtr, COLORREF color)
 {
     // Example
     //edPtr->fontColor = color;
@@ -901,7 +901,7 @@ void WINAPI DLLExport SetTextClr(mv _far *mV, EDITDATA* edPtr, COLORREF color)
 // --------------------
 // Get the text alignment of the object.
 //
-DWORD WINAPI DLLExport GetTextAlignment(mv _far *mV, EDITDATA* edPtr)
+DWORD FusionAPI DLLExport GetTextAlignment(mv _far *mV, EDITDATA* edPtr)
 {
     DWORD dw = 0;
 #if !defined(RUNTIME)
@@ -929,7 +929,7 @@ DWORD WINAPI DLLExport GetTextAlignment(mv _far *mV, EDITDATA* edPtr)
 // --------------------
 // Set the text alignment of the object.
 //
-void WINAPI DLLExport SetTextAlignment(mv _far *mV, EDITDATA* edPtr, DWORD dwAlignFlags)
+void FusionAPI DLLExport SetTextAlignment(mv _far *mV, EDITDATA* edPtr, DWORD dwAlignFlags)
 {
 #if !defined(RUNTIME)
     // Example
@@ -1043,7 +1043,7 @@ static LPEVENTINFOS2 GetEventInformations(LPEVENTINFOS2 eiPtr, short code)
 // Load the condition/action/expression menu from the resource, eventually
 // enable or disable some options, and returns it to CC&C.
 //
-HMENU WINAPI DLLExport GetConditionMenu(mv _far *mV, fpObjInfo oiPtr, EDITDATA* edPtr)
+HMENU FusionAPI DLLExport GetConditionMenu(mv _far *mV, fpObjInfo oiPtr, EDITDATA* edPtr)
 {
 #ifndef RUNTIME
     // Check compatibility
@@ -1053,7 +1053,7 @@ HMENU WINAPI DLLExport GetConditionMenu(mv _far *mV, fpObjInfo oiPtr, EDITDATA* 
     return NULL;
 }
 
-HMENU WINAPI DLLExport GetActionMenu(mv _far *mV, fpObjInfo oiPtr, EDITDATA* edPtr)
+HMENU FusionAPI DLLExport GetActionMenu(mv _far *mV, fpObjInfo oiPtr, EDITDATA* edPtr)
 {
 #ifndef RUNTIME
     // Check compatibility
@@ -1063,7 +1063,7 @@ HMENU WINAPI DLLExport GetActionMenu(mv _far *mV, fpObjInfo oiPtr, EDITDATA* edP
     return NULL;
 }
 
-HMENU WINAPI DLLExport GetExpressionMenu(mv _far *mV, fpObjInfo oiPtr, EDITDATA* edPtr)
+HMENU FusionAPI DLLExport GetExpressionMenu(mv _far *mV, fpObjInfo oiPtr, EDITDATA* edPtr)
 {
 #ifndef RUNTIME
     // Check compatibility
@@ -1109,15 +1109,15 @@ void GetCodeTitle(LPEVENTINFOS2 eiPtr, short code, short param, short mn, LPTSTR
 #define GetCodeTitle(a,b,c,d,e,f)
 #endif // !defined(RUNTIME)
 
-void WINAPI DLLExport GetConditionTitle(mv _far *mV, short code, short param, LPTSTR strBuf, short maxLen)
+void FusionAPI DLLExport GetConditionTitle(mv _far *mV, short code, short param, LPTSTR strBuf, short maxLen)
 {
     GetCodeTitle((LPEVENTINFOS2)conditionsInfos, code, param, MN_CONDITIONS, strBuf, maxLen);
 }
-void WINAPI DLLExport GetActionTitle(mv _far *mV, short code, short param, LPTSTR strBuf, short maxLen)
+void FusionAPI DLLExport GetActionTitle(mv _far *mV, short code, short param, LPTSTR strBuf, short maxLen)
 {
     GetCodeTitle((LPEVENTINFOS2)actionsInfos, code, param, MN_ACTIONS, strBuf, maxLen);
 }
-void WINAPI DLLExport GetExpressionTitle(mv _far *mV, short code, LPTSTR strBuf, short maxLen)
+void FusionAPI DLLExport GetExpressionTitle(mv _far *mV, short code, LPTSTR strBuf, short maxLen)
 {
     GetCodeTitle((LPEVENTINFOS2)expressionsInfos, code, 0, MN_EXPRESSIONS, strBuf, maxLen);
 }
@@ -1129,7 +1129,7 @@ void WINAPI DLLExport GetExpressionTitle(mv _far *mV, short code, LPTSTR strBuf,
 // action or expression, as defined in the .H file
 //
 
-short WINAPI DLLExport GetConditionCodeFromMenu(mv _far *mV, short menuId)
+short FusionAPI DLLExport GetConditionCodeFromMenu(mv _far *mV, short menuId)
 {
 #ifndef RUNTIME
     LPEVENTINFOS2	eiPtr;
@@ -1143,7 +1143,7 @@ short WINAPI DLLExport GetConditionCodeFromMenu(mv _far *mV, short menuId)
     return -1;
 }
 
-short WINAPI DLLExport GetActionCodeFromMenu(mv _far *mV, short menuId)
+short FusionAPI DLLExport GetActionCodeFromMenu(mv _far *mV, short menuId)
 {
 #ifndef RUNTIME
     LPEVENTINFOS2	eiPtr;
@@ -1157,7 +1157,7 @@ short WINAPI DLLExport GetActionCodeFromMenu(mv _far *mV, short menuId)
     return -1;
 }
 
-short WINAPI DLLExport GetExpressionCodeFromMenu(mv _far *mV, short menuId)
+short FusionAPI DLLExport GetExpressionCodeFromMenu(mv _far *mV, short menuId)
 {
 #ifndef RUNTIME
     LPEVENTINFOS2	eiPtr;
@@ -1179,7 +1179,7 @@ short WINAPI DLLExport GetExpressionCodeFromMenu(mv _far *mV, short menuId)
 // an infosEvents structure. 
 //
 
-LPINFOEVENTSV2 WINAPI DLLExport GetConditionInfos(mv _far *mV, short code)
+LPINFOEVENTSV2 FusionAPI DLLExport GetConditionInfos(mv _far *mV, short code)
 {
 #ifndef RUNTIME
     return &GetEventInformations((LPEVENTINFOS2)conditionsInfos, code)->infos;
@@ -1188,7 +1188,7 @@ LPINFOEVENTSV2 WINAPI DLLExport GetConditionInfos(mv _far *mV, short code)
 #endif // !defined(RUNTIME)
 }
 
-LPINFOEVENTSV2 WINAPI DLLExport GetActionInfos(mv _far *mV, short code)
+LPINFOEVENTSV2 FusionAPI DLLExport GetActionInfos(mv _far *mV, short code)
 {
 #ifndef RUNTIME
     return &GetEventInformations((LPEVENTINFOS2)actionsInfos, code)->infos;
@@ -1197,7 +1197,7 @@ LPINFOEVENTSV2 WINAPI DLLExport GetActionInfos(mv _far *mV, short code)
 #endif // !defined(RUNTIME)
 }
 
-LPINFOEVENTSV2 WINAPI DLLExport GetExpressionInfos(mv _far *mV, short code)
+LPINFOEVENTSV2 FusionAPI DLLExport GetExpressionInfos(mv _far *mV, short code)
 {
 #ifndef RUNTIME
     return &GetEventInformations((LPEVENTINFOS2)expressionsInfos, code)->infos;
@@ -1214,7 +1214,7 @@ LPINFOEVENTSV2 WINAPI DLLExport GetExpressionInfos(mv _far *mV, short code)
 // the string to use for displaying it under the event editor
 //
 
-void WINAPI DLLExport GetConditionString(mv _far *mV, short code, LPTSTR strPtr, short maxLen)
+void FusionAPI DLLExport GetConditionString(mv _far *mV, short code, LPTSTR strPtr, short maxLen)
 {
 #ifndef RUNTIME
     // Check compatibility
@@ -1223,7 +1223,7 @@ void WINAPI DLLExport GetConditionString(mv _far *mV, short code, LPTSTR strPtr,
 #endif // !defined(RUNTIME)
 }
 
-void WINAPI DLLExport GetActionString(mv _far *mV, short code, LPTSTR strPtr, short maxLen)
+void FusionAPI DLLExport GetActionString(mv _far *mV, short code, LPTSTR strPtr, short maxLen)
 {
 #ifndef RUNTIME
     // Check compatibility
@@ -1232,7 +1232,7 @@ void WINAPI DLLExport GetActionString(mv _far *mV, short code, LPTSTR strPtr, sh
 #endif // !defined(RUNTIME)
 }
 
-void WINAPI DLLExport GetExpressionString(mv _far *mV, short code, LPTSTR strPtr, short maxLen)
+void FusionAPI DLLExport GetExpressionString(mv _far *mV, short code, LPTSTR strPtr, short maxLen)
 {
 #ifndef RUNTIME
     // Check compatibility
@@ -1246,7 +1246,7 @@ void WINAPI DLLExport GetExpressionString(mv _far *mV, short code, LPTSTR strPtr
 // ----------------------------------------------------------
 // Returns the parameter name to display in the expression editor
 //
-void WINAPI DLLExport GetExpressionParam(mv _far *mV, short code, short param, LPTSTR strBuf, short maxLen)
+void FusionAPI DLLExport GetExpressionParam(mv _far *mV, short code, short param, LPTSTR strBuf, short maxLen)
 {
 #if !defined(RUNTIME)
     short		strID;
@@ -1272,7 +1272,7 @@ void WINAPI DLLExport GetExpressionParam(mv _far *mV, short code, short param, L
 // --------------------
 // Initialize the parameter.
 //
-void WINAPI InitParameter(mv _far *mV, short code, paramExt* pExt)
+void FusionAPI InitParameter(mv _far *mV, short code, paramExt* pExt)
 {
 #if !defined(RUNTIME)
     // Example
@@ -1332,7 +1332,7 @@ BOOL CALLBACK DLLExport SetupProc(HWND hDlg, UINT msgType, WPARAM wParam, LPARAM
 // --------------------
 // Edit the parameter.
 //
-void WINAPI EditParameter(mv _far *mV, short code, paramExt* pExt)
+void FusionAPI EditParameter(mv _far *mV, short code, paramExt* pExt)
 {
 #if !defined(RUNTIME)
 
@@ -1348,7 +1348,7 @@ void WINAPI EditParameter(mv _far *mV, short code, paramExt* pExt)
 // --------------------
 // Initialize the parameter.
 //
-void WINAPI GetParameterString(mv _far *mV, short code, paramExt* pExt, LPTSTR pDest, short size)
+void FusionAPI GetParameterString(mv _far *mV, short code, paramExt* pExt, LPTSTR pDest, short size)
 {
 #if !defined(RUNTIME)
 
