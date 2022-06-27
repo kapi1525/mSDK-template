@@ -33,13 +33,6 @@ EXPORTS
 ;	actionsTable			@48
 ;	expressionsTable		@49
 
-    CreateRunObject			@50
-    DestroyRunObject		@51
-    HandleRunObject			@52
-    DisplayRunObject		@53
-    PauseRunObject			@57
-    ContinueRunObject		@58
-
     GetConditionMenu		@60
     GetActionMenu			@61
     GetExpressionMenu		@62
@@ -58,24 +51,12 @@ EXPORTS
     GetConditionInfos	    @75
     GetActionInfos     		@76
     GetExpressionInfos     	@77
-    GetRunObjectDataSize	@80
 ;	SaveBackground			@81
 ;	RestoreBackground		@82
 ;	KillBackground			@83
-; 	WindowProc				@84
-    StartApp				@85
-    EndApp					@86
-    StartFrame				@87
-    EndFrame				@88
      GetExpressionParam		@89
 
-;	GetRunObjectSurface		@90
-;	GetRunObjectCollisionMask		@91
 
-;	GetRunObjectFont		@92
-;	SetRunObjectFont		@93
-;	GetRunObjectTextColor	@94
-;	SetRunObjectTextColor	@95
 
 ; 	SetEditSize				@99
     GetProperties			@100
@@ -88,11 +69,6 @@ EXPORTS
     GetPropCreateParam		@107
     ReleasePropCreateParam	@108
     EditProp				@109
-    GetDebugTree			@110
-    GetDebugItem			@111
-    EditDebugItem			@112
 
-    SaveRunObject			@113
-    LoadRunObject			@114
 ;	GetRunObjectMemoryUsage @115
 ;	ChangeScale				@116
