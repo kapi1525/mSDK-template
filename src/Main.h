@@ -7,82 +7,69 @@
                                         // and then remove the #pragma message above. If you do not do this, MMF2
                                         // could confuse your object with another in the event editor.
 
-// ------------------------------
-// DEFINITION OF CONDITIONS CODES
-// ------------------------------
-#define	CND_CONDITION				0
-#define	CND_LAST					1
 
-// ---------------------------
+// ACEs IDs
 // DEFINITION OF ACTIONS CODES
-// ---------------------------
-#define	ACT_ACTION					0
-#define	ACT_LAST					1
+#define	ACT_ACTION          0
+#define	ACT_LAST            1
 
-// -------------------------------
+// DEFINITION OF CONDITIONS CODES
+#define	CND_CONDITION       0
+#define	CND_LAST            1
+
 // DEFINITION OF EXPRESSIONS CODES
-// -------------------------------
-#define	EXP_EXPRESSION				0
-#define EXP_EXPRESSION2				1
-#define EXP_EXPRESSION3				2
-#define	EXP_LAST                    3
+#define	EXP_EXPRESSION      0
+#define EXP_EXPRESSION2     1
+#define EXP_EXPRESSION3     2
+#define	EXP_LAST            3
 
-// ---------------------
-// OBJECT DATA STRUCTURE 
-// ---------------------
-// Used at edit time and saved in the MFA/CCN/EXE files
 
-typedef struct tagEDATA_V1
-{
-    // Header - required
-    extHeader		eHeader;
 
-    // Object's data
-//	short			swidth;
-//	short			sheight;
+// EDITDATA stores data that can be modified in editor by user
+struct EDITDATA_v1 {
+    extHeader eHeader; // Required, must be first.
 
-} EDITDATA;
+    // Objects editor data
+    // short swidth;
+    // short sheight;
+};
+
+// When modyfing EDITDATA and you care about backwards compatibility create new version of EDITDATA and dont remove old version
+// then implement UpdateEditStructure() function to update old EDITDATA into new one
+using EDITDATA = EDITDATA_v1;
+
 
 // Object versions
-#define	KCX_CURRENT_VERSION			1
-
-// --------------------------------
-// RUNNING OBJECT DATA STRUCTURE
-// --------------------------------
-// Used at runtime. Initialize it in the CreateRunObject function.
-// Free any allocated memory or object in the DestroyRunObject function.
-//
-// Note: if you store C++ objects in this structure and do not store 
-// them as pointers, you must call yourself their constructor in the
-// CreateRunObject function and their destructor in the DestroyRunObject
-// function. As the RUNDATA structure is a simple C structure and not a C++ object.
-
-typedef struct tagRDATA
-{
-    // Main header - required
-    headerObject	rHo;					// Header
-
-    // Optional headers - depend on the OEFLAGS value, see documentation and examples for more info
-//	rCom			rc;				// Common structure for movements & animations
-//	rMvt			rm;				// Movements
-//	rSpr			rs;				// Sprite (displayable objects)
-//	rVal			rv;				// Alterable values
-
-    // Object's runtime data
-
-} RUNDATA;
-
-// Size when editing the object under level editor
-// -----------------------------------------------
-#define	MAX_EDITSIZE			sizeof(EDITDATA)
-
-// Default flags - see documentation for more info
-// -------------
-#define	OEFLAGS      			0
-#define	OEPREFS      			0
+#define	KCX_CURRENT_VERSION 1
 
 
-// If to handle message, specify the priority of the handling procedure
-// 0= low, 255= very high. You should use 100 as normal.                                                
-// --------------------------------------------------------------------
-#define	WINDOWPROC_PRIORITY		100
+// Objects rundata
+// During runtime rundata is unique data for every object
+// Initialize it in CreateRunObject()
+// Free any alocated memory in DestroyRunObject()
+// Note: You need to manualy call constructors and destructors of C++ objects that you store here.
+struct RUNDATA {
+    headerObject rHo; // Required, must be first.
+
+    // Optional structures - depend on object flags bellow
+    // rCom rc;    // Movements and animations
+    // rMvt rm;    // Movements
+    // rSpr rs;    // Sprite
+    // rVal rv;    // Alterable values
+
+    // Objects runtime data
+};
+
+
+// Maximum EDITDATA size.
+#define	MAX_EDITSIZE sizeof(EDITDATA)
+
+
+// Object flags, look at help file for more info.
+#define	OEFLAGS 0
+#define	OEPREFS 0
+
+
+// If you want to intercept window messages, set priority of WindowProc
+// 0 = low    100 = normal    255 = very high
+#define	WINDOWPROC_PRIORITY 100
