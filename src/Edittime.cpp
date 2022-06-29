@@ -58,7 +58,7 @@ PropData Properties[] = {
 // SETUP PROC /////////////////////////////////////////////////////////////////
 
 // Prototype of setup procedure
-BOOL CALLBACK DLLExport setupProc(HWND hDlg,uint msgType,WPARAM wParam,LPARAM lParam);
+BOOL CALLBACK DLLExport setupProc(HWND hDlg,unsigned int msgType,WPARAM wParam,LPARAM lParam);
 
 // Structure defined to pass edptr and mv into setup box
 typedef struct tagSetP
@@ -195,7 +195,7 @@ int FusionAPI DLLExport MakeIconEx ( mv _far *mV, cSurface* pIconSf, LPTSTR lpNa
 
 #ifndef RUNTIME
 
-BOOL CALLBACK DLLExport setupProc(HWND hDlg,uint msgType,WPARAM wParam,LPARAM lParam)
+BOOL CALLBACK DLLExport setupProc(HWND hDlg,unsigned int msgType,WPARAM wParam,LPARAM lParam)
 {
     setupParams	_far *	spa;
     EDITDATA _far *		edPtr;
@@ -391,7 +391,7 @@ BOOL FusionAPI SetEditSize(LPMV mv, EDITDATA* edPtr, int cx, int cy)
 // --------------------
 // Called when each individual object is dropped in the frame.
 //
-void FusionAPI	DLLExport PutObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr, ushort cpt)
+void FusionAPI	DLLExport PutObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr, unsigned short cpt)
 {
 #ifndef RUNTIME
 #endif // !defined(RUNTIME)
@@ -402,7 +402,7 @@ void FusionAPI	DLLExport PutObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr,
 // --------------------
 // Called when each individual object is removed from the frame.
 //
-void FusionAPI	DLLExport RemoveObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr, ushort cpt)
+void FusionAPI	DLLExport RemoveObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr, unsigned short cpt)
 {
 #ifndef RUNTIME
     // Is the last object removed?
@@ -990,7 +990,7 @@ void menucpy(HMENU hTargetMenu, HMENU hSourceMenu)
             else
             {
                 hSubMenu = CreatePopupMenu();
-                AppendMenu(hTargetMenu, MF_POPUP | MF_STRING, (uint)hSubMenu, strBuf);
+                AppendMenu(hTargetMenu, MF_POPUP | MF_STRING, (unsigned int)hSubMenu, strBuf);
                 menucpy(hSubMenu, GetSubMenu(hSourceMenu, n));
             }
         }
