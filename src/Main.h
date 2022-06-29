@@ -66,8 +66,8 @@ struct RUNDATA {
 
 
 // Object flags, look at help file for more info.
-#define	OEFLAGS 0
-#define	OEPREFS 0
+#define	OEFLAGS 0 // (OEFLAG_SPRITES|OEFLAG_BACKSAVE|OEFLAG_MOVEMENTS|OEFLAG_VALUES|OEFLAG_TEXT)
+#define	OEPREFS 0 // (OEPREFS_BACKSAVE|OEPREFS_KILL|OEPREFS_BACKEFFECTS|OEPREFS_SCROLLINGINDEPENDANT|OEPREFS_INKEFFECTS)
 
 
 // If you want to intercept window messages, set priority of WindowProc

@@ -65,7 +65,7 @@ short FusionAPI DestroyRunObject(RUNDATA* rdPtr, long fast) {
 // If you dont do anything in here return 
 short FusionAPI HandleRunObject(RUNDATA* rdPtr) {
     #pragma MFXExport
-    
+
     // If your extension will draw something to screen you should
     // check if anything about its display has changed
     // if(rdPtr->rc.rcChanged) {
@@ -94,6 +94,12 @@ short FusionAPI HandleRunObject(RUNDATA* rdPtr) {
 // Draw to screen surface that you can get using WinGetSurface()
 short FusionAPI DisplayRunObject(RUNDATA* rdPtr) {
     #pragma MFXExport
+
+    // Example:
+    // Fill the screen with nice blue color
+    // NOTE: Many cSurface functions are unimplemented in Direct3D mode, expect nothing to be drawn on the screen all the time.
+    // cSurface* s = WinGetSurface((int)rdPtr->rHo.hoAdRunHeader->rhIdEditWin);
+    // s->Fill(0,100,255);
 
     // OK
     return 0;
