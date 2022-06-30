@@ -11,7 +11,7 @@
 // Common
 #include	"common.h"
 
-#if !defined(RUNTIME)
+#ifdef EDITTIME
 
 // PROPERTIES /////////////////////////////////////////////////////////////////
 
@@ -67,7 +67,7 @@ typedef struct tagSetP
     mv _far	*		kv;
 } setupParams;
 
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 
 
 // -----------------
@@ -80,7 +80,7 @@ typedef struct tagSetP
 //
 void FusionAPI	DLLExport GetObjInfos (mv _far *mV, EDITDATA* edPtr, LPTSTR ObjName, LPTSTR ObjAuthor, LPTSTR ObjCopyright, LPTSTR ObjComment, LPTSTR ObjHttp)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     // Name
     LoadString(hInstLib, IDST_OBJNAME,ObjName, 255);
 
@@ -95,7 +95,7 @@ void FusionAPI	DLLExport GetObjInfos (mv _far *mV, EDITDATA* edPtr, LPTSTR ObjNa
 
     // Internet address
     LoadString(hInstLib, IDST_HTTP,ObjHttp,255);
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 }
 
 // -----------------
@@ -105,7 +105,7 @@ void FusionAPI	DLLExport GetObjInfos (mv _far *mV, EDITDATA* edPtr, LPTSTR ObjNa
 //
 LPCTSTR FusionAPI GetHelpFileName()
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     // Return a file without path if your help file can be loaded by the MMF help file.
 //	return "MyExt.chm";
 
@@ -114,7 +114,7 @@ LPCTSTR FusionAPI GetHelpFileName()
     return _T("Help\\MyExt.chm");
 #else
     return NULL;
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 }
 
 // -----------------
@@ -179,10 +179,10 @@ WORD BmpToImg(int bmID, npAppli idApp, short HotX = 0, short HotY = 0, short Act
 int FusionAPI DLLExport MakeIconEx ( mv _far *mV, cSurface* pIconSf, LPTSTR lpName, fpObjInfo oiPtr, EDITDATA* edPtr )
 {
     int error = -1;
-#ifndef RUNTIME
+#ifdef EDITTIME
     if ( pIconSf->LoadImage(hInstLib, EXO_ICON) != 0 )
         error = 0;
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
     return error;
 }
 */
@@ -193,7 +193,7 @@ int FusionAPI DLLExport MakeIconEx ( mv _far *mV, cSurface* pIconSf, LPTSTR lpNa
 // This routine is yours. You may even not need a setup dialog box.
 // I have put it as an example...
 
-#ifndef RUNTIME
+#ifdef EDITTIME
 
 BOOL CALLBACK DLLExport setupProc(HWND hDlg,unsigned int msgType,WPARAM wParam,LPARAM lParam)
 {
@@ -312,7 +312,7 @@ BOOL CALLBACK DLLExport setupProc(HWND hDlg,unsigned int msgType,WPARAM wParam,L
     return FALSE;
 }
 
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 
 // --------------------
 // CreateObject
@@ -322,7 +322,7 @@ BOOL CALLBACK DLLExport setupProc(HWND hDlg,unsigned int msgType,WPARAM wParam,L
 
 int FusionAPI DLLExport CreateObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     // Check compatibility
     if ( IS_COMPATIBLE(mV) )
     {
@@ -339,7 +339,7 @@ int FusionAPI DLLExport CreateObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPt
             return 0;	// No error
         }
     }
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 
     // Error
     return -1;
@@ -352,7 +352,7 @@ int FusionAPI DLLExport CreateObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPt
 //
 BOOL FusionAPI EditObject (mv _far *mV, fpObjInfo oiPtr, fpLevObj loPtr, EDITDATA* edPtr)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     // Check compatibility
     if ( IS_COMPATIBLE(mV) )
     {
@@ -365,7 +365,7 @@ BOOL FusionAPI EditObject (mv _far *mV, fpObjInfo oiPtr, fpLevObj loPtr, EDITDAT
             return TRUE;
         }
     }
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
     return FALSE;
 }
 
@@ -378,10 +378,10 @@ BOOL FusionAPI EditObject (mv _far *mV, fpObjInfo oiPtr, fpLevObj loPtr, EDITDAT
 /*
 BOOL FusionAPI SetEditSize(LPMV mv, EDITDATA* edPtr, int cx, int cy)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     edPtr->swidth = cx;
     edPtr->sheight = cy;
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
     return TRUE;	// OK
 }
 */
@@ -393,8 +393,8 @@ BOOL FusionAPI SetEditSize(LPMV mv, EDITDATA* edPtr, int cx, int cy)
 //
 void FusionAPI	DLLExport PutObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr, unsigned short cpt)
 {
-#ifndef RUNTIME
-#endif // !defined(RUNTIME)
+#ifdef EDITTIME
+#endif // EDITTIME
 }
 
 // --------------------
@@ -404,13 +404,13 @@ void FusionAPI	DLLExport PutObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr,
 //
 void FusionAPI	DLLExport RemoveObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr, unsigned short cpt)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     // Is the last object removed?
     if (0 == cpt)
     {
         // Do whatever necessary to remove our data
     }
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 }
 
 // --------------------
@@ -420,8 +420,8 @@ void FusionAPI	DLLExport RemoveObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edP
 //
 void FusionAPI DLLExport DuplicateObject(mv __far *mV, fpObjInfo oiPtr, EDITDATA* edPtr)
 {
-#ifndef RUNTIME
-#endif // !defined(RUNTIME)
+#ifdef EDITTIME
+#endif // EDITTIME
 }
 
 // --------------------
@@ -431,10 +431,10 @@ void FusionAPI DLLExport DuplicateObject(mv __far *mV, fpObjInfo oiPtr, EDITDATA
 //
 void FusionAPI DLLExport GetObjectRect(mv _far *mV, RECT FAR *rc, fpLevObj loPtr, EDITDATA* edPtr)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     rc->right = rc->left + 32;	// edPtr->swidth;
     rc->bottom = rc->top + 32;	// edPtr->sheight;
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
     return;
 }
 
@@ -452,7 +452,7 @@ void FusionAPI DLLExport GetObjectRect(mv _far *mV, RECT FAR *rc, fpLevObj loPtr
 /*
 void FusionAPI DLLExport EditorDisplay(mv _far *mV, fpObjInfo oiPtr, fpLevObj loPtr, EDITDATA* edPtr, RECT FAR *rc)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
 
     // This is a simple case of drawing an image onto MMF's frame editor window
     // First, we must get a pointer to the surface used by the frame editor
@@ -477,7 +477,7 @@ void FusionAPI DLLExport EditorDisplay(mv _far *mV, fpObjInfo oiPtr, fpLevObj lo
         // You can 'anti-alias' with the 7th param (default=0 or off)
     }
 
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 }
 */
 
@@ -489,9 +489,9 @@ void FusionAPI DLLExport EditorDisplay(mv _far *mV, fpObjInfo oiPtr, fpLevObj lo
 
 extern "C" BOOL FusionAPI DLLExport IsTransparent(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr, int dx, int dy)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     // Write your code here
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
     return FALSE;
 }
 
@@ -502,9 +502,9 @@ extern "C" BOOL FusionAPI DLLExport IsTransparent(mv _far *mV, fpLevObj loPtr, E
 // 
 void FusionAPI	DLLExport PrepareToWriteObject(mv _far *mV, EDITDATA* edPtr, fpObjInfo adoi)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     // Write your code here
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 }
 
 // --------------------
@@ -513,7 +513,7 @@ void FusionAPI	DLLExport PrepareToWriteObject(mv _far *mV, EDITDATA* edPtr, fpOb
 
 BOOL FusionAPI GetFilters(LPMV mV, EDITDATA* edPtr, DWORD dwFlags, LPVOID pReserved)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     // If your extension uses image filters
 //	if ( (dwFlags & GETFILTERS_IMAGES) != 0 )
 //		return TRUE;
@@ -521,7 +521,7 @@ BOOL FusionAPI GetFilters(LPMV mV, EDITDATA* edPtr, DWORD dwFlags, LPVOID pReser
     // If your extension uses sound filters
 //	if ( (dwFlags & GETFILTERS_SOUNDS) != 0 )
 //		return TRUE;
-#endif // RUNTIME
+#endif // EDITTIME
     return FALSE;
 }
 
@@ -534,7 +534,7 @@ BOOL FusionAPI GetFilters(LPMV mV, EDITDATA* edPtr, DWORD dwFlags, LPVOID pReser
 BOOL FusionAPI	DLLExport UsesFile (LPMV mV, LPTSTR fileName)
 {
     BOOL r = FALSE;
-#ifndef RUNTIME
+#ifdef EDITTIME
 
     // Example: return TRUE if file extension is ".txt"
 /*	
@@ -555,7 +555,7 @@ BOOL FusionAPI	DLLExport UsesFile (LPMV mV, LPTSTR fileName)
             free(ext);
         }
     } */
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
     return r;
 }
 
@@ -567,14 +567,14 @@ BOOL FusionAPI	DLLExport UsesFile (LPMV mV, LPTSTR fileName)
 //
 void FusionAPI	DLLExport CreateFromFile (LPMV mV, LPTSTR fileName, EDITDATA* edPtr)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     // Initialize your extension data from the given file
 //	edPtr->swidth = 32;
 //	edPtr->sheight = 32;
 
     // Example: store the filename
     // _tcscpy(edPtr->myFileName, fileName);
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 }
 
 // ============================================================================
@@ -590,9 +590,9 @@ void FusionAPI	DLLExport CreateFromFile (LPMV mV, LPTSTR fileName, EDITDATA* edP
 //
 BOOL FusionAPI DLLExport GetProperties(LPMV mV, EDITDATA* edPtr, BOOL bMasterItem)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     mvInsertProps(mV, edPtr, Properties, PROPID_TAB_GENERAL, TRUE);
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 
     // OK
     return TRUE;
@@ -605,9 +605,9 @@ BOOL FusionAPI DLLExport GetProperties(LPMV mV, EDITDATA* edPtr, BOOL bMasterIte
 //
 void FusionAPI DLLExport ReleaseProperties(LPMV mV, EDITDATA* edPtr, BOOL bMasterItem)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     // Write your code here
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 }
 
 // --------------------
@@ -618,7 +618,7 @@ void FusionAPI DLLExport ReleaseProperties(LPMV mV, EDITDATA* edPtr, BOOL bMaste
 //
 LPARAM FusionAPI DLLExport GetPropCreateParam(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     // Example
     // -------
 //	if ( nPropID == PROPID_COMBO )
@@ -631,7 +631,7 @@ LPARAM FusionAPI DLLExport GetPropCreateParam(LPMV mV, EDITDATA* edPtr, UINT nPr
 //			return (LPARAM)ComboList2;
 //		}
 //	}
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
     return NULL;
 }
 
@@ -643,8 +643,8 @@ LPARAM FusionAPI DLLExport GetPropCreateParam(LPMV mV, EDITDATA* edPtr, UINT nPr
 //
 void FusionAPI DLLExport ReleasePropCreateParam(LPMV mV, EDITDATA* edPtr, UINT nPropID, LPARAM lParam)
 {
-#ifndef RUNTIME
-#endif // !defined(RUNTIME)
+#ifdef EDITTIME
+#endif // EDITTIME
 }
 
 // --------------------
@@ -655,7 +655,7 @@ void FusionAPI DLLExport ReleasePropCreateParam(LPMV mV, EDITDATA* edPtr, UINT n
 //
 LPVOID FusionAPI DLLExport GetPropValue(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     // Example
     // -------
 //	switch (nPropID) {
@@ -672,7 +672,7 @@ LPVOID FusionAPI DLLExport GetPropValue(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 //	case PROPID_COMBO:
 //		return new CPropDWordValue(edPtr->nComboIndex);
 //	}
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
     return NULL;
 }
 
@@ -683,7 +683,7 @@ LPVOID FusionAPI DLLExport GetPropValue(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 //
 BOOL FusionAPI DLLExport GetPropCheck(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     // Example
     // -------
 //	switch (nPropID) {
@@ -693,7 +693,7 @@ BOOL FusionAPI DLLExport GetPropCheck(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 //		return edPtr->nCheck;
 //	}
 
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
     return 0;		// Unchecked
 }
 
@@ -704,7 +704,7 @@ BOOL FusionAPI DLLExport GetPropCheck(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 //
 void FusionAPI DLLExport SetPropValue(LPMV mV, EDITDATA* edPtr, UINT nPropID, LPVOID lParam)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     // Gets the pointer to the CPropValue structure
     CPropValue* pValue = (CPropValue*)lParam;
 
@@ -757,7 +757,7 @@ void FusionAPI DLLExport SetPropValue(LPMV mV, EDITDATA* edPtr, UINT nPropID, LP
     // in this case, just call this function
     // mvInvalidateObject(mV, edPtr);
 
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 }
 
 // --------------------
@@ -767,7 +767,7 @@ void FusionAPI DLLExport SetPropValue(LPMV mV, EDITDATA* edPtr, UINT nPropID, LP
 //
 void FusionAPI DLLExport SetPropCheck(LPMV mV, EDITDATA* edPtr, UINT nPropID, BOOL nCheck)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     // Example
     // -------
 //	switch (nPropID)
@@ -778,7 +778,7 @@ void FusionAPI DLLExport SetPropCheck(LPMV mV, EDITDATA* edPtr, UINT nPropID, BO
 //		mvRefreshProp(mV, edPtr, PROPID_COMBO, TRUE);
 //		break;
 //	}
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 }
 
 // --------------------
@@ -788,7 +788,7 @@ void FusionAPI DLLExport SetPropCheck(LPMV mV, EDITDATA* edPtr, UINT nPropID, BO
 //
 BOOL FusionAPI DLLExport EditProp(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
 
     // Example
     // -------
@@ -800,7 +800,7 @@ BOOL FusionAPI DLLExport EditProp(LPMV mV, EDITDATA* edPtr, UINT nPropID)
     }
 */
 
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
     return FALSE;
 }
 
@@ -811,7 +811,7 @@ BOOL FusionAPI DLLExport EditProp(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 //
 BOOL FusionAPI IsPropEnabled(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     // Example
     // -------
 /*
@@ -821,7 +821,7 @@ BOOL FusionAPI IsPropEnabled(LPMV mV, EDITDATA* edPtr, UINT nPropID)
         return (edPtr->nComboIndex != 0);
     }
 */
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
     return TRUE;
 }
 
@@ -850,10 +850,10 @@ DWORD FusionAPI DLLExport GetTextCaps(mv _far *mV, EDITDATA* edPtr)
 //
 BOOL FusionAPI DLLExport GetTextFont(mv _far *mV, EDITDATA* edPtr, LPLOGFONT plf, LPTSTR pStyle, UINT cbSize)
 {
-#if !defined(RUNTIME)
+#ifdef EDITTIME
     // Example: copy LOGFONT structure from EDITDATA
     // memcpy(plf, &edPtr->m_lf, sizeof(LOGFONT));
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 
     return TRUE;
 }
@@ -866,10 +866,10 @@ BOOL FusionAPI DLLExport GetTextFont(mv _far *mV, EDITDATA* edPtr, LPLOGFONT plf
 //
 BOOL FusionAPI DLLExport SetTextFont(mv _far *mV, EDITDATA* edPtr, LPLOGFONT plf, LPCTSTR pStyle)
 {
-#if !defined(RUNTIME)
+#ifdef EDITTIME
     // Example: copy LOGFONT structure to EDITDATA
     // memcpy(&edPtr->m_lf, plf, sizeof(LOGFONT));
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 
     return TRUE;
 }
@@ -904,7 +904,7 @@ void FusionAPI DLLExport SetTextClr(mv _far *mV, EDITDATA* edPtr, COLORREF color
 DWORD FusionAPI DLLExport GetTextAlignment(mv _far *mV, EDITDATA* edPtr)
 {
     DWORD dw = 0;
-#if !defined(RUNTIME)
+#ifdef EDITTIME
     // Example
     // -------
 /*	if ( (edPtr->eData.dwFlags & ALIGN_LEFT) != 0 )
@@ -920,7 +920,7 @@ DWORD FusionAPI DLLExport GetTextAlignment(mv _far *mV, EDITDATA* edPtr)
     if ( (edPtr->eData.dwFlags & ALIGN_BOTTOM) != 0 )
         dw |= TEXT_ALIGN_BOTTOM;
 */
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
     return dw;
 }
 
@@ -931,7 +931,7 @@ DWORD FusionAPI DLLExport GetTextAlignment(mv _far *mV, EDITDATA* edPtr)
 //
 void FusionAPI DLLExport SetTextAlignment(mv _far *mV, EDITDATA* edPtr, DWORD dwAlignFlags)
 {
-#if !defined(RUNTIME)
+#ifdef EDITTIME
     // Example
     // -------
 /*	DWORD dw = edPtr->eData.dwFlags;
@@ -952,7 +952,7 @@ void FusionAPI DLLExport SetTextAlignment(mv _far *mV, EDITDATA* edPtr, DWORD dw
 
     edPtr->eData.dwFlags = dw;
 */
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 }
 
 
@@ -968,10 +968,10 @@ void FusionAPI DLLExport SetTextAlignment(mv _far *mV, EDITDATA* edPtr, DWORD dw
 // -----------------
 // Internal routine used later, copy one menu onto another
 // 
-#ifndef RUNTIME
+#ifdef EDITTIME
 void menucpy(HMENU hTargetMenu, HMENU hSourceMenu)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     int			n, id, nMn;
     LPTSTR		strBuf;
     HMENU		hSubMenu;
@@ -1034,7 +1034,7 @@ static LPEVENTINFOS2 GetEventInformations(LPEVENTINFOS2 eiPtr, short code)
     
     return eiPtr;
 }
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 
 
 // ----------------------------------------------------
@@ -1045,31 +1045,31 @@ static LPEVENTINFOS2 GetEventInformations(LPEVENTINFOS2 eiPtr, short code)
 //
 HMENU FusionAPI DLLExport GetConditionMenu(mv _far *mV, fpObjInfo oiPtr, EDITDATA* edPtr)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     // Check compatibility
     if ( IS_COMPATIBLE(mV) )
         return GetPopupMenu(MN_CONDITIONS);
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
     return NULL;
 }
 
 HMENU FusionAPI DLLExport GetActionMenu(mv _far *mV, fpObjInfo oiPtr, EDITDATA* edPtr)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     // Check compatibility
     if ( IS_COMPATIBLE(mV) )
         return GetPopupMenu(MN_ACTIONS);
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
     return NULL;
 }
 
 HMENU FusionAPI DLLExport GetExpressionMenu(mv _far *mV, fpObjInfo oiPtr, EDITDATA* edPtr)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     // Check compatibility
     if ( IS_COMPATIBLE(mV) )
         return GetPopupMenu(MN_EXPRESSIONS);
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
     return NULL;
 }
 
@@ -1082,7 +1082,7 @@ HMENU FusionAPI DLLExport GetExpressionMenu(mv _far *mV, fpObjInfo oiPtr, EDITDA
 // Here, we simply return the title of the menu option
 //
 
-#ifndef RUNTIME
+#ifdef EDITTIME
 void GetCodeTitle(LPEVENTINFOS2 eiPtr, short code, short param, short mn, LPTSTR strBuf, WORD maxLen)
 {
     HMENU		hMn;
@@ -1107,7 +1107,7 @@ void GetCodeTitle(LPEVENTINFOS2 eiPtr, short code, short param, short mn, LPTSTR
 }
 #else
 #define GetCodeTitle(a,b,c,d,e,f)
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 
 void FusionAPI DLLExport GetConditionTitle(mv _far *mV, short code, short param, LPTSTR strBuf, short maxLen)
 {
@@ -1131,7 +1131,7 @@ void FusionAPI DLLExport GetExpressionTitle(mv _far *mV, short code, LPTSTR strB
 
 short FusionAPI DLLExport GetConditionCodeFromMenu(mv _far *mV, short menuId)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     LPEVENTINFOS2	eiPtr;
     int				n;
 
@@ -1139,13 +1139,13 @@ short FusionAPI DLLExport GetConditionCodeFromMenu(mv _far *mV, short menuId)
         eiPtr = EVINFO2_NEXT(eiPtr);
     if (n>0) 
         return eiPtr->infos.code;
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
     return -1;
 }
 
 short FusionAPI DLLExport GetActionCodeFromMenu(mv _far *mV, short menuId)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     LPEVENTINFOS2	eiPtr;
     int				n;
 
@@ -1153,13 +1153,13 @@ short FusionAPI DLLExport GetActionCodeFromMenu(mv _far *mV, short menuId)
         eiPtr = EVINFO2_NEXT(eiPtr);
     if (n>0) 
         return eiPtr->infos.code;
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
     return -1;
 }
 
 short FusionAPI DLLExport GetExpressionCodeFromMenu(mv _far *mV, short menuId)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     LPEVENTINFOS2	eiPtr;
     int				n;
 
@@ -1167,7 +1167,7 @@ short FusionAPI DLLExport GetExpressionCodeFromMenu(mv _far *mV, short menuId)
         eiPtr = EVINFO2_NEXT(eiPtr);
     if (n>0) 
         return eiPtr->infos.code;
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
     return -1;
 }
 
@@ -1181,29 +1181,29 @@ short FusionAPI DLLExport GetExpressionCodeFromMenu(mv _far *mV, short menuId)
 
 LPINFOEVENTSV2 FusionAPI DLLExport GetConditionInfos(mv _far *mV, short code)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     return &GetEventInformations((LPEVENTINFOS2)conditionsInfos, code)->infos;
 #else
     return NULL;
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 }
 
 LPINFOEVENTSV2 FusionAPI DLLExport GetActionInfos(mv _far *mV, short code)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     return &GetEventInformations((LPEVENTINFOS2)actionsInfos, code)->infos;
 #else
     return NULL;
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 }
 
 LPINFOEVENTSV2 FusionAPI DLLExport GetExpressionInfos(mv _far *mV, short code)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     return &GetEventInformations((LPEVENTINFOS2)expressionsInfos, code)->infos;
 #else
     return NULL;
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 }
 
 
@@ -1216,29 +1216,29 @@ LPINFOEVENTSV2 FusionAPI DLLExport GetExpressionInfos(mv _far *mV, short code)
 
 void FusionAPI DLLExport GetConditionString(mv _far *mV, short code, LPTSTR strPtr, short maxLen)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     // Check compatibility
     if ( IS_COMPATIBLE(mV) )
         LoadString(hInstLib, GetEventInformations((LPEVENTINFOS2)conditionsInfos, code)->string, strPtr, maxLen);
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 }
 
 void FusionAPI DLLExport GetActionString(mv _far *mV, short code, LPTSTR strPtr, short maxLen)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     // Check compatibility
     if ( IS_COMPATIBLE(mV) )
         LoadString(hInstLib, GetEventInformations((LPEVENTINFOS2)actionsInfos, code)->string, strPtr, maxLen);
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 }
 
 void FusionAPI DLLExport GetExpressionString(mv _far *mV, short code, LPTSTR strPtr, short maxLen)
 {
-#ifndef RUNTIME
+#ifdef EDITTIME
     // Check compatibility
     if ( IS_COMPATIBLE(mV) )
         LoadString(hInstLib, GetEventInformations((LPEVENTINFOS2)expressionsInfos, code)->string, strPtr, maxLen);
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 }
 
 // ----------------------------------------------------------
@@ -1248,7 +1248,7 @@ void FusionAPI DLLExport GetExpressionString(mv _far *mV, short code, LPTSTR str
 //
 void FusionAPI DLLExport GetExpressionParam(mv _far *mV, short code, short param, LPTSTR strBuf, short maxLen)
 {
-#if !defined(RUNTIME)
+#ifdef EDITTIME
     short		strID;
 
     // Finds event in array
@@ -1260,7 +1260,7 @@ void FusionAPI DLLExport GetExpressionParam(mv _far *mV, short code, short param
         LoadString(hInstLib, strID, strBuf, maxLen);
     else
         *strBuf=0;
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 }
 
 // ----------------------------------------------------------
@@ -1274,18 +1274,18 @@ void FusionAPI DLLExport GetExpressionParam(mv _far *mV, short code, short param
 //
 void FusionAPI InitParameter(mv _far *mV, short code, paramExt* pExt)
 {
-#if !defined(RUNTIME)
+#ifdef EDITTIME
     // Example
     // -------
     // _tcscpy(&pExt->pextData[0], _T("Parameter Test"));
     // pExt->pextSize = sizeof(paramExt) + (_tcslen(pExt->pextData)+1)*sizeof(TCHAR);
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 }
 
 // Example of custom parameter setup proc
 // --------------------------------------
 /*
-#if !defined(RUNTIME)
+#ifdef EDITTIME
 BOOL CALLBACK DLLExport SetupProc(HWND hDlg, UINT msgType, WPARAM wParam, LPARAM lParam)
 {
     paramExt*			pExt;
@@ -1324,7 +1324,7 @@ BOOL CALLBACK DLLExport SetupProc(HWND hDlg, UINT msgType, WPARAM wParam, LPARAM
     }
     return FALSE;
 }
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 */
 
 // --------------------
@@ -1334,13 +1334,13 @@ BOOL CALLBACK DLLExport SetupProc(HWND hDlg, UINT msgType, WPARAM wParam, LPARAM
 //
 void FusionAPI EditParameter(mv _far *mV, short code, paramExt* pExt)
 {
-#if !defined(RUNTIME)
+#ifdef EDITTIME
 
     // Example
     // -------
     // DialogBoxParam(hInstLib, MAKEINTRESOURCE(DB_TRYPARAM), mV->mvHEditWin, SetupProc, (LPARAM)(LPBYTE)pExt);
 
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 }
 
 // --------------------
@@ -1350,12 +1350,12 @@ void FusionAPI EditParameter(mv _far *mV, short code, paramExt* pExt)
 //
 void FusionAPI GetParameterString(mv _far *mV, short code, paramExt* pExt, LPTSTR pDest, short size)
 {
-#if !defined(RUNTIME)
+#ifdef EDITTIME
 
     // Example
     // -------
     // wsprintf(pDest, "Super parameter %s", pExt->pextData);
 
-#endif // !defined(RUNTIME)
+#endif // EDITTIME
 }
 
