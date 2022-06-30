@@ -21,7 +21,7 @@ jobs:
         python-version: 'pypy3.9'
 
     - name: Install meson
-      run: pip install meson ninja
+      run: pip install meson ninja -r ./.github/workflows/requirements.txt
 
     - name: configure
       run: meson --buildtype=debug bin
