@@ -4,7 +4,6 @@
             "name": "Win32",
             "compileCommands": "bin/compile_commands.json",
             "windowsSdkVersion": "10.0.22000.0",
-            "compilerPath": "",
             "cStandard": "c11",
             "cppStandard": "c++17"
         }
