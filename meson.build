@@ -48,7 +48,7 @@ extension_edittime_unicode = shared_library(
   cpp_args: common + edittime + unicode,
   dependencies: mSDK_dep,
   name_suffix: 'mfx',
-  vs_module_defs: 'src/Ext.def',
+  # vs_module_defs: 'src/Ext.def',
 )
 
 
@@ -59,5 +59,5 @@ extension_runtime_unicode = shared_library(
   cpp_args: common + runtime + unicode,
   dependencies: mSDK_dep,
   name_suffix: 'mfx',
-  vs_module_defs: 'src/Ext.def',
+  # vs_module_defs: 'src/Ext.def',
 )
