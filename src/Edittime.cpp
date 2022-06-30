@@ -71,7 +71,7 @@ typedef struct tagSetP
 // Info displayed in the object's About properties
 // Note: ObjComment is also displayed in the Quick Description box in the Insert Object dialog box
 //
-void FusionAPI GetObjInfos (mv _far *mV, EDITDATA* edPtr, LPTSTR ObjName, LPTSTR ObjAuthor, LPTSTR ObjCopyright, LPTSTR ObjComment, LPTSTR ObjHttp)
+void FusionAPI GetObjInfos (mv* mV, EDITDATA* edPtr, LPTSTR ObjName, LPTSTR ObjAuthor, LPTSTR ObjCopyright, LPTSTR ObjComment, LPTSTR ObjHttp)
 {
     #pragma MFXExport
 
@@ -173,7 +173,7 @@ WORD BmpToImg(int bmID, npAppli idApp, short HotX = 0, short HotY = 0, short Act
 // If you need to draw the icon manually, remove the comments around this function and in the .def file.
 //
 /*
-int FusionAPI MakeIconEx ( mv _far *mV, cSurface* pIconSf, LPTSTR lpName, fpObjInfo oiPtr, EDITDATA* edPtr )
+int FusionAPI MakeIconEx ( mv* mV, cSurface* pIconSf, LPTSTR lpName, fpObjInfo oiPtr, EDITDATA* edPtr )
 {
     #pragma MFXExport
     
@@ -319,7 +319,7 @@ BOOL CALLBACK setupProc(HWND hDlg,unsigned int msgType,WPARAM wParam,LPARAM lPar
 // Called when you choose "Create new object". It should display the setup box 
 // and initialize everything in the datazone.
 
-int FusionAPI CreateObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr)
+int FusionAPI CreateObject(mv* mV, fpLevObj loPtr, EDITDATA* edPtr)
 {
     #pragma MFXExport
 
@@ -351,7 +351,7 @@ int FusionAPI CreateObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr)
 // --------------------
 // Called when the user selects the Edit command in the object's popup menu
 //
-BOOL FusionAPI EditObject (mv _far *mV, fpObjInfo oiPtr, fpLevObj loPtr, EDITDATA* edPtr)
+BOOL FusionAPI EditObject (mv* mV, fpObjInfo oiPtr, fpLevObj loPtr, EDITDATA* edPtr)
 {
     #pragma MFXExport
 
@@ -396,7 +396,7 @@ BOOL FusionAPI SetEditSize(LPMV mv, EDITDATA* edPtr, int cx, int cy)
 // --------------------
 // Called when each individual object is dropped in the frame.
 //
-void FusionAPI PutObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr, unsigned short cpt)
+void FusionAPI PutObject(mv* mV, fpLevObj loPtr, EDITDATA* edPtr, unsigned short cpt)
 {
     #pragma MFXExport
 
@@ -409,7 +409,7 @@ void FusionAPI PutObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr, unsigned 
 // --------------------
 // Called when each individual object is removed from the frame.
 //
-void FusionAPI RemoveObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr, unsigned short cpt)
+void FusionAPI RemoveObject(mv* mV, fpLevObj loPtr, EDITDATA* edPtr, unsigned short cpt)
 {
     #pragma MFXExport
 
@@ -440,7 +440,7 @@ void FusionAPI DuplicateObject(mv __far *mV, fpObjInfo oiPtr, EDITDATA* edPtr)
 // --------------------
 // Returns the size of the rectangle of the object in the frame editor.
 //
-void FusionAPI GetObjectRect(mv _far *mV, RECT FAR *rc, fpLevObj loPtr, EDITDATA* edPtr)
+void FusionAPI GetObjectRect(mv* mV, RECT FAR *rc, fpLevObj loPtr, EDITDATA* edPtr)
 {
     #pragma MFXExport
 
@@ -463,7 +463,7 @@ void FusionAPI GetObjectRect(mv _far *mV, RECT FAR *rc, fpLevObj loPtr, EDITDATA
 // If you need to draw the icon manually, remove the comments around this function and in the .def file.
 //
 /*
-void FusionAPI EditorDisplay(mv _far *mV, fpObjInfo oiPtr, fpLevObj loPtr, EDITDATA* edPtr, RECT FAR *rc)
+void FusionAPI EditorDisplay(mv* mV, fpObjInfo oiPtr, fpLevObj loPtr, EDITDATA* edPtr, RECT FAR *rc)
 {
     #pragma MFXExport
 
@@ -502,7 +502,7 @@ void FusionAPI EditorDisplay(mv _far *mV, fpObjInfo oiPtr, fpLevObj loPtr, EDITD
 // This routine tells CC&C if the mouse pointer is over a transparent zone of the object.
 // 
 
-extern "C" BOOL FusionAPI IsTransparent(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr, int dx, int dy)
+extern "C" BOOL FusionAPI IsTransparent(mv* mV, fpLevObj loPtr, EDITDATA* edPtr, int dx, int dy)
 {
     #pragma MFXExport
 
@@ -517,7 +517,7 @@ extern "C" BOOL FusionAPI IsTransparent(mv _far *mV, fpLevObj loPtr, EDITDATA* e
 // --------------------
 // Just before writing the datazone when saving the application, CC&C calls this routine.
 // 
-void FusionAPI PrepareToWriteObject(mv _far *mV, EDITDATA* edPtr, fpObjInfo adoi)
+void FusionAPI PrepareToWriteObject(mv* mV, EDITDATA* edPtr, fpObjInfo adoi)
 {
     #pragma MFXExport
 
@@ -882,7 +882,7 @@ BOOL FusionAPI IsPropEnabled(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 // --------------------
 // Return the text capabilities of the object under the frame editor.
 //
-DWORD FusionAPI GetTextCaps(mv _far *mV, EDITDATA* edPtr)
+DWORD FusionAPI GetTextCaps(mv* mV, EDITDATA* edPtr)
 {
     #pragma MFXExport
 
@@ -895,7 +895,7 @@ DWORD FusionAPI GetTextCaps(mv _far *mV, EDITDATA* edPtr)
 // Return the font used the object.
 // Note: the pStyle and cbSize parameters are obsolete and passed for compatibility reasons only.
 //
-BOOL FusionAPI GetTextFont(mv _far *mV, EDITDATA* edPtr, LPLOGFONT plf, LPTSTR pStyle, UINT cbSize)
+BOOL FusionAPI GetTextFont(mv* mV, EDITDATA* edPtr, LPLOGFONT plf, LPTSTR pStyle, UINT cbSize)
 {
     #pragma MFXExport
     
@@ -913,7 +913,7 @@ BOOL FusionAPI GetTextFont(mv _far *mV, EDITDATA* edPtr, LPLOGFONT plf, LPTSTR p
 // Change the font used the object.
 // Note: the pStyle parameter is obsolete and passed for compatibility reasons only.
 //
-BOOL FusionAPI SetTextFont(mv _far *mV, EDITDATA* edPtr, LPLOGFONT plf, LPCTSTR pStyle)
+BOOL FusionAPI SetTextFont(mv* mV, EDITDATA* edPtr, LPLOGFONT plf, LPCTSTR pStyle)
 {
     #pragma MFXExport
 
@@ -930,7 +930,7 @@ BOOL FusionAPI SetTextFont(mv _far *mV, EDITDATA* edPtr, LPLOGFONT plf, LPCTSTR 
 // --------------------
 // Get the text color of the object.
 //
-COLORREF FusionAPI GetTextClr(mv _far *mV, EDITDATA* edPtr)
+COLORREF FusionAPI GetTextClr(mv* mV, EDITDATA* edPtr)
 {
     #pragma MFXExport
 
@@ -943,7 +943,7 @@ COLORREF FusionAPI GetTextClr(mv _far *mV, EDITDATA* edPtr)
 // --------------------
 // Set the text color of the object.
 //
-void FusionAPI SetTextClr(mv _far *mV, EDITDATA* edPtr, COLORREF color)
+void FusionAPI SetTextClr(mv* mV, EDITDATA* edPtr, COLORREF color)
 {
     #pragma MFXExport
     
@@ -956,7 +956,7 @@ void FusionAPI SetTextClr(mv _far *mV, EDITDATA* edPtr, COLORREF color)
 // --------------------
 // Get the text alignment of the object.
 //
-DWORD FusionAPI GetTextAlignment(mv _far *mV, EDITDATA* edPtr)
+DWORD FusionAPI GetTextAlignment(mv* mV, EDITDATA* edPtr)
 {
     #pragma MFXExport
 
@@ -986,7 +986,7 @@ DWORD FusionAPI GetTextAlignment(mv _far *mV, EDITDATA* edPtr)
 // --------------------
 // Set the text alignment of the object.
 //
-void FusionAPI SetTextAlignment(mv _far *mV, EDITDATA* edPtr, DWORD dwAlignFlags)
+void FusionAPI SetTextAlignment(mv* mV, EDITDATA* edPtr, DWORD dwAlignFlags)
 {
     #pragma MFXExport
 
@@ -1030,7 +1030,6 @@ void FusionAPI SetTextAlignment(mv _far *mV, EDITDATA* edPtr, DWORD dwAlignFlags
 #ifdef EDITTIME
 void menucpy(HMENU hTargetMenu, HMENU hSourceMenu)
 {
-#ifdef EDITTIME
     int			n, id, nMn;
     LPTSTR		strBuf;
     HMENU		hSubMenu;
@@ -1055,7 +1054,6 @@ void menucpy(HMENU hTargetMenu, HMENU hSourceMenu)
         }
     }
     free(strBuf);
-#endif
 }
 
 // -----------------
@@ -1102,41 +1100,41 @@ static LPEVENTINFOS2 GetEventInformations(LPEVENTINFOS2 eiPtr, short code)
 // Load the condition/action/expression menu from the resource, eventually
 // enable or disable some options, and returns it to CC&C.
 //
-HMENU FusionAPI GetConditionMenu(mv _far *mV, fpObjInfo oiPtr, EDITDATA* edPtr)
-{
-    #pragma MFXExport
 
 #ifdef EDITTIME
-    // Check compatibility
-    if ( IS_COMPATIBLE(mV) )
-        return GetPopupMenu(MN_CONDITIONS);
-#endif // EDITTIME
-    return NULL;
-}
-
-HMENU FusionAPI GetActionMenu(mv _far *mV, fpObjInfo oiPtr, EDITDATA* edPtr)
-{
+HMENU FusionAPI GetActionMenu(mv* mV, OI* oiPtr, EDITDATA* edPtr) {
     #pragma MFXExport
 
-#ifdef EDITTIME
     // Check compatibility
-    if ( IS_COMPATIBLE(mV) )
+    if (IS_COMPATIBLE(mV)) {
         return GetPopupMenu(MN_ACTIONS);
-#endif // EDITTIME
+    }
+    
     return NULL;
 }
 
-HMENU FusionAPI GetExpressionMenu(mv _far *mV, fpObjInfo oiPtr, EDITDATA* edPtr)
-{
+HMENU FusionAPI GetConditionMenu(mv* mV, OI* oiPtr, EDITDATA* edPtr) {
     #pragma MFXExport
 
-#ifdef EDITTIME
     // Check compatibility
-    if ( IS_COMPATIBLE(mV) )
-        return GetPopupMenu(MN_EXPRESSIONS);
-#endif // EDITTIME
+    if (IS_COMPATIBLE(mV)) {
+        return GetPopupMenu(MN_CONDITIONS);
+    }
+
     return NULL;
 }
+
+HMENU FusionAPI GetExpressionMenu(mv* mV, OI* oiPtr, EDITDATA* edPtr) {
+    #pragma MFXExport
+
+    // Check compatibility
+    if (IS_COMPATIBLE(mV)) {
+        return GetPopupMenu(MN_EXPRESSIONS);
+    }
+
+    return NULL;
+}
+#endif // EDITTIME
 
 
 // -------------------------------------------------------
@@ -1145,50 +1143,43 @@ HMENU FusionAPI GetExpressionMenu(mv _far *mV, fpObjInfo oiPtr, EDITDATA* edPtr)
 // Returns the title of the dialog box displayed when entering
 // parameters for the condition, action or expressions, if any.
 // Here, we simply return the title of the menu option
-//
 
 #ifdef EDITTIME
-void GetCodeTitle(LPEVENTINFOS2 eiPtr, short code, short param, short mn, LPTSTR strBuf, WORD maxLen)
-{
-    HMENU		hMn;
+void GetCodeTitle(eventInformations2* eiPtr, short code, short param, short mn, LPTSTR strBuf, WORD maxLen) {
+    HMENU hMn;
+    eiPtr = GetEventInformations(eiPtr, code);      // Finds event in array
 
-    // Finds event in array
-    eiPtr=GetEventInformations(eiPtr, code);
+    short strID = EVINFO2_PARAMTITLE(eiPtr, param); // If a special string is to be returned
 
-    // If a special string is to be returned
-    short strID = EVINFO2_PARAMTITLE(eiPtr, param);
-
-    if ( strID != 0 )
+    if (strID != 0) {
         LoadString(hInstLib, strID, strBuf, maxLen);
-    else
-    {
-        // Otherwise, returns the menu option 
-        if ((hMn = LoadMenu(hInstLib, MAKEINTRESOURCE(mn))) != NULL )
-        {
+    } else {
+        // Otherwise, returns the menu option
+        if ((hMn = LoadMenu(hInstLib, MAKEINTRESOURCE(mn)))) {
             GetMenuString(hMn, eiPtr->menu, strBuf, maxLen, MF_BYCOMMAND);
             DestroyMenu(hMn);
         }
     }
 }
-#else
-#define GetCodeTitle(a,b,c,d,e,f)
+
+
+void FusionAPI GetActionTitle(mv* mV, short code, short param, LPTSTR strBuf, short maxLen) {
+    #pragma MFXExport
+    GetCodeTitle((eventInformations2*)actionsInfos, code, param, MN_ACTIONS, strBuf, maxLen);
+}
+
+void FusionAPI GetConditionTitle(mv* mV, short code, short param, LPTSTR strBuf, short maxLen) {
+    #pragma MFXExport
+    GetCodeTitle((eventInformations2*)conditionsInfos, code, param, MN_CONDITIONS, strBuf, maxLen);
+}
+
+void FusionAPI GetExpressionTitle(mv* mV, short code, LPTSTR strBuf, short maxLen) {
+    #pragma MFXExport
+    GetCodeTitle((eventInformations2*)expressionsInfos, code, 0, MN_EXPRESSIONS, strBuf, maxLen);
+}
 #endif // EDITTIME
 
-void FusionAPI GetConditionTitle(mv _far *mV, short code, short param, LPTSTR strBuf, short maxLen)
-{
-    #pragma MFXExport
-    GetCodeTitle((LPEVENTINFOS2)conditionsInfos, code, param, MN_CONDITIONS, strBuf, maxLen);
-}
-void FusionAPI GetActionTitle(mv _far *mV, short code, short param, LPTSTR strBuf, short maxLen)
-{
-    #pragma MFXExport
-    GetCodeTitle((LPEVENTINFOS2)actionsInfos, code, param, MN_ACTIONS, strBuf, maxLen);
-}
-void FusionAPI GetExpressionTitle(mv _far *mV, short code, LPTSTR strBuf, short maxLen)
-{
-    #pragma MFXExport
-    GetCodeTitle((LPEVENTINFOS2)expressionsInfos, code, 0, MN_EXPRESSIONS, strBuf, maxLen);
-}
+
 
 // -------------------------------------------------------
 // GetConditionTitle / GetActionTitle / GetExpressionTitle
@@ -1197,53 +1188,55 @@ void FusionAPI GetExpressionTitle(mv _far *mV, short code, LPTSTR strBuf, short 
 // action or expression, as defined in the .H file
 //
 
-short FusionAPI GetConditionCodeFromMenu(mv _far *mV, short menuId)
-{
+#ifdef EDITTIME
+short FusionAPI GetActionCodeFromMenu(mv* mV, short menuId) {
     #pragma MFXExport
 
-#ifdef EDITTIME
-    LPEVENTINFOS2	eiPtr;
-    int				n;
+    eventInformations2* eiPtr;
+    int n;
 
-    for (n=CND_LAST, eiPtr=(LPEVENTINFOS2)conditionsInfos; n>0 && eiPtr->menu!=menuId; n--)
+    for (n = CND_LAST, eiPtr = (eventInformations2*)actionsInfos; n > 0 && eiPtr->menu!=menuId; n--) {
         eiPtr = EVINFO2_NEXT(eiPtr);
-    if (n>0) 
+    }
+    if (n > 0) {
         return eiPtr->infos.code;
-#endif // EDITTIME
+    }
+    
     return -1;
 }
 
-short FusionAPI GetActionCodeFromMenu(mv _far *mV, short menuId)
-{
+short FusionAPI GetConditionCodeFromMenu(mv* mV, short menuId) {
     #pragma MFXExport
 
-#ifdef EDITTIME
-    LPEVENTINFOS2	eiPtr;
-    int				n;
+    eventInformations2* eiPtr;
+    int n;
 
-    for (n=ACT_LAST, eiPtr=(LPEVENTINFOS2)actionsInfos; n>0 && eiPtr->menu!=menuId; n--)
+    for (n = CND_LAST, eiPtr = (eventInformations2*)conditionsInfos; n > 0 && eiPtr->menu!=menuId; n--) {
         eiPtr = EVINFO2_NEXT(eiPtr);
-    if (n>0) 
+    }
+    if (n > 0) {
         return eiPtr->infos.code;
-#endif // EDITTIME
+    }
+    
     return -1;
 }
 
-short FusionAPI GetExpressionCodeFromMenu(mv _far *mV, short menuId)
-{
+short FusionAPI GetExpressionCodeFromMenu(mv* mV, short menuId) {
     #pragma MFXExport
 
-#ifdef EDITTIME
-    LPEVENTINFOS2	eiPtr;
-    int				n;
+    eventInformations2* eiPtr;
+    int n;
 
-    for (n=EXP_LAST, eiPtr=(LPEVENTINFOS2)expressionsInfos; n>0 && eiPtr->menu!=menuId; n--)
+    for (n = CND_LAST, eiPtr = (eventInformations2*)expressionsInfos; n > 0 && eiPtr->menu!=menuId; n--) {
         eiPtr = EVINFO2_NEXT(eiPtr);
-    if (n>0) 
+    }
+    if (n > 0) {
         return eiPtr->infos.code;
-#endif // EDITTIME
+    }
+    
     return -1;
 }
+#endif // EDITTIME
 
 
 // -------------------------------------------------------
@@ -1253,38 +1246,25 @@ short FusionAPI GetExpressionCodeFromMenu(mv _far *mV, short menuId)
 // an infosEvents structure. 
 //
 
-LPINFOEVENTSV2 FusionAPI GetConditionInfos(mv _far *mV, short code)
-{
+#ifdef EDITTIME
+infosEventsV2* FusionAPI GetActionInfos(mv* mV, short code) {
     #pragma MFXExport
 
-#ifdef EDITTIME
-    return &GetEventInformations((LPEVENTINFOS2)conditionsInfos, code)->infos;
-#else
-    return NULL;
-#endif // EDITTIME
+    return &GetEventInformations((eventInformations2*)actionsInfos, code)->infos;
 }
 
-LPINFOEVENTSV2 FusionAPI GetActionInfos(mv _far *mV, short code)
-{
+infosEventsV2* FusionAPI GetConditionInfos(mv* mV, short code) {
     #pragma MFXExport
 
-#ifdef EDITTIME
-    return &GetEventInformations((LPEVENTINFOS2)actionsInfos, code)->infos;
-#else
-    return NULL;
-#endif // EDITTIME
+    return &GetEventInformations((eventInformations2*)conditionsInfos, code)->infos;
 }
 
-LPINFOEVENTSV2 FusionAPI GetExpressionInfos(mv _far *mV, short code)
-{
+infosEventsV2* FusionAPI GetExpressionInfos(mv* mV, short code) {
     #pragma MFXExport
 
-#ifdef EDITTIME
-    return &GetEventInformations((LPEVENTINFOS2)expressionsInfos, code)->infos;
-#else
-    return NULL;
-#endif // EDITTIME
+    return &GetEventInformations((eventInformations2*)expressionsInfos, code)->infos;
 }
+#endif // EDITTIME
 
 
 // ----------------------------------------------------------
@@ -1292,64 +1272,58 @@ LPINFOEVENTSV2 FusionAPI GetExpressionInfos(mv _far *mV, short code)
 // ----------------------------------------------------------
 // From a action / condition / expression code, returns 
 // the string to use for displaying it under the event editor
-//
-
-void FusionAPI GetConditionString(mv _far *mV, short code, LPTSTR strPtr, short maxLen)
-{
+#ifdef EDITTIME
+void FusionAPI GetActionString(mv* mV, short code, LPTSTR strPtr, short maxLen) {
     #pragma MFXExport
 
-#ifdef EDITTIME
     // Check compatibility
-    if ( IS_COMPATIBLE(mV) )
-        LoadString(hInstLib, GetEventInformations((LPEVENTINFOS2)conditionsInfos, code)->string, strPtr, maxLen);
-#endif // EDITTIME
+    if (IS_COMPATIBLE(mV)) {
+        LoadString(hInstLib, GetEventInformations((eventInformations2*)actionsInfos, code)->string, strPtr, maxLen);
+    }
 }
 
-void FusionAPI GetActionString(mv _far *mV, short code, LPTSTR strPtr, short maxLen)
-{
+void FusionAPI GetConditionString(mv* mV, short code, LPTSTR strPtr, short maxLen) {
     #pragma MFXExport
 
-#ifdef EDITTIME
     // Check compatibility
-    if ( IS_COMPATIBLE(mV) )
-        LoadString(hInstLib, GetEventInformations((LPEVENTINFOS2)actionsInfos, code)->string, strPtr, maxLen);
-#endif // EDITTIME
+    if (IS_COMPATIBLE(mV)) {
+        LoadString(hInstLib, GetEventInformations((eventInformations2*)conditionsInfos, code)->string, strPtr, maxLen);
+    }
 }
 
-void FusionAPI GetExpressionString(mv _far *mV, short code, LPTSTR strPtr, short maxLen)
-{
+void FusionAPI GetExpressionString(mv* mV, short code, LPTSTR strPtr, short maxLen) {
     #pragma MFXExport
 
-#ifdef EDITTIME
     // Check compatibility
-    if ( IS_COMPATIBLE(mV) )
-        LoadString(hInstLib, GetEventInformations((LPEVENTINFOS2)expressionsInfos, code)->string, strPtr, maxLen);
-#endif // EDITTIME
+    if (IS_COMPATIBLE(mV)) {
+        LoadString(hInstLib, GetEventInformations((eventInformations2*)expressionsInfos, code)->string, strPtr, maxLen);
+    }
 }
+#endif // EDITTIME
 
 // ----------------------------------------------------------
 // GetExpressionParam
 // ----------------------------------------------------------
 // Returns the parameter name to display in the expression editor
 //
-void FusionAPI GetExpressionParam(mv _far *mV, short code, short param, LPTSTR strBuf, short maxLen)
-{
+#ifdef EDITTIME
+void FusionAPI GetExpressionParam(mv* mV, short code, short param, LPTSTR strBuf, short maxLen) {
     #pragma MFXExport
 
-#ifdef EDITTIME
-    short		strID;
+    short strID;
 
     // Finds event in array
-    LPEVENTINFOS2 eiPtr=GetEventInformations((LPEVENTINFOS2)expressionsInfos, code);
+    eventInformations2* eiPtr = GetEventInformations((eventInformations2*)expressionsInfos, code);
 
     // If a special string is to be returned
     strID = EVINFO2_PARAMTITLE(eiPtr, param);
-    if ( strID != 0 )
+    if (strID != 0) {
         LoadString(hInstLib, strID, strBuf, maxLen);
-    else
+    } else {
         *strBuf=0;
-#endif // EDITTIME
+    }
 }
+#endif // EDITTIME
 
 // ----------------------------------------------------------
 // Custom Parameters
@@ -1360,7 +1334,7 @@ void FusionAPI GetExpressionParam(mv _far *mV, short code, short param, LPTSTR s
 // --------------------
 // Initialize the parameter.
 //
-void FusionAPI InitParameter(mv _far *mV, short code, paramExt* pExt)
+void FusionAPI InitParameter(mv* mV, short code, paramExt* pExt)
 {
     #pragma MFXExport
 
@@ -1422,7 +1396,7 @@ BOOL CALLBACK SetupProc(HWND hDlg, UINT msgType, WPARAM wParam, LPARAM lParam)
 // --------------------
 // Edit the parameter.
 //
-void FusionAPI EditParameter(mv _far *mV, short code, paramExt* pExt)
+void FusionAPI EditParameter(mv* mV, short code, paramExt* pExt)
 {
     #pragma MFXExport
 
@@ -1440,7 +1414,7 @@ void FusionAPI EditParameter(mv _far *mV, short code, paramExt* pExt)
 // --------------------
 // Initialize the parameter.
 //
-void FusionAPI GetParameterString(mv _far *mV, short code, paramExt* pExt, LPTSTR pDest, short size)
+void FusionAPI GetParameterString(mv* mV, short code, paramExt* pExt, LPTSTR pDest, short size)
 {
     #pragma MFXExport
     
