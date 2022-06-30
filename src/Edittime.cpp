@@ -73,6 +73,8 @@ typedef struct tagSetP
 //
 void FusionAPI GetObjInfos (mv _far *mV, EDITDATA* edPtr, LPTSTR ObjName, LPTSTR ObjAuthor, LPTSTR ObjCopyright, LPTSTR ObjComment, LPTSTR ObjHttp)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     // Name
     LoadString(hInstLib, IDST_OBJNAME,ObjName, 255);
@@ -98,6 +100,8 @@ void FusionAPI GetObjInfos (mv _far *mV, EDITDATA* edPtr, LPTSTR ObjName, LPTSTR
 //
 LPCTSTR FusionAPI GetHelpFileName()
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     // Return a file without path if your help file can be loaded by the MMF help file.
 //	return "MyExt.chm";
@@ -171,6 +175,8 @@ WORD BmpToImg(int bmID, npAppli idApp, short HotX = 0, short HotY = 0, short Act
 /*
 int FusionAPI MakeIconEx ( mv _far *mV, cSurface* pIconSf, LPTSTR lpName, fpObjInfo oiPtr, EDITDATA* edPtr )
 {
+    #pragma MFXExport
+    
     int error = -1;
 #ifdef EDITTIME
     if ( pIconSf->LoadImage(hInstLib, EXO_ICON) != 0 )
@@ -315,6 +321,8 @@ BOOL CALLBACK setupProc(HWND hDlg,unsigned int msgType,WPARAM wParam,LPARAM lPar
 
 int FusionAPI CreateObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     // Check compatibility
     if ( IS_COMPATIBLE(mV) )
@@ -345,6 +353,8 @@ int FusionAPI CreateObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr)
 //
 BOOL FusionAPI EditObject (mv _far *mV, fpObjInfo oiPtr, fpLevObj loPtr, EDITDATA* edPtr)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     // Check compatibility
     if ( IS_COMPATIBLE(mV) )
@@ -371,6 +381,8 @@ BOOL FusionAPI EditObject (mv _far *mV, fpObjInfo oiPtr, fpLevObj loPtr, EDITDAT
 /*
 BOOL FusionAPI SetEditSize(LPMV mv, EDITDATA* edPtr, int cx, int cy)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     edPtr->swidth = cx;
     edPtr->sheight = cy;
@@ -386,6 +398,8 @@ BOOL FusionAPI SetEditSize(LPMV mv, EDITDATA* edPtr, int cx, int cy)
 //
 void FusionAPI PutObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr, unsigned short cpt)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
 #endif // EDITTIME
 }
@@ -397,6 +411,8 @@ void FusionAPI PutObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr, unsigned 
 //
 void FusionAPI RemoveObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr, unsigned short cpt)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     // Is the last object removed?
     if (0 == cpt)
@@ -413,6 +429,8 @@ void FusionAPI RemoveObject(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr, unsign
 //
 void FusionAPI DuplicateObject(mv __far *mV, fpObjInfo oiPtr, EDITDATA* edPtr)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
 #endif // EDITTIME
 }
@@ -424,6 +442,8 @@ void FusionAPI DuplicateObject(mv __far *mV, fpObjInfo oiPtr, EDITDATA* edPtr)
 //
 void FusionAPI GetObjectRect(mv _far *mV, RECT FAR *rc, fpLevObj loPtr, EDITDATA* edPtr)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     rc->right = rc->left + 32;	// edPtr->swidth;
     rc->bottom = rc->top + 32;	// edPtr->sheight;
@@ -445,6 +465,8 @@ void FusionAPI GetObjectRect(mv _far *mV, RECT FAR *rc, fpLevObj loPtr, EDITDATA
 /*
 void FusionAPI EditorDisplay(mv _far *mV, fpObjInfo oiPtr, fpLevObj loPtr, EDITDATA* edPtr, RECT FAR *rc)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
 
     // This is a simple case of drawing an image onto MMF's frame editor window
@@ -482,6 +504,8 @@ void FusionAPI EditorDisplay(mv _far *mV, fpObjInfo oiPtr, fpLevObj loPtr, EDITD
 
 extern "C" BOOL FusionAPI IsTransparent(mv _far *mV, fpLevObj loPtr, EDITDATA* edPtr, int dx, int dy)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     // Write your code here
 #endif // EDITTIME
@@ -495,6 +519,8 @@ extern "C" BOOL FusionAPI IsTransparent(mv _far *mV, fpLevObj loPtr, EDITDATA* e
 // 
 void FusionAPI PrepareToWriteObject(mv _far *mV, EDITDATA* edPtr, fpObjInfo adoi)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     // Write your code here
 #endif // EDITTIME
@@ -506,6 +532,8 @@ void FusionAPI PrepareToWriteObject(mv _far *mV, EDITDATA* edPtr, fpObjInfo adoi
 
 BOOL FusionAPI GetFilters(LPMV mV, EDITDATA* edPtr, DWORD dwFlags, LPVOID pReserved)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     // If your extension uses image filters
 //	if ( (dwFlags & GETFILTERS_IMAGES) != 0 )
@@ -526,6 +554,8 @@ BOOL FusionAPI GetFilters(LPMV mV, EDITDATA* edPtr, DWORD dwFlags, LPVOID pReser
 //
 BOOL FusionAPI UsesFile (LPMV mV, LPTSTR fileName)
 {
+    #pragma MFXExport
+
     BOOL r = FALSE;
 #ifdef EDITTIME
 
@@ -560,6 +590,8 @@ BOOL FusionAPI UsesFile (LPMV mV, LPTSTR fileName)
 //
 void FusionAPI CreateFromFile (LPMV mV, LPTSTR fileName, EDITDATA* edPtr)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     // Initialize your extension data from the given file
 //	edPtr->swidth = 32;
@@ -583,6 +615,8 @@ void FusionAPI CreateFromFile (LPMV mV, LPTSTR fileName, EDITDATA* edPtr)
 //
 BOOL FusionAPI GetProperties(LPMV mV, EDITDATA* edPtr, BOOL bMasterItem)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     mvInsertProps(mV, edPtr, Properties, PROPID_TAB_GENERAL, TRUE);
 #endif // EDITTIME
@@ -598,6 +632,8 @@ BOOL FusionAPI GetProperties(LPMV mV, EDITDATA* edPtr, BOOL bMasterItem)
 //
 void FusionAPI ReleaseProperties(LPMV mV, EDITDATA* edPtr, BOOL bMasterItem)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     // Write your code here
 #endif // EDITTIME
@@ -611,6 +647,8 @@ void FusionAPI ReleaseProperties(LPMV mV, EDITDATA* edPtr, BOOL bMasterItem)
 //
 LPARAM FusionAPI GetPropCreateParam(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     // Example
     // -------
@@ -636,6 +674,8 @@ LPARAM FusionAPI GetPropCreateParam(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 //
 void FusionAPI ReleasePropCreateParam(LPMV mV, EDITDATA* edPtr, UINT nPropID, LPARAM lParam)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
 #endif // EDITTIME
 }
@@ -648,6 +688,8 @@ void FusionAPI ReleasePropCreateParam(LPMV mV, EDITDATA* edPtr, UINT nPropID, LP
 //
 LPVOID FusionAPI GetPropValue(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     // Example
     // -------
@@ -676,6 +718,8 @@ LPVOID FusionAPI GetPropValue(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 //
 BOOL FusionAPI GetPropCheck(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     // Example
     // -------
@@ -697,6 +741,8 @@ BOOL FusionAPI GetPropCheck(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 //
 void FusionAPI SetPropValue(LPMV mV, EDITDATA* edPtr, UINT nPropID, LPVOID lParam)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     // Gets the pointer to the CPropValue structure
     CPropValue* pValue = (CPropValue*)lParam;
@@ -760,6 +806,8 @@ void FusionAPI SetPropValue(LPMV mV, EDITDATA* edPtr, UINT nPropID, LPVOID lPara
 //
 void FusionAPI SetPropCheck(LPMV mV, EDITDATA* edPtr, UINT nPropID, BOOL nCheck)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     // Example
     // -------
@@ -781,6 +829,8 @@ void FusionAPI SetPropCheck(LPMV mV, EDITDATA* edPtr, UINT nPropID, BOOL nCheck)
 //
 BOOL FusionAPI EditProp(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
 
     // Example
@@ -804,6 +854,8 @@ BOOL FusionAPI EditProp(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 //
 BOOL FusionAPI IsPropEnabled(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     // Example
     // -------
@@ -832,6 +884,8 @@ BOOL FusionAPI IsPropEnabled(LPMV mV, EDITDATA* edPtr, UINT nPropID)
 //
 DWORD FusionAPI GetTextCaps(mv _far *mV, EDITDATA* edPtr)
 {
+    #pragma MFXExport
+
     return 0;	// (TEXT_ALIGN_LEFT|TEXT_ALIGN_HCENTER|TEXT_ALIGN_RIGHT|TEXT_ALIGN_TOP|TEXT_ALIGN_VCENTER|TEXT_ALIGN_BOTTOM|TEXT_FONT|TEXT_COLOR);
 }
 
@@ -843,6 +897,8 @@ DWORD FusionAPI GetTextCaps(mv _far *mV, EDITDATA* edPtr)
 //
 BOOL FusionAPI GetTextFont(mv _far *mV, EDITDATA* edPtr, LPLOGFONT plf, LPTSTR pStyle, UINT cbSize)
 {
+    #pragma MFXExport
+    
 #ifdef EDITTIME
     // Example: copy LOGFONT structure from EDITDATA
     // memcpy(plf, &edPtr->m_lf, sizeof(LOGFONT));
@@ -859,6 +915,8 @@ BOOL FusionAPI GetTextFont(mv _far *mV, EDITDATA* edPtr, LPLOGFONT plf, LPTSTR p
 //
 BOOL FusionAPI SetTextFont(mv _far *mV, EDITDATA* edPtr, LPLOGFONT plf, LPCTSTR pStyle)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     // Example: copy LOGFONT structure to EDITDATA
     // memcpy(&edPtr->m_lf, plf, sizeof(LOGFONT));
@@ -874,6 +932,8 @@ BOOL FusionAPI SetTextFont(mv _far *mV, EDITDATA* edPtr, LPLOGFONT plf, LPCTSTR 
 //
 COLORREF FusionAPI GetTextClr(mv _far *mV, EDITDATA* edPtr)
 {
+    #pragma MFXExport
+
     // Example
     return 0;	// edPtr->fontColor;
 }
@@ -885,6 +945,8 @@ COLORREF FusionAPI GetTextClr(mv _far *mV, EDITDATA* edPtr)
 //
 void FusionAPI SetTextClr(mv _far *mV, EDITDATA* edPtr, COLORREF color)
 {
+    #pragma MFXExport
+    
     // Example
     //edPtr->fontColor = color;
 }
@@ -896,6 +958,8 @@ void FusionAPI SetTextClr(mv _far *mV, EDITDATA* edPtr, COLORREF color)
 //
 DWORD FusionAPI GetTextAlignment(mv _far *mV, EDITDATA* edPtr)
 {
+    #pragma MFXExport
+
     DWORD dw = 0;
 #ifdef EDITTIME
     // Example
@@ -924,6 +988,8 @@ DWORD FusionAPI GetTextAlignment(mv _far *mV, EDITDATA* edPtr)
 //
 void FusionAPI SetTextAlignment(mv _far *mV, EDITDATA* edPtr, DWORD dwAlignFlags)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     // Example
     // -------
@@ -1038,6 +1104,8 @@ static LPEVENTINFOS2 GetEventInformations(LPEVENTINFOS2 eiPtr, short code)
 //
 HMENU FusionAPI GetConditionMenu(mv _far *mV, fpObjInfo oiPtr, EDITDATA* edPtr)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     // Check compatibility
     if ( IS_COMPATIBLE(mV) )
@@ -1048,6 +1116,8 @@ HMENU FusionAPI GetConditionMenu(mv _far *mV, fpObjInfo oiPtr, EDITDATA* edPtr)
 
 HMENU FusionAPI GetActionMenu(mv _far *mV, fpObjInfo oiPtr, EDITDATA* edPtr)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     // Check compatibility
     if ( IS_COMPATIBLE(mV) )
@@ -1058,6 +1128,8 @@ HMENU FusionAPI GetActionMenu(mv _far *mV, fpObjInfo oiPtr, EDITDATA* edPtr)
 
 HMENU FusionAPI GetExpressionMenu(mv _far *mV, fpObjInfo oiPtr, EDITDATA* edPtr)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     // Check compatibility
     if ( IS_COMPATIBLE(mV) )
@@ -1104,14 +1176,17 @@ void GetCodeTitle(LPEVENTINFOS2 eiPtr, short code, short param, short mn, LPTSTR
 
 void FusionAPI GetConditionTitle(mv _far *mV, short code, short param, LPTSTR strBuf, short maxLen)
 {
+    #pragma MFXExport
     GetCodeTitle((LPEVENTINFOS2)conditionsInfos, code, param, MN_CONDITIONS, strBuf, maxLen);
 }
 void FusionAPI GetActionTitle(mv _far *mV, short code, short param, LPTSTR strBuf, short maxLen)
 {
+    #pragma MFXExport
     GetCodeTitle((LPEVENTINFOS2)actionsInfos, code, param, MN_ACTIONS, strBuf, maxLen);
 }
 void FusionAPI GetExpressionTitle(mv _far *mV, short code, LPTSTR strBuf, short maxLen)
 {
+    #pragma MFXExport
     GetCodeTitle((LPEVENTINFOS2)expressionsInfos, code, 0, MN_EXPRESSIONS, strBuf, maxLen);
 }
 
@@ -1124,6 +1199,8 @@ void FusionAPI GetExpressionTitle(mv _far *mV, short code, LPTSTR strBuf, short 
 
 short FusionAPI GetConditionCodeFromMenu(mv _far *mV, short menuId)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     LPEVENTINFOS2	eiPtr;
     int				n;
@@ -1138,6 +1215,8 @@ short FusionAPI GetConditionCodeFromMenu(mv _far *mV, short menuId)
 
 short FusionAPI GetActionCodeFromMenu(mv _far *mV, short menuId)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     LPEVENTINFOS2	eiPtr;
     int				n;
@@ -1152,6 +1231,8 @@ short FusionAPI GetActionCodeFromMenu(mv _far *mV, short menuId)
 
 short FusionAPI GetExpressionCodeFromMenu(mv _far *mV, short menuId)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     LPEVENTINFOS2	eiPtr;
     int				n;
@@ -1174,6 +1255,8 @@ short FusionAPI GetExpressionCodeFromMenu(mv _far *mV, short menuId)
 
 LPINFOEVENTSV2 FusionAPI GetConditionInfos(mv _far *mV, short code)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     return &GetEventInformations((LPEVENTINFOS2)conditionsInfos, code)->infos;
 #else
@@ -1183,6 +1266,8 @@ LPINFOEVENTSV2 FusionAPI GetConditionInfos(mv _far *mV, short code)
 
 LPINFOEVENTSV2 FusionAPI GetActionInfos(mv _far *mV, short code)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     return &GetEventInformations((LPEVENTINFOS2)actionsInfos, code)->infos;
 #else
@@ -1192,6 +1277,8 @@ LPINFOEVENTSV2 FusionAPI GetActionInfos(mv _far *mV, short code)
 
 LPINFOEVENTSV2 FusionAPI GetExpressionInfos(mv _far *mV, short code)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     return &GetEventInformations((LPEVENTINFOS2)expressionsInfos, code)->infos;
 #else
@@ -1209,6 +1296,8 @@ LPINFOEVENTSV2 FusionAPI GetExpressionInfos(mv _far *mV, short code)
 
 void FusionAPI GetConditionString(mv _far *mV, short code, LPTSTR strPtr, short maxLen)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     // Check compatibility
     if ( IS_COMPATIBLE(mV) )
@@ -1218,6 +1307,8 @@ void FusionAPI GetConditionString(mv _far *mV, short code, LPTSTR strPtr, short 
 
 void FusionAPI GetActionString(mv _far *mV, short code, LPTSTR strPtr, short maxLen)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     // Check compatibility
     if ( IS_COMPATIBLE(mV) )
@@ -1227,6 +1318,8 @@ void FusionAPI GetActionString(mv _far *mV, short code, LPTSTR strPtr, short max
 
 void FusionAPI GetExpressionString(mv _far *mV, short code, LPTSTR strPtr, short maxLen)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     // Check compatibility
     if ( IS_COMPATIBLE(mV) )
@@ -1241,6 +1334,8 @@ void FusionAPI GetExpressionString(mv _far *mV, short code, LPTSTR strPtr, short
 //
 void FusionAPI GetExpressionParam(mv _far *mV, short code, short param, LPTSTR strBuf, short maxLen)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     short		strID;
 
@@ -1267,6 +1362,8 @@ void FusionAPI GetExpressionParam(mv _far *mV, short code, short param, LPTSTR s
 //
 void FusionAPI InitParameter(mv _far *mV, short code, paramExt* pExt)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
     // Example
     // -------
@@ -1327,6 +1424,8 @@ BOOL CALLBACK SetupProc(HWND hDlg, UINT msgType, WPARAM wParam, LPARAM lParam)
 //
 void FusionAPI EditParameter(mv _far *mV, short code, paramExt* pExt)
 {
+    #pragma MFXExport
+
 #ifdef EDITTIME
 
     // Example
@@ -1343,6 +1442,8 @@ void FusionAPI EditParameter(mv _far *mV, short code, paramExt* pExt)
 //
 void FusionAPI GetParameterString(mv _far *mV, short code, paramExt* pExt, LPTSTR pDest, short size)
 {
+    #pragma MFXExport
+    
 #ifdef EDITTIME
 
     // Example
