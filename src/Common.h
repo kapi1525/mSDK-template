@@ -16,12 +16,12 @@
 
 // General includes
 #include "mSDK.h"
-#include "ccxhdr.h"
+#include "Ccxhdr.h"
 #include "Surface.h"
 
 // Specific to this cox
 #include "resource.h"
-#include "main.h"
+#include "Main.h"
 #include "TigsExt.hpp"
 
 
@@ -31,9 +31,9 @@ extern short conditionsInfos[];
 extern short actionsInfos[];
 extern short expressionsInfos[];
 
-long (WINAPI * ConditionJumps[])(RUNDATA* rdPtr, long param1, long param2);
-short (WINAPI * ActionJumps[])(RUNDATA* rdPtr, long param1, long param2);
-long (WINAPI * ExpressionJumps[])(RUNDATA* rdPtr, long param);
+extern long (WINAPI * ConditionJumps[])(RUNDATA* rdPtr, long param1, long param2);
+extern short (WINAPI * ActionJumps[])(RUNDATA* rdPtr, long param1, long param2);
+extern long (WINAPI * ExpressionJumps[])(RUNDATA* rdPtr, long param);
 
 
 // Used to ensure the MMF version is 1.5, you can safely ignore this

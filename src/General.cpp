@@ -1,5 +1,5 @@
 // Functions in this file are used internaly by Fusion, you probably dont need to change them.
-#include	"common.h"
+#include "Common.h"
 
 HINSTANCE hInstLib;
 

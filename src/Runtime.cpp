@@ -1,21 +1,21 @@
 // This file contains functions that are used during runtime
 // eg: Object creation, destruction, drawing object etc.
 
-#include "common.h"
+#include "Common.h"
 
 
 
 #ifdef EDITTIME
 
 // Identifiers of items displayed in the debugger
-enum {
+// enum {
 // Example
 // -------
 //	DB_CURRENTSTRING,
 //	DB_CURRENTVALUE,
 //	DB_CURRENTCHECK,
 //	DB_CURRENTCOMBO
-};
+// };
 
 // Items displayed in the debugger
 WORD DebugTree[] = {
