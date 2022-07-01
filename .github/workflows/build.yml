@@ -3,11 +3,11 @@ name: build
 on: 
   push:
     paths:
-      - 'github/**'
-      - 'res/**'
-      - 'src/**'
-      - 'subprojects/**'
-      - '.gitmodules'
+    - 'github/**'
+    - 'res/**'
+    - 'src/**'
+    - 'subprojects/**'
+    - '.gitmodules'
 
 
 jobs:
