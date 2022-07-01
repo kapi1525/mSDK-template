@@ -3,7 +3,7 @@ name: build
 on: 
   push:
     paths:
-    - 'github/**'
+    - '.github/**'
     - 'res/**'
     - 'src/**'
     - 'subprojects/**'
