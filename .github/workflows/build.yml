@@ -35,3 +35,5 @@ jobs:
         directory: bin
         setup-options: --buildtype=debug
         options: --verbose --load-average=100
+        meson-version: 0.62.2
+        ninja-version: 1.10.2.3
