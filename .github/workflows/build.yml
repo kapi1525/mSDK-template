@@ -19,20 +19,19 @@ jobs:
       with:
         submodules: true
     
+    - uses: actions/setup-python@v4
+      with:
+        python-version: 'pypy3.9'
+        cache: 'pip'
+
     - uses: ilammy/msvc-dev-cmd@v1
       with:
         arch: amd64_x86
     
-    - uses: actions/setup-python@v4
+    - name: Configure and compile
+      uses: BSFishy/meson-build@v1
       with:
-        cache: 'pip'
-        python-version: 'pypy3.9'
-
-    - name: Install meson
-      run: pip install meson ninja
-
-    - name: configure
-      run: meson --buildtype=debug bin
-    
-    - name: compile
-      run: meson compile -C bin --load-average=100 --verbose
+        action: compile
+        directory: bin
+        setup-options: --buildtype=debug
+        options: --verbose --load-average=100
