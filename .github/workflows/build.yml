@@ -31,7 +31,7 @@ jobs:
     - name: Configure and compile
       uses: BSFishy/meson-build@v1
       with:
-        action: compile
+        action: build
         directory: bin
         setup-options: --buildtype=debug
         options: --verbose --load-average=100
