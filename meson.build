@@ -31,20 +31,24 @@ edittime    = mSDK_core.get_variable('edittime')
 runtime     = mSDK_core.get_variable('runtime')
 unicode     = mSDK_core.get_variable('unicode')
 
-edittime_rc = mSDK_core.get_variable('edittime_rc')
-runtime_rc  = mSDK_core.get_variable('runtime_rc')
 
 
-
-extension_res = import('windows').compile_resources(
+resources_edittime = import('windows').compile_resources(
   'src/Ext.rc',
-  args: edittime_rc,
+  args: edittime,
   include_directories: mSDK_inc,
 )
 
+resources_runtime = import('windows').compile_resources(
+  'src/../src/Ext.rc',    # This dumb workaround is required to stop meson from complaining about 2 targets with same name
+  args: runtime,
+  include_directories: mSDK_inc,
+)
+
+
 extension_edittime_unicode = shared_library(
   'extension_edittime_unicode',
-  files, extension_res,
+  files, resources_edittime,
   cpp_args: common + edittime + unicode,
   dependencies: mSDK_dep,
   name_suffix: 'mfx',
@@ -54,7 +58,7 @@ extension_edittime_unicode = shared_library(
 
 extension_runtime_unicode = shared_library(
   'extension_runtime_unicode',
-  files, extension_res,
+  files, resources_runtime,
   cpp_args: common + runtime + unicode,
   dependencies: mSDK_dep,
   name_suffix: 'mfx',
