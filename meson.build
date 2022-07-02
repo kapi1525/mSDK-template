@@ -26,6 +26,7 @@ mSDK_dep    = dependency('mSDK', fallback: 'mSDK-core')
 
 mSDK_inc    = mSDK_core.get_variable('mSDK_include')
 
+# Compiler arguments
 common      = mSDK_core.get_variable('common')
 edittime    = mSDK_core.get_variable('edittime')
 runtime     = mSDK_core.get_variable('runtime')
@@ -53,8 +54,6 @@ extension_edittime_unicode = shared_library(
   dependencies: mSDK_dep,
   name_suffix: 'mfx',
 )
-
-
 
 extension_runtime_unicode = shared_library(
   'extension_runtime_unicode',
