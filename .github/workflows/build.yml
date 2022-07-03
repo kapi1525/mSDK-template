@@ -3,6 +3,19 @@ name: build
 on: 
   push:
     paths:
+    - '**.cpp'
+    - '**.hpp'
+    - '**.c'
+    - '**.h'
+    - '**.rc'
+    - '**.def'
+    - '**.lib'
+    - '**.dll'
+    - '**.build'
+    - '**.bmp'
+    - '**.png'
+    - '**.jpg'
+    - '**.webp'
     - '.github/**'
     - 'res/**'
     - 'src/**'
