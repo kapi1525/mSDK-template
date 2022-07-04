@@ -15,6 +15,7 @@ files = files(
   'src/Edittime.cpp',
   'src/Properties.cpp',
   'src/Runtime.cpp',
+  'src/Debuger.cpp',
   'src/ACE/actions.cpp',
   'src/ACE/conditions.cpp',
   'src/ACE/expressions.cpp',
