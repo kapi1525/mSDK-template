@@ -12,11 +12,11 @@ project(
 
 files = files(
   'src/General.cpp',
+  'src/Edittime.cpp',
+  'src/Runtime.cpp',
   'src/ACE/actions.cpp',
   'src/ACE/conditions.cpp',
   'src/ACE/expressions.cpp',
-  'src/Runtime.cpp',
-  'src/Edittime.cpp',
 )
 
 
