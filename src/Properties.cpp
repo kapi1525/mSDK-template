@@ -51,7 +51,7 @@ PropData Properties[] = {
 
 // Called when Fusion wants to display object properties
 // Call mvInsertProps to put your custom props into properties
-BOOL FusionAPI GetProperties(LPMV mV, EDITDATA* edPtr, BOOL bMasterItem) {
+BOOL FusionAPI GetProperties(mv* mV, EDITDATA* edPtr, BOOL bMasterItem) {
     #pragma MFXExport
     mvInsertProps(mV, edPtr, Properties, PROPID_TAB_GENERAL, TRUE);
     return TRUE;
@@ -59,7 +59,7 @@ BOOL FusionAPI GetProperties(LPMV mV, EDITDATA* edPtr, BOOL bMasterItem) {
 
 // Called when props are removed from properties
 // Free anything you might have allocated in GetProperties() here
-void FusionAPI ReleaseProperties(LPMV mV, EDITDATA* edPtr, BOOL bMasterItem) {
+void FusionAPI ReleaseProperties(mv* mV, EDITDATA* edPtr, BOOL bMasterItem) {
     #pragma MFXExport
 }
 
@@ -67,7 +67,7 @@ void FusionAPI ReleaseProperties(LPMV mV, EDITDATA* edPtr, BOOL bMasterItem) {
 
 // Called when prop is initialized if its lCreateParam is NULL (PropData)
 // Use to eg: set default values for props if you cant do this in PropData array
-LPARAM FusionAPI GetPropCreateParam(LPMV mV, EDITDATA* edPtr, UINT nPropID) {
+LPARAM FusionAPI GetPropCreateParam(mv* mV, EDITDATA* edPtr, unsigned int nPropID) {
     #pragma MFXExport
 
     return NULL;
@@ -75,14 +75,14 @@ LPARAM FusionAPI GetPropCreateParam(LPMV mV, EDITDATA* edPtr, UINT nPropID) {
 
 // Called after prop was initialized
 // Free any memory allocated in GetPropCreateParam() here
-void FusionAPI ReleasePropCreateParam(LPMV mV, EDITDATA* edPtr, UINT nPropID, LPARAM lParam) {
+void FusionAPI ReleasePropCreateParam(mv* mV, EDITDATA* edPtr, unsigned int nPropID, LPARAM lParam) {
     #pragma MFXExport
 }
 
 
 
 // Returns value of property
-LPVOID FusionAPI GetPropValue(LPMV mV, EDITDATA* edPtr, UINT nPropID) {
+void* FusionAPI GetPropValue(mv* mV, EDITDATA* edPtr, unsigned int nPropID) {
     #pragma MFXExport
 
     // Example
@@ -99,7 +99,7 @@ LPVOID FusionAPI GetPropValue(LPMV mV, EDITDATA* edPtr, UINT nPropID) {
 }
 
 // Same as GetPropValue() but for checkboxes
-BOOL FusionAPI GetPropCheck(LPMV mV, EDITDATA* edPtr, UINT nPropID) {
+BOOL FusionAPI GetPropCheck(mv* mV, EDITDATA* edPtr, unsigned int nPropID) {
     #pragma MFXExport
 
     return 0;
@@ -109,7 +109,7 @@ BOOL FusionAPI GetPropCheck(LPMV mV, EDITDATA* edPtr, UINT nPropID) {
 
 // Called when user modifies property value
 // Use to store prop value in EDITDATA
-void FusionAPI SetPropValue(LPMV mV, EDITDATA* edPtr, UINT nPropID, LPVOID lParam) {
+void FusionAPI SetPropValue(mv* mV, EDITDATA* edPtr, unsigned int nPropID, void* lParam) {
     #pragma MFXExport
 
     // Example
@@ -142,14 +142,14 @@ void FusionAPI SetPropValue(LPMV mV, EDITDATA* edPtr, UINT nPropID, LPVOID lPara
 }
 
 // Same as SetPropValue() but for checkboxes
-void FusionAPI SetPropCheck(LPMV mV, EDITDATA* edPtr, UINT nPropID, BOOL nCheck) {
+void FusionAPI SetPropCheck(mv* mV, EDITDATA* edPtr, unsigned int nPropID, BOOL nCheck) {
     #pragma MFXExport
 }
 
 
 
 // Called when user clicks button in properties
-BOOL FusionAPI EditProp(LPMV mV, EDITDATA* edPtr, UINT nPropID) {
+BOOL FusionAPI EditProp(mv* mV, EDITDATA* edPtr, unsigned int nPropID) {
     #pragma MFXExport
 
     // Example
@@ -162,7 +162,7 @@ BOOL FusionAPI EditProp(LPMV mV, EDITDATA* edPtr, UINT nPropID) {
 }
 
 // This function returns the enabled state of a property.
-BOOL FusionAPI IsPropEnabled(LPMV mV, EDITDATA* edPtr, UINT nPropID) {
+BOOL FusionAPI IsPropEnabled(mv* mV, EDITDATA* edPtr, unsigned int nPropID) {
     #pragma MFXExport
 
     // Example
