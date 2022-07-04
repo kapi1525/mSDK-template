@@ -14,8 +14,8 @@ enum {
 
 // Example
 // -------
-//	PROPID_TEXTTITLE,	
-//	PROPID_TEXT,	
+//	PROPID_TEXTTITLE,
+//	PROPID_TEXT,
 //	PROPID_CHECK,
 //	PROPID_COMBO,
 //	PROPID_COLOR,
@@ -1083,7 +1083,7 @@ HMENU GetPopupMenu(short mn)
 // Internal routine used later. Look for one event in one of the eventInfos array...
 // No protection to go faster: you must properly enter the conditions/actions!
 // 
-static LPEVENTINFOS2 GetEventInformations(LPEVENTINFOS2 eiPtr, short code)
+static eventInformations2* GetEventInformations(eventInformations2* eiPtr, short code)
 
 {
     while(eiPtr->infos.code != code)
