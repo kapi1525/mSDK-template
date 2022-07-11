@@ -175,3 +175,112 @@ BOOL FusionAPI IsPropEnabled(mv* mV, EDITDATA* edPtr, unsigned int nPropID) {
 }
 
 #endif // EDITTIME
+
+
+
+// Text properties
+// TODO: Check if all functions are only used at EDITTIME so i can remove them from RUNTIME extensions
+
+
+
+// Return the text capabilities of the object under the frame editor.
+DWORD FusionAPI GetTextCaps(mv* mV, EDITDATA* edPtr) {
+    #pragma MFXExport
+
+    return 0;	// TEXT_ALIGN_LEFT|TEXT_ALIGN_HCENTER|TEXT_ALIGN_RIGHT|TEXT_ALIGN_TOP|TEXT_ALIGN_VCENTER|TEXT_ALIGN_BOTTOM|TEXT_FONT|TEXT_COLOR;
+}
+
+#ifdef EDITTIME
+
+// Return the font used by object.
+BOOL FusionAPI GetTextFont(mv* mV, EDITDATA* edPtr, LOGFONT* plf, void* obsolete, int obsolete2) {
+    #pragma MFXExport
+    
+    // Example: copy LOGFONT structure from EDITDATA
+    // memcpy(plf, &edPtr->m_lf, sizeof(LOGFONT));
+
+    return TRUE;
+}
+
+// Called when user changed font
+BOOL FusionAPI SetTextFont(mv* mV, EDITDATA* edPtr, LOGFONT* plf, void* obsolete) {
+    #pragma MFXExport
+
+    // Example: copy LOGFONT structure to EDITDATA
+    // memcpy(&edPtr->m_lf, plf, sizeof(LOGFONT));
+
+    return TRUE;
+}
+
+#endif // EDITTIME
+
+
+
+// Get the text color of the object.
+COLORREF FusionAPI GetTextClr(mv* mV, EDITDATA* edPtr) {
+    #pragma MFXExport
+
+    return 0;	// edPtr->fontColor;
+}
+
+// Set the text color of the object.
+void FusionAPI SetTextClr(mv* mV, EDITDATA* edPtr, COLORREF color) {
+    #pragma MFXExport
+    
+    // Example
+    //edPtr->fontColor = color;
+}
+
+
+#ifdef EDITTIME
+
+// Get the text alignment of the object.
+DWORD FusionAPI GetTextAlignment(mv* mV, EDITDATA* edPtr) {
+    #pragma MFXExport
+
+    DWORD dw = 0;
+    // Example
+    // -------
+/*	if ( (edPtr->eData.dwFlags & ALIGN_LEFT) != 0 )
+        dw |= TEXT_ALIGN_LEFT;
+    if ( (edPtr->eData.dwFlags & ALIGN_HCENTER) != 0 )
+        dw |= TEXT_ALIGN_HCENTER;
+    if ( (edPtr->eData.dwFlags & ALIGN_RIGHT) != 0 )
+        dw |= TEXT_ALIGN_RIGHT;
+    if ( (edPtr->eData.dwFlags & ALIGN_TOP) != 0 )
+        dw |= TEXT_ALIGN_TOP;
+    if ( (edPtr->eData.dwFlags & ALIGN_VCENTER) != 0 )
+        dw |= TEXT_ALIGN_VCENTER;
+    if ( (edPtr->eData.dwFlags & ALIGN_BOTTOM) != 0 )
+        dw |= TEXT_ALIGN_BOTTOM;
+*/
+    return dw;
+}
+
+// Set the text alignment of the object.
+void FusionAPI SetTextAlignment(mv* mV, EDITDATA* edPtr, DWORD dwAlignFlags) {
+    #pragma MFXExport
+
+    // Example
+    // -------
+/*	DWORD dw = edPtr->eData.dwFlags;
+
+    if ( (dwAlignFlags & TEXT_ALIGN_LEFT) != 0 )
+        dw = (dw & ~(ALIGN_LEFT|ALIGN_HCENTER|ALIGN_RIGHT)) | ALIGN_LEFT;
+    if ( (dwAlignFlags & TEXT_ALIGN_HCENTER) != 0 )
+        dw = (dw & ~(ALIGN_LEFT|ALIGN_HCENTER|ALIGN_RIGHT)) | ALIGN_HCENTER;
+    if ( (dwAlignFlags & TEXT_ALIGN_RIGHT) != 0 )
+        dw = (dw & ~(ALIGN_LEFT|ALIGN_HCENTER|ALIGN_RIGHT)) | ALIGN_RIGHT;
+
+    if ( (dwAlignFlags & TEXT_ALIGN_TOP) != 0 )
+        dw = (dw & ~(ALIGN_TOP|ALIGN_VCENTER|ALIGN_BOTTOM)) | ALIGN_TOP;
+    if ( (dwAlignFlags & TEXT_ALIGN_VCENTER) != 0 )
+        dw = (dw & ~(ALIGN_TOP|ALIGN_VCENTER|ALIGN_BOTTOM)) | ALIGN_VCENTER;
+    if ( (dwAlignFlags & TEXT_ALIGN_BOTTOM) != 0 )
+        dw = (dw & ~(ALIGN_TOP|ALIGN_VCENTER|ALIGN_BOTTOM)) | ALIGN_BOTTOM;
+
+    edPtr->eData.dwFlags = dw;
+*/
+}
+
+#endif // EDITTIME

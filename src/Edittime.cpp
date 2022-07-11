@@ -4,722 +4,219 @@
 #include "Common.h"
 
 
+
 #ifdef EDITTIME
 
-// SETUP PROC /////////////////////////////////////////////////////////////////
-
-// Prototype of setup procedure
-BOOL CALLBACK setupProc(HWND hDlg,unsigned int msgType,WPARAM wParam,LPARAM lParam);
-
-// Structure defined to pass edptr and mv into setup box
-typedef struct tagSetP
-{
-    EDITDATA _far *	edpt;
-    mv _far	*		kv;
-} setupParams;
-
-#endif // EDITTIME
-
-
-// -----------------
-// GetObjInfos
-// -----------------
-// Return object info
-//
-// Info displayed in the object's About properties
-// Note: ObjComment is also displayed in the Quick Description box in the Insert Object dialog box
-//
-void FusionAPI GetObjInfos (mv* mV, EDITDATA* edPtr, LPTSTR ObjName, LPTSTR ObjAuthor, LPTSTR ObjCopyright, LPTSTR ObjComment, LPTSTR ObjHttp)
-{
+// Returns object info to Fusion
+void FusionAPI GetObjInfos (mv* mV, EDITDATA* edPtr, LPTSTR ObjName, LPTSTR ObjAuthor, LPTSTR ObjCopyright, LPTSTR ObjComment, LPTSTR ObjHttp) {
     #pragma MFXExport
 
-#ifdef EDITTIME
-    // Name
-    LoadString(hInstLib, IDST_OBJNAME,ObjName, 255);
-
-    // Author
-    LoadString(hInstLib, IDST_AUTHOR,ObjAuthor,255);
-
-    // Copyright
-    LoadString(hInstLib, IDST_COPYRIGHT,ObjCopyright,255);
-
-    // Comment
-    LoadString(hInstLib, IDST_COMMENT,ObjComment,1024);
-
-    // Internet address
-    LoadString(hInstLib, IDST_HTTP,ObjHttp,255);
-#endif // EDITTIME
+    LoadString(hInstLib, IDST_OBJNAME,ObjName, 255);        // Name
+    LoadString(hInstLib, IDST_AUTHOR,ObjAuthor,255);        // Author
+    LoadString(hInstLib, IDST_COPYRIGHT,ObjCopyright,255);  // Copyright
+    LoadString(hInstLib, IDST_COMMENT,ObjComment,1024);     // Comment
+    LoadString(hInstLib, IDST_HTTP,ObjHttp,255);            // Internet address
 }
 
-// -----------------
-// GetHelpFileName
-// -----------------
-// Returns the help filename of the object.
-//
-LPCTSTR FusionAPI GetHelpFileName()
-{
+// Returns a path to help file
+LPCTSTR FusionAPI GetHelpFileName() {
     #pragma MFXExport
 
-#ifdef EDITTIME
-    // Return a file without path if your help file can be loaded by the MMF help file.
-//	return "MyExt.chm";
+    // Return only a file without path if your help file can be loaded by Fusion help file
+    // return _T("MyHelpFile.chm");
+    // Or a path to your file relative to Fusion install directory if it cant
+    // return _T("Help\\MyExt.chm");
 
-    // Or return the path of your file, relatively to the MMF directory
-    // if your file is not loaded by the MMF help file.
-    return _T("Help\\MyExt.chm");
-#else
-    return NULL;
-#endif // EDITTIME
+    return NULL;    // No help file
 }
 
-// -----------------
-// BmpToImg
-// -----------------
-// Converts an image from the resource to an image displayable under CC&C
-// Not used in this template, but it is a good example on how to create
-// an image.
-//
+
+
+// Frame editor functions
+
+
+
+// Called once when object is created or modified
+// Load your icon into pIconSf surface
+// Note: If this function is not implemented Fusion will load EXO_ICON automaticaly and use it.
 /*
-WORD BmpToImg(int bmID, npAppli idApp, short HotX = 0, short HotY = 0, short ActionX = 0, short ActionY = 0)
-{
-    Img					ifo;
-    WORD				img;
-    HRSRC				hs;
-    HGLOBAL				hgBuf;
-    LPBYTE				adBuf;
-    LPBITMAPINFOHEADER	adBmi;
-
-    img = 0;
-    if ((hs = FindResource(hInstLib, MAKEINTRESOURCE(bmID), RT_BITMAP)) != NULL)
-    {
-        if ((hgBuf = LoadResource(hInstLib, hs)) != NULL)
-        {
-            if ((adBuf = (LPBYTE)LockResource(hgBuf)) != NULL)
-            {
-                adBmi = (LPBITMAPINFOHEADER)adBuf;
-                ifo.imgXSpot = HotX;
-                ifo.imgYSpot = HotY;
-                ifo.imgXAction = ActionX;
-                ifo.imgYAction = ActionY;
-                if (adBmi->biBitCount > 4)
-                    RemapDib((LPBITMAPINFO)adBmi, idApp, NULL);
-                img = (WORD)DibToImage(idApp, &ifo, adBmi);
-                UnlockResource(hgBuf);
-            }
-            FreeResource(hgBuf);
-        }
-    }
-    return img;
-}
-*/
-
-// ============================================================================
-//
-// ROUTINES USED UNDER FRAME EDITOR
-// 
-// ============================================================================
-
-
-// --------------------
-// MakeIcon
-// --------------------
-// Called once object is created or modified, just after setup.
-//
-// Note: this function is optional. If it's not defined in your extension,
-// MMF2 will load the EXO_ICON bitmap if it's defined in your resource file.
-//
-// If you need to draw the icon manually, remove the comments around this function and in the .def file.
-//
-/*
-int FusionAPI MakeIconEx ( mv* mV, cSurface* pIconSf, LPTSTR lpName, fpObjInfo oiPtr, EDITDATA* edPtr )
-{
+int FusionAPI MakeIconEx (mv* mV, cSurface* pIconSf, LPTSTR lpName, fpObjInfo oiPtr, EDITDATA* edPtr) {
     #pragma MFXExport
     
-    int error = -1;
-#ifdef EDITTIME
-    if ( pIconSf->LoadImage(hInstLib, EXO_ICON) != 0 )
-        error = 0;
-#endif // EDITTIME
-    return error;
+    int status = -1;
+    if (pIconSf->LoadImage(hInstLib, EXO_ICON)) {
+        status = 0;
+    }
+
+    return status;
 }
 */
-
-// --------------------
-// SetupProc
-// --------------------
-// This routine is yours. You may even not need a setup dialog box.
-// I have put it as an example...
-
-#ifdef EDITTIME
-
-BOOL CALLBACK setupProc(HWND hDlg,unsigned int msgType,WPARAM wParam,LPARAM lParam)
-{
-    setupParams	_far *	spa;
-    EDITDATA _far *		edPtr;
-
-    switch (msgType)
-    {
-    case WM_INITDIALOG: // Init dialog
-        SetWindowLong(hDlg, DWL_USER, lParam);
-        spa = (setupParams far *)lParam;
-        edPtr = spa->edpt;
-
-        /*
-            Insert your code to initalise the dialog!
-            Try the following code snippets:
-
-            ** Change an editbox's text:
-
-            SetDlgItemText(hDlg, IDC_YOUR_EDITBOX_ID, edPtr->YourTextVariable);
-
-            ** (Un)check a checkbox:
-
-            CheckDlgButton(hDlg, IDC_YOUR_CHECKBOX_ID,
-                edPtr->YourBooleanValue ? BST_CHECKED : BST_UNCHECKED);
-            
-            ** If the variable is not of type 'bool' then include a comparison
-            ** before the question mark (conditional operator):
-
-            CheckDlgButton(hDlg, IDC_YOUR_CHECKBOX_ID,
-                edPtr->YourLongValue == 1 ? BST_CHECKED : BST_UNCHECKED);
-
-            ** Check a radio button, deselecting the others at the same time
-
-            CheckRadioButton(hDlg, IDC_FIRST_RADIO_IN_GROUP, IDC_LAST_RADIO_IN_GROUP, IDC_RADIO_TO_CHECK);
-
-            ** You should know how to add radio buttons properly in MSVC++'s dialog editor first...
-            ** Make sure to add radiobuttons in order, and use the 'Group' property to signal a new group
-            ** of radio buttons.
-
-            ** Disable a control. Replace 'FALSE' with 'TRUE' to enable the control:
-
-            EnableWindow(GetDlgItem(hDlg, IDC_YOUR_CONTROL_ID), FALSE);
-        */
         
-        return TRUE;
 
-    case WM_COMMAND: // Command
-        spa = (setupParams far *)GetWindowLong(hDlg, DWL_USER);
-        edPtr = spa->edpt;
 
-        switch (wmCommandID)
-        {
-        case IDOK:
-            /*
-                The user has pressed OK! Save our data with the following commands:
-
-                ** Get text from an editbox. There is a limit to how much you can retrieve,
-                ** make sure this limit is reasonable and your variable can hold this data.
-                ** (Replace 'MAXIMUM_TEXT_LENGTH' with a value or defined constant!)
-
-                GetDlgItemText(hDlg, IDC_YOUR_EDITBOX_ID, edPtr->YourTextVariable, MAXIMUM_TEXT_LENGTH);
-
-                ** Check if a checkbox or radiobutton is checked. This is the basic code:
-
-                (IsDlgButtonChecked(hDlg, IDC_YOUR_CHECKBOX_ID)==BST_CHECKED)
-
-                ** This will return true if checked, false if not.
-                ** If your variable is a bool, set it to this code
-                ** If not, use an if statement or the conditional operator
-
-                if (IsDlgButtonChecked(hDlg, IDC_YOUR_CHECKBOX_ID)==BST_CHECKED)
-                    edPtr->YourLongValue = 100;
-                else
-                    edPtr->YourLongValue = 50;
-            */
-
-            // Close the dialog
-            EndDialog(hDlg, IDOK);
-            return 0;
-
-        case IDCANCEL:
-            // User pressed cancel, don't save anything
-            // Close the dialog
-            EndDialog(hDlg, IDCANCEL);
-            return 0;
-
-        case ID_HELP:
-            {
-                // Call the mvHelp function
-                //
-                spa->kv->mvHelp(GetHelpFileName(), 0 /*HH_DISPLAY_TOPIC*/, NULL /*(LPARAM)"index.html"*/);
-            }
-            return 0;
-
-        /*
-            If you have a button or checkbox which, when clicked, will change
-            something on the dialog, add them like so:
-
-        case IDC_YOUR_CLICKED_CONTROL:
-            // your code here
-            return 0;
-
-            You can use any of the commands added previously, (including the Help code,)
-            but it's a good idea NOT to save data to edPtr until the user presses OK.
-        */
-
-        default:
-            break;
-        }
-        break;
-
-    default:
-        break;
-    }
-    return FALSE;
-}
-
-#endif // EDITTIME
-
-// --------------------
-// CreateObject
-// --------------------
-// Called when you choose "Create new object". It should display the setup box 
-// and initialize everything in the datazone.
-
-int FusionAPI CreateObject(mv* mV, fpLevObj loPtr, EDITDATA* edPtr)
-{
+// Called when user clicks "Create new object"
+// Initialize EDITDATA here.
+int FusionAPI CreateObject(mv* mV, LO* loPtr, EDITDATA* edPtr) {
     #pragma MFXExport
 
-#ifdef EDITTIME
     // Check compatibility
-    if ( IS_COMPATIBLE(mV) )
-    {
-        // Set default object settings
-//		edPtr->swidth = 32;
-//		edPtr->sheight = 32;
-
-        // Call setup (remove this and return 0 if your object does not need a setup)
-        setupParams	spa;
-        spa.edpt = edPtr;
-        spa.kv = mV;
-        if ( DialogBoxParam(hInstLib, MAKEINTRESOURCE(DB_SETUP), mV->mvHEditWin, setupProc, (LPARAM)(LPBYTE)&spa) == IDOK )
-        {
-            return 0;	// No error
-        }
+    if (!IS_COMPATIBLE(mV)) {
+        return CREATE_OBJECT_ERROR;
     }
-#endif // EDITTIME
 
-    // Error
-    return -1;
+    // Init everything here
+
+    return CREATE_OBJECT_OK;
 }
 
-// --------------------
-// EditObject
-// --------------------
-// Called when the user selects the Edit command in the object's popup menu
-//
-BOOL FusionAPI EditObject (mv* mV, fpObjInfo oiPtr, fpLevObj loPtr, EDITDATA* edPtr)
-{
+// Called when user clicks "Edit"
+BOOL FusionAPI EditObject (mv* mV, OI* oiPtr, LO* loPtr, EDITDATA* edPtr) {
     #pragma MFXExport
 
-#ifdef EDITTIME
     // Check compatibility
-    if ( IS_COMPATIBLE(mV) )
-    {
-        // Remove this if your object does not need a setup
-        setupParams		spa;
-        spa.edpt = edPtr;
-        spa.kv = mV;
-        if ( DialogBoxParam(hInstLib, MAKEINTRESOURCE(DB_SETUP), mV->mvHEditWin, setupProc, (LPARAM)(LPBYTE)&spa) == IDOK )
-        {
-            return TRUE;
-        }
+    if (!IS_COMPATIBLE(mV)) {
+        return FALSE;
     }
-#endif // EDITTIME
-    return FALSE;
+
+    // Do whatever you want here
+
+    return TRUE;
 }
 
-// --------------------
-// SetEditSize
-// --------------------
-// Called when the object has been resized
-//
-// Note: remove the comments if your object can be resized (and remove the comments in the .def file)
+
+
+// Called when object was resized
+// If not implemented object will have a set size
 /*
-BOOL FusionAPI SetEditSize(LPMV mv, EDITDATA* edPtr, int cx, int cy)
-{
+BOOL FusionAPI SetEditSize(LPMV mv, EDITDATA* edPtr, int cx, int cy) {
     #pragma MFXExport
 
-#ifdef EDITTIME
-    edPtr->swidth = cx;
-    edPtr->sheight = cy;
-#endif // EDITTIME
-    return TRUE;	// OK
+    // edPtr->swidth = cx;
+    // edPtr->sheight = cy;
+    return TRUE;
 }
 */
 
-// --------------------
-// PutObject
-// --------------------
-// Called when each individual object is dropped in the frame.
-//
-void FusionAPI PutObject(mv* mV, fpLevObj loPtr, EDITDATA* edPtr, unsigned short cpt)
-{
-    #pragma MFXExport
 
-#ifdef EDITTIME
-#endif // EDITTIME
+
+// Called when each individual object is dropped in the frame
+void FusionAPI PutObject(mv* mV, LO* loPtr, EDITDATA* edPtr, unsigned short cpt) {
+    #pragma MFXExport
 }
 
-// --------------------
-// RemoveObject
-// --------------------
-// Called when each individual object is removed from the frame.
-//
-void FusionAPI RemoveObject(mv* mV, fpLevObj loPtr, EDITDATA* edPtr, unsigned short cpt)
-{
+// Called when each individual object is removed from the frame
+void FusionAPI RemoveObject(mv* mV, LO* loPtr, EDITDATA* edPtr, unsigned short cpt) {
     #pragma MFXExport
 
-#ifdef EDITTIME
     // Is the last object removed?
-    if (0 == cpt)
-    {
+    if (0 == cpt) {
         // Do whatever necessary to remove our data
     }
-#endif // EDITTIME
 }
 
-// --------------------
-// DuplicateObject
-// --------------------
-// Called when an object is created from another one (note: should be called CloneObject instead...)
-//
-void FusionAPI DuplicateObject(mv __far *mV, fpObjInfo oiPtr, EDITDATA* edPtr)
-{
+
+
+// Called when user clicks "Clone object"
+void FusionAPI DuplicateObject(mv* mV, OI* oiPtr, EDITDATA* edPtr) {
+    #pragma MFXExport
+}
+
+
+
+// Returns size of object
+void FusionAPI GetObjectRect(mv* mV, RECT* rc, LO* loPtr, EDITDATA* edPtr) {
     #pragma MFXExport
 
-#ifdef EDITTIME
-#endif // EDITTIME
-}
-
-// --------------------
-// GetObjectRect
-// --------------------
-// Returns the size of the rectangle of the object in the frame editor.
-//
-void FusionAPI GetObjectRect(mv* mV, RECT FAR *rc, fpLevObj loPtr, EDITDATA* edPtr)
-{
-    #pragma MFXExport
-
-#ifdef EDITTIME
-    rc->right = rc->left + 32;	// edPtr->swidth;
-    rc->bottom = rc->top + 32;	// edPtr->sheight;
-#endif // EDITTIME
-    return;
+    rc->right = rc->left + 32;  // edPtr->swidth;
+    rc->bottom = rc->top + 32;  // edPtr->sheight;
 }
 
 
-// --------------------
-// EditorDisplay
-// --------------------
-// Displays the object under the frame editor
-//
-// Note: this function is optional. If it's not defined in your extension,
-// MMF2 will load and display the EXO_IMAGE bitmap if it's defined in your resource file.
-//
-// If you need to draw the icon manually, remove the comments around this function and in the .def file.
-//
+
+// Called when object is drawn in frame editor
+// Note: If this function is unimplemented Fusion will draw EXO_IMAGE bitmap as our object for us
 /*
-void FusionAPI EditorDisplay(mv* mV, fpObjInfo oiPtr, fpLevObj loPtr, EDITDATA* edPtr, RECT FAR *rc)
-{
+void FusionAPI EditorDisplay(mv* mV, OI* oiPtr, LO* loPtr, EDITDATA* edPtr, RECT* rc) {
     #pragma MFXExport
 
-#ifdef EDITTIME
-
-    // This is a simple case of drawing an image onto MMF's frame editor window
-    // First, we must get a pointer to the surface used by the frame editor
-
-    LPSURFACE ps = WinGetSurface((int)mV->mvIdEditWin);
-    if ( ps != NULL )		// Do the following if this surface exists
-    {
-        int x = rc->left;	// get our boundaries
+    // Get frame editor surface
+    cSurface* ps = WinGetSurface((int)mV->mvIdEditWin);
+    if (ps != NULL) {
+        // Objects position and size
+        int x = rc->left;
         int y = rc->top;
-        int w = rc->right-rc->left;
-        int h = rc->bottom-rc->top;
+        int w = rc->right - rc->left;
+        int h = rc->bottom - rc->top;
 
-        cSurface is;			// New surface variable for us to use
-        is.Create(4, 4, ps);	// Create a surface implementation from a prototype (frame editor win)
-        is.LoadImage(hInstLib, EXO_IMAGE, LI_REMAP);	// Load our bitmap from the resource,
-                                                        // and remap palette if necessary
-        is.Blit(*ps, x, y, BMODE_TRANSP, BOP_COPY, 0);	// Blit the image to the frame editor surface!
-        // This actually blits (or copies) the whole of our surface onto the frame editor's surface
-        // at a specified position.
-        // We could use different image effects when we copy, e.g. invert, AND, OR, XOR,
-        // blend (semi-transparent, the 6th param is amount of transparency)
-        // You can 'anti-alias' with the 7th param (default=0 or off)
+        // Load image into a new surface
+        cSurface is;
+        is.Create(0, 0, ps);	// Create a surface implementation from a prototype (frame editor surface)
+        is.LoadImage(hInstLib, EXO_ICON, LI_REMAP);    // Load image and remap pallete if necessary
+        is.Blit(*ps, x, y, BMODE_TRANSP, BOP_COPY, 0);  // Blit our image into frame editor surface
     }
-
-#endif // EDITTIME
 }
 */
 
-// --------------------
-// IsTransparent
-// --------------------
-// This routine tells CC&C if the mouse pointer is over a transparent zone of the object.
-// 
 
-extern "C" BOOL FusionAPI IsTransparent(mv* mV, fpLevObj loPtr, EDITDATA* edPtr, int dx, int dy)
-{
+
+// True if mouse is over a transparent part of the object
+extern "C" BOOL FusionAPI IsTransparent(mv* mV, LO* loPtr, EDITDATA* edPtr, int dx, int dy) {
     #pragma MFXExport
-
-#ifdef EDITTIME
-    // Write your code here
-#endif // EDITTIME
     return FALSE;
 }
 
-// --------------------
-// PrepareToWriteObject
-// --------------------
-// Just before writing the datazone when saving the application, CC&C calls this routine.
-// 
-void FusionAPI PrepareToWriteObject(mv* mV, EDITDATA* edPtr, fpObjInfo adoi)
-{
+// Called before EDITDATA is saved to an MFA, EXE etc
+void FusionAPI PrepareToWriteObject(mv* mV, EDITDATA* edPtr, OI* adoi) {
     #pragma MFXExport
-
-#ifdef EDITTIME
-    // Write your code here
-#endif // EDITTIME
 }
 
-// --------------------
-// GetFilters
-// --------------------
-
-BOOL FusionAPI GetFilters(LPMV mV, EDITDATA* edPtr, DWORD dwFlags, LPVOID pReserved)
-{
+// True if your extension uses image or sound filters(?)
+BOOL FusionAPI GetFilters(mv* mV, EDITDATA* edPtr, DWORD dwFlags, LPVOID pReserved) {
     #pragma MFXExport
 
-#ifdef EDITTIME
     // If your extension uses image filters
-//	if ( (dwFlags & GETFILTERS_IMAGES) != 0 )
-//		return TRUE;
+    // if ((dwFlags & GETFILTERS_IMAGES)) {
+    //     return TRUE;
+    // }
 
     // If your extension uses sound filters
-//	if ( (dwFlags & GETFILTERS_SOUNDS) != 0 )
-//		return TRUE;
-#endif // EDITTIME
+    // if ((dwFlags & GETFILTERS_SOUNDS)) {
+    //     return TRUE;
+    // }
+
     return FALSE;
 }
 
-// --------------------
-// UsesFile
-// --------------------
-// Triggers when a file is dropped onto the frame
-// Return TRUE if you can create an object from the given file
-//
-BOOL FusionAPI UsesFile (LPMV mV, LPTSTR fileName)
-{
+
+
+// Called when user drops a file onto frame
+// Return true if object can be created from given file
+BOOL FusionAPI UsesFile(mv* mV, LPTSTR fileName) {
     #pragma MFXExport
-
-    BOOL r = FALSE;
-#ifdef EDITTIME
-
-    // Example: return TRUE if file extension is ".txt"
-/*	
-    LPTSTR	ext, npath;
-
-    if ( fileName != NULL )
-    {
-        if ( (ext=(LPTSTR)calloc(_MAX_EXT, sizeof(TCHAR))) != NULL )
-        {
-            if ( (npath=(LPTSTR)calloc(_MAX_PATH, sizeof(TCHAR))) != NULL )
-            {
-                _tcscpy(npath, fileName);
-                _tsplitpath(npath, NULL, NULL, NULL, ext);
-                if ( _tcsicmp(ext, _T(".txt")) == 0 )
-                    r = TRUE;
-                free(npath);
-            }
-            free(ext);
-        }
-    } */
-#endif // EDITTIME
-    return r;
+    return FALSE;
 }
 
-
-// --------------------
-// CreateFromFile
-// --------------------
-// Creates a new object from file
-//
-void FusionAPI CreateFromFile (LPMV mV, LPTSTR fileName, EDITDATA* edPtr)
-{
+// If you can create object from that file and user selects your object this function is called
+void FusionAPI CreateFromFile(mv* mV, LPTSTR fileName, EDITDATA* edPtr) {
     #pragma MFXExport
 
-#ifdef EDITTIME
     // Initialize your extension data from the given file
-//	edPtr->swidth = 32;
-//	edPtr->sheight = 32;
+    // edPtr->swidth = 32;
+    // edPtr->sheight = 32;
 
     // Example: store the filename
     // _tcscpy(edPtr->myFileName, fileName);
-#endif // EDITTIME
 }
 
 
-// ============================================================================
-//
-// TEXT PROPERTIES
-// 
-// ============================================================================
 
-// --------------------
-// GetTextCaps
-// --------------------
-// Return the text capabilities of the object under the frame editor.
-//
-DWORD FusionAPI GetTextCaps(mv* mV, EDITDATA* edPtr)
-{
-    #pragma MFXExport
-
-    return 0;	// (TEXT_ALIGN_LEFT|TEXT_ALIGN_HCENTER|TEXT_ALIGN_RIGHT|TEXT_ALIGN_TOP|TEXT_ALIGN_VCENTER|TEXT_ALIGN_BOTTOM|TEXT_FONT|TEXT_COLOR);
-}
-
-// --------------------
-// GetTextFont
-// --------------------
-// Return the font used the object.
-// Note: the pStyle and cbSize parameters are obsolete and passed for compatibility reasons only.
-//
-BOOL FusionAPI GetTextFont(mv* mV, EDITDATA* edPtr, LPLOGFONT plf, LPTSTR pStyle, UINT cbSize)
-{
-    #pragma MFXExport
-    
-#ifdef EDITTIME
-    // Example: copy LOGFONT structure from EDITDATA
-    // memcpy(plf, &edPtr->m_lf, sizeof(LOGFONT));
-#endif // EDITTIME
-
-    return TRUE;
-}
-
-// --------------------
-// SetTextFont
-// --------------------
-// Change the font used the object.
-// Note: the pStyle parameter is obsolete and passed for compatibility reasons only.
-//
-BOOL FusionAPI SetTextFont(mv* mV, EDITDATA* edPtr, LPLOGFONT plf, LPCTSTR pStyle)
-{
-    #pragma MFXExport
-
-#ifdef EDITTIME
-    // Example: copy LOGFONT structure to EDITDATA
-    // memcpy(&edPtr->m_lf, plf, sizeof(LOGFONT));
-#endif // EDITTIME
-
-    return TRUE;
-}
-
-// --------------------
-// GetTextClr
-// --------------------
-// Get the text color of the object.
-//
-COLORREF FusionAPI GetTextClr(mv* mV, EDITDATA* edPtr)
-{
-    #pragma MFXExport
-
-    // Example
-    return 0;	// edPtr->fontColor;
-}
-
-// --------------------
-// SetTextClr
-// --------------------
-// Set the text color of the object.
-//
-void FusionAPI SetTextClr(mv* mV, EDITDATA* edPtr, COLORREF color)
-{
-    #pragma MFXExport
-    
-    // Example
-    //edPtr->fontColor = color;
-}
-
-// --------------------
-// GetTextAlignment
-// --------------------
-// Get the text alignment of the object.
-//
-DWORD FusionAPI GetTextAlignment(mv* mV, EDITDATA* edPtr)
-{
-    #pragma MFXExport
-
-    DWORD dw = 0;
-#ifdef EDITTIME
-    // Example
-    // -------
-/*	if ( (edPtr->eData.dwFlags & ALIGN_LEFT) != 0 )
-        dw |= TEXT_ALIGN_LEFT;
-    if ( (edPtr->eData.dwFlags & ALIGN_HCENTER) != 0 )
-        dw |= TEXT_ALIGN_HCENTER;
-    if ( (edPtr->eData.dwFlags & ALIGN_RIGHT) != 0 )
-        dw |= TEXT_ALIGN_RIGHT;
-    if ( (edPtr->eData.dwFlags & ALIGN_TOP) != 0 )
-        dw |= TEXT_ALIGN_TOP;
-    if ( (edPtr->eData.dwFlags & ALIGN_VCENTER) != 0 )
-        dw |= TEXT_ALIGN_VCENTER;
-    if ( (edPtr->eData.dwFlags & ALIGN_BOTTOM) != 0 )
-        dw |= TEXT_ALIGN_BOTTOM;
-*/
-#endif // EDITTIME
-    return dw;
-}
-
-// --------------------
-// SetTextAlignment
-// --------------------
-// Set the text alignment of the object.
-//
-void FusionAPI SetTextAlignment(mv* mV, EDITDATA* edPtr, DWORD dwAlignFlags)
-{
-    #pragma MFXExport
-
-#ifdef EDITTIME
-    // Example
-    // -------
-/*	DWORD dw = edPtr->eData.dwFlags;
-
-    if ( (dwAlignFlags & TEXT_ALIGN_LEFT) != 0 )
-        dw = (dw & ~(ALIGN_LEFT|ALIGN_HCENTER|ALIGN_RIGHT)) | ALIGN_LEFT;
-    if ( (dwAlignFlags & TEXT_ALIGN_HCENTER) != 0 )
-        dw = (dw & ~(ALIGN_LEFT|ALIGN_HCENTER|ALIGN_RIGHT)) | ALIGN_HCENTER;
-    if ( (dwAlignFlags & TEXT_ALIGN_RIGHT) != 0 )
-        dw = (dw & ~(ALIGN_LEFT|ALIGN_HCENTER|ALIGN_RIGHT)) | ALIGN_RIGHT;
-
-    if ( (dwAlignFlags & TEXT_ALIGN_TOP) != 0 )
-        dw = (dw & ~(ALIGN_TOP|ALIGN_VCENTER|ALIGN_BOTTOM)) | ALIGN_TOP;
-    if ( (dwAlignFlags & TEXT_ALIGN_VCENTER) != 0 )
-        dw = (dw & ~(ALIGN_TOP|ALIGN_VCENTER|ALIGN_BOTTOM)) | ALIGN_VCENTER;
-    if ( (dwAlignFlags & TEXT_ALIGN_BOTTOM) != 0 )
-        dw = (dw & ~(ALIGN_TOP|ALIGN_VCENTER|ALIGN_BOTTOM)) | ALIGN_BOTTOM;
-
-    edPtr->eData.dwFlags = dw;
-*/
-#endif // EDITTIME
-}
+// Event editor functions
 
 
-// ============================================================================
-//
-// ROUTINES USED UNDER EVENT / TIME / STEP-THROUGH EDITOR
-// You should not need to change these routines
-// 
-// ============================================================================
 
-// -----------------
-// menucpy
-// -----------------
-// Internal routine used later, copy one menu onto another
-// 
-#ifdef EDITTIME
-void menucpy(HMENU hTargetMenu, HMENU hSourceMenu)
-{
+// Internal used later
+// Copy menu into another
+inline void menucpy(HMENU hTargetMenu, HMENU hSourceMenu) {
     int			n, id, nMn;
     LPTSTR		strBuf;
     HMENU		hSubMenu;
@@ -746,13 +243,10 @@ void menucpy(HMENU hTargetMenu, HMENU hSourceMenu)
     free(strBuf);
 }
 
-// -----------------
-// GetPopupMenu
-// -----------------
-// Internal routine used later. Returns the first popup from a menu
-// 
-HMENU GetPopupMenu(short mn)
-{
+
+// Load ACE menus from resources
+// If you want you can disable enable some menu options
+inline HMENU GetPopupMenu(short mn) {
     HMENU	hMn, hSubMenu, hPopup = NULL;
 
     if ((hMn = LoadMenu(hInstLib, MAKEINTRESOURCE(mn))) != NULL)
@@ -767,31 +261,7 @@ HMENU GetPopupMenu(short mn)
     return hPopup;
 }
 
-// --------------------
-// GetEventInformations
-// --------------------
-// Internal routine used later. Look for one event in one of the eventInfos array...
-// No protection to go faster: you must properly enter the conditions/actions!
-// 
-static eventInformations2* GetEventInformations(eventInformations2* eiPtr, short code)
 
-{
-    while(eiPtr->infos.code != code)
-        eiPtr = EVINFO2_NEXT(eiPtr);
-    
-    return eiPtr;
-}
-#endif // EDITTIME
-
-
-// ----------------------------------------------------
-// GetConditionMenu / GetActionMenu / GetExpressionMenu
-// ----------------------------------------------------
-// Load the condition/action/expression menu from the resource, eventually
-// enable or disable some options, and returns it to CC&C.
-//
-
-#ifdef EDITTIME
 HMENU FusionAPI GetActionMenu(mv* mV, OI* oiPtr, EDITDATA* edPtr) {
     #pragma MFXExport
 
@@ -824,22 +294,24 @@ HMENU FusionAPI GetExpressionMenu(mv* mV, OI* oiPtr, EDITDATA* edPtr) {
 
     return NULL;
 }
-#endif // EDITTIME
 
 
-// -------------------------------------------------------
-// GetConditionTitle / GetActionTitle / GetExpressionTitle
-// -------------------------------------------------------
-// Returns the title of the dialog box displayed when entering
-// parameters for the condition, action or expressions, if any.
-// Here, we simply return the title of the menu option
 
-#ifdef EDITTIME
-void GetCodeTitle(eventInformations2* eiPtr, short code, short param, short mn, LPTSTR strBuf, WORD maxLen) {
+// Return ACE parameter title to Fusion (Window title of a popup where you enter ACE parameter)
+inline static eventInformations2* GetEventInformations(eventInformations2* eiPtr, short code) {
+    while(eiPtr->infos.code != code)
+        eiPtr = EVINFO2_NEXT(eiPtr);
+    
+    return eiPtr;
+}
+
+
+inline void GetCodeTitle(eventInformations2* eiPtr, short code, short param, short mn, LPTSTR strBuf, WORD maxLen) {
     HMENU hMn;
     eiPtr = GetEventInformations(eiPtr, code);      // Finds event in array
 
-    short strID = EVINFO2_PARAMTITLE(eiPtr, param); // If a special string is to be returned
+    // If a special string is to be returned
+    short strID = EVINFO2_PARAMTITLE(eiPtr, param); 
 
     if (strID != 0) {
         LoadString(hInstLib, strID, strBuf, maxLen);
@@ -867,25 +339,15 @@ void FusionAPI GetExpressionTitle(mv* mV, short code, LPTSTR strBuf, short maxLe
     #pragma MFXExport
     GetCodeTitle((eventInformations2*)expressionsInfos, code, 0, MN_EXPRESSIONS, strBuf, maxLen);
 }
-#endif // EDITTIME
 
 
 
-// -------------------------------------------------------
-// GetConditionTitle / GetActionTitle / GetExpressionTitle
-// -------------------------------------------------------
-// From a menu ID, these routines returns the code of the condition,
-// action or expression, as defined in the .H file
-//
-
-#ifdef EDITTIME
-short FusionAPI GetActionCodeFromMenu(mv* mV, short menuId) {
-    #pragma MFXExport
-
+// Return ACE ID from a Menu ID
+inline short GetACECodeFromMenu(short* infos, int count, mv* mV, short menuID) {
     eventInformations2* eiPtr;
     int n;
 
-    for (n = CND_LAST, eiPtr = (eventInformations2*)actionsInfos; n > 0 && eiPtr->menu!=menuId; n--) {
+    for (n = count, eiPtr = (eventInformations2*)infos; n > 0 && eiPtr->menu!=menuID; n--) {
         eiPtr = EVINFO2_NEXT(eiPtr);
     }
     if (n > 0) {
@@ -895,74 +357,43 @@ short FusionAPI GetActionCodeFromMenu(mv* mV, short menuId) {
     return -1;
 }
 
-short FusionAPI GetConditionCodeFromMenu(mv* mV, short menuId) {
+
+short FusionAPI GetActionCodeFromMenu(mv* mV, short menuID) {
     #pragma MFXExport
-
-    eventInformations2* eiPtr;
-    int n;
-
-    for (n = CND_LAST, eiPtr = (eventInformations2*)conditionsInfos; n > 0 && eiPtr->menu!=menuId; n--) {
-        eiPtr = EVINFO2_NEXT(eiPtr);
-    }
-    if (n > 0) {
-        return eiPtr->infos.code;
-    }
-    
-    return -1;
+    return GetACECodeFromMenu(actionsInfos, ACT_LAST, mV, menuID);
 }
 
-short FusionAPI GetExpressionCodeFromMenu(mv* mV, short menuId) {
+short FusionAPI GetConditionCodeFromMenu(mv* mV, short menuID) {
     #pragma MFXExport
-
-    eventInformations2* eiPtr;
-    int n;
-
-    for (n = CND_LAST, eiPtr = (eventInformations2*)expressionsInfos; n > 0 && eiPtr->menu!=menuId; n--) {
-        eiPtr = EVINFO2_NEXT(eiPtr);
-    }
-    if (n > 0) {
-        return eiPtr->infos.code;
-    }
-    
-    return -1;
+    return GetACECodeFromMenu(conditionsInfos, CND_LAST, mV, menuID);
 }
-#endif // EDITTIME
+
+short FusionAPI GetExpressionCodeFromMenu(mv* mV, short menuID) {
+    #pragma MFXExport
+    return GetACECodeFromMenu(expressionsInfos, EXP_LAST, mV, menuID);
+}
 
 
-// -------------------------------------------------------
-// GetConditionInfos / GetActionInfos / GetExpressionInfos
-// -------------------------------------------------------
-// From a action / condition / expression code, returns 
-// an infosEvents structure. 
-//
 
-#ifdef EDITTIME
+// Returns infosEvents from ACE ID
 infosEventsV2* FusionAPI GetActionInfos(mv* mV, short code) {
     #pragma MFXExport
-
     return &GetEventInformations((eventInformations2*)actionsInfos, code)->infos;
 }
 
 infosEventsV2* FusionAPI GetConditionInfos(mv* mV, short code) {
     #pragma MFXExport
-
     return &GetEventInformations((eventInformations2*)conditionsInfos, code)->infos;
 }
 
 infosEventsV2* FusionAPI GetExpressionInfos(mv* mV, short code) {
     #pragma MFXExport
-
     return &GetEventInformations((eventInformations2*)expressionsInfos, code)->infos;
 }
-#endif // EDITTIME
 
 
-// ----------------------------------------------------------
-// GetConditionString / GetActionString / GetExpressionString
-// ----------------------------------------------------------
-// From a action / condition / expression code, returns 
-// the string to use for displaying it under the event editor
-#ifdef EDITTIME
+
+// Returns ACE string displayed in event editor
 void FusionAPI GetActionString(mv* mV, short code, LPTSTR strPtr, short maxLen) {
     #pragma MFXExport
 
@@ -989,14 +420,10 @@ void FusionAPI GetExpressionString(mv* mV, short code, LPTSTR strPtr, short maxL
         LoadString(hInstLib, GetEventInformations((eventInformations2*)expressionsInfos, code)->string, strPtr, maxLen);
     }
 }
-#endif // EDITTIME
 
-// ----------------------------------------------------------
-// GetExpressionParam
-// ----------------------------------------------------------
+
+
 // Returns the parameter name to display in the expression editor
-//
-#ifdef EDITTIME
 void FusionAPI GetExpressionParam(mv* mV, short code, short param, LPTSTR strBuf, short maxLen) {
     #pragma MFXExport
 
@@ -1013,41 +440,29 @@ void FusionAPI GetExpressionParam(mv* mV, short code, short param, LPTSTR strBuf
         *strBuf=0;
     }
 }
-#endif // EDITTIME
 
-// ----------------------------------------------------------
+
+
 // Custom Parameters
-// ----------------------------------------------------------
 
-// --------------------
-// InitParameter
-// --------------------
+
+
 // Initialize the parameter.
-//
-void FusionAPI InitParameter(mv* mV, short code, paramExt* pExt)
-{
+void FusionAPI InitParameter(mv* mV, short code, paramExt* pExt) {
     #pragma MFXExport
 
-#ifdef EDITTIME
     // Example
-    // -------
     // _tcscpy(&pExt->pextData[0], _T("Parameter Test"));
     // pExt->pextSize = sizeof(paramExt) + (_tcslen(pExt->pextData)+1)*sizeof(TCHAR);
-#endif // EDITTIME
 }
 
-// Example of custom parameter setup proc
-// --------------------------------------
 /*
-#ifdef EDITTIME
-BOOL CALLBACK SetupProc(HWND hDlg, UINT msgType, WPARAM wParam, LPARAM lParam)
-{
+BOOL CALLBACK SetupProc(HWND hDlg, UINT msgType, WPARAM wParam, LPARAM lParam) {
     paramExt*			pExt;
 
     switch (msgType)
     {
         case WM_INITDIALOG: // Init dialog
-
             // Save edptr
             SetWindowLong(hDlg, DWL_USER, lParam);
             pExt=(paramExt*)lParam;
@@ -1056,7 +471,6 @@ BOOL CALLBACK SetupProc(HWND hDlg, UINT msgType, WPARAM wParam, LPARAM lParam)
             return TRUE;
 
         case WM_COMMAND: // Command
-
             // Retrieve edptr
             pExt = (paramExt *)GetWindowLong(hDlg, DWL_USER);
 
@@ -1078,42 +492,23 @@ BOOL CALLBACK SetupProc(HWND hDlg, UINT msgType, WPARAM wParam, LPARAM lParam)
     }
     return FALSE;
 }
-#endif // EDITTIME
 */
 
-// --------------------
-// EditParameter
-// --------------------
 // Edit the parameter.
-//
-void FusionAPI EditParameter(mv* mV, short code, paramExt* pExt)
-{
+void FusionAPI EditParameter(mv* mV, short code, paramExt* pExt) {
     #pragma MFXExport
 
-#ifdef EDITTIME
-
     // Example
-    // -------
     // DialogBoxParam(hInstLib, MAKEINTRESOURCE(DB_TRYPARAM), mV->mvHEditWin, SetupProc, (LPARAM)(LPBYTE)pExt);
-
-#endif // EDITTIME
 }
 
-// --------------------
-// GetParameterString
-// --------------------
 // Initialize the parameter.
-//
-void FusionAPI GetParameterString(mv* mV, short code, paramExt* pExt, LPTSTR pDest, short size)
-{
+void FusionAPI GetParameterString(mv* mV, short code, paramExt* pExt, LPTSTR pDest, short size) {
     #pragma MFXExport
     
-#ifdef EDITTIME
-
     // Example
-    // -------
     // wsprintf(pDest, "Super parameter %s", pExt->pextData);
 
-#endif // EDITTIME
 }
 
+#endif // EDITTIME
