@@ -40,7 +40,7 @@ LPCTSTR FusionAPI GetHelpFileName() {
 // Load your icon into pIconSf surface
 // Note: If this function is not implemented Fusion will load EXO_ICON automaticaly and use it.
 /*
-int FusionAPI MakeIconEx (mv* mV, cSurface* pIconSf, LPTSTR lpName, fpObjInfo oiPtr, EDITDATA* edPtr) {
+int FusionAPI MakeIconEx(mv* mV, cSurface* pIconSf, LPTSTR lpName, OI* oiPtr, EDITDATA* edPtr) {
     #pragma MFXExport
     
     int status = -1;
@@ -70,7 +70,7 @@ int FusionAPI CreateObject(mv* mV, LO* loPtr, EDITDATA* edPtr) {
 }
 
 // Called when user clicks "Edit"
-BOOL FusionAPI EditObject (mv* mV, OI* oiPtr, LO* loPtr, EDITDATA* edPtr) {
+BOOL FusionAPI EditObject(mv* mV, OI* oiPtr, LO* loPtr, EDITDATA* edPtr) {
     #pragma MFXExport
 
     // Check compatibility
@@ -88,7 +88,7 @@ BOOL FusionAPI EditObject (mv* mV, OI* oiPtr, LO* loPtr, EDITDATA* edPtr) {
 // Called when object was resized
 // If not implemented object will have a set size
 /*
-BOOL FusionAPI SetEditSize(LPMV mv, EDITDATA* edPtr, int cx, int cy) {
+BOOL FusionAPI SetEditSize(mv* mv, EDITDATA* edPtr, int cx, int cy) {
     #pragma MFXExport
 
     // edPtr->swidth = cx;
