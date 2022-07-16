@@ -1,5 +1,5 @@
 // Functions in this file are used internaly by Fusion, you probably dont need to change them.
-#include "Common.h"
+#include "Common.hpp"
 
 HINSTANCE hInstLib;
 
@@ -71,7 +71,7 @@ extern "C" DWORD FusionAPI GetInfos(int info) {
 
 // Tells Fusion everything about your extension
 // Actions Condition Expressions etc
-short FusionAPI GetRunObjectInfos(mv _far *mV, fpKpxRunInfos infoPtr) {
+short FusionAPI GetRunObjectInfos(mv _far *mV, kpxRunInfos* infoPtr) {
     #pragma MFXExport
 
     infoPtr->conditions = (LPBYTE)ConditionJumps;

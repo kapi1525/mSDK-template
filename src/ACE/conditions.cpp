@@ -1,4 +1,4 @@
-#include "../Common.h"
+#include "../Common.hpp"
 
 
 // Cheatsheet: content of the eventInformations arrays

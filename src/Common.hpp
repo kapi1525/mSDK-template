@@ -21,7 +21,7 @@
 
 // Specific to this cox
 #include "resource.h"
-#include "Main.h"
+#include "Main.hpp"
 #include "TigsExt.hpp"
 
 

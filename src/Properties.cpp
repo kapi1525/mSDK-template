@@ -1,4 +1,4 @@
-#include "Common.h"
+#include "Common.hpp"
 
 // Only used at EDITTIME
 #ifdef EDITTIME

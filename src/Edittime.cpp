@@ -1,7 +1,7 @@
 // This file contains functions that are run only during Edittime in editor
 // aka: Frave editor, Event editor etc.
 
-#include "Common.h"
+#include "Common.hpp"
 
 
 
