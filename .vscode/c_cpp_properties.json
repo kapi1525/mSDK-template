@@ -1,11 +1,48 @@
 {
     "configurations": [
         {
-            "name": "Win32",
+            "name": "Edittime Unicode",
             "compileCommands": "bin/compile_commands.json",
-            "windowsSdkVersion": "10.0.22000.0",
             "cStandard": "c11",
-            "cppStandard": "c++17"
+            "cppStandard": "c++17",
+            "defines": [
+                "UNICODE",
+                "_UNICODE",
+                "EDITTIME",
+                "HWABETA"
+            ]
+        },
+        {
+            "name": "Runtime Unicode",
+            "compileCommands": "bin/compile_commands.json",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "defines": [
+                "UNICODE",
+                "_UNICODE",
+                "RUNTIME",
+                "HWABETA"
+            ]
+        },
+        {
+            "name": "Edittime",
+            "compileCommands": "bin/compile_commands.json",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "defines": [
+                "EDITTIME",
+                "HWABETA"
+            ]
+        },
+        {
+            "name": "Runtime",
+            "compileCommands": "bin/compile_commands.json",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "defines": [
+                "RUNTIME",
+                "HWABETA"
+            ]
         }
     ],
     "version": 4
