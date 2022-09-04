@@ -17,7 +17,7 @@
 // General includes
 #include "mSDK.h"
 #include "Ccxhdr.h"
-#include "Surface.h"
+#include "Surface.hpp"
 
 // Specific to this cox
 #include "resource.h"
