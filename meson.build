@@ -3,7 +3,7 @@ project(
   'cpp',
   version: '0.1.0',
   default_options: [
-    'warning_level=0',  # TODO: Cleanup Fusion headers so no warnings are shown when compiling with warning_level=3
+    'warning_level=3',  # TODO: Cleanup Fusion headers so no warnings are shown when compiling with warning_level=3
     'cpp_std=c++17'
   ],
   license: 'MIT'
@@ -16,9 +16,9 @@ files = files(
   'src/Properties.cpp',
   'src/Runtime.cpp',
   'src/Debuger.cpp',
-  'src/ACE/actions.cpp',
-  'src/ACE/conditions.cpp',
-  'src/ACE/expressions.cpp',
+  'src/ACE/Actions.cpp',
+  'src/ACE/Conditions.cpp',
+  'src/ACE/Expressions.cpp',
 )
 
 
