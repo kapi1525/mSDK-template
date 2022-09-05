@@ -317,7 +317,8 @@ inline void GetCodeTitle(eventInformations2* eiPtr, short code, short param, sho
         LoadString(hInstLib, strID, strBuf, maxLen);
     } else {
         // Otherwise, returns the menu option
-        if ((hMn = LoadMenu(hInstLib, MAKEINTRESOURCE(mn)))) {
+        hMn = LoadMenu(hInstLib, MAKEINTRESOURCE(mn));
+        if(hMn) {
             GetMenuString(hMn, eiPtr->menu, strBuf, maxLen, MF_BYCOMMAND);
             DestroyMenu(hMn);
         }
