@@ -30,6 +30,7 @@ mSDK_dep    = dependency('mSDK', fallback: 'mSDK-core')
 mSDK_inc    = mSDK_core.get_variable('mSDK_include')
 
 # Compiler arguments
+common      = mSDK_core.get_variable('common')
 edittime    = mSDK_core.get_variable('edittime')
 runtime     = mSDK_core.get_variable('runtime')
 unicode     = mSDK_core.get_variable('unicode')
@@ -52,7 +53,7 @@ resources_runtime = import('windows').compile_resources(
 extension_edittime_unicode = shared_library(
   'extension_edittime_unicode',
   files, resources_edittime,
-  cpp_args: edittime + unicode,
+  cpp_args: common + edittime + unicode,
   dependencies: mSDK_dep,
   name_suffix: 'mfx',
 )
@@ -60,7 +61,7 @@ extension_edittime_unicode = shared_library(
 extension_runtime_unicode = shared_library(
   'extension_runtime_unicode',
   files, resources_runtime,
-  cpp_args: runtime + unicode,
+  cpp_args: common + runtime + unicode,
   dependencies: mSDK_dep,
   name_suffix: 'mfx',
 )
