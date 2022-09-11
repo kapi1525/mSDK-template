@@ -23,7 +23,8 @@
 #include "resource.h"
 #include "Main.hpp"
 #include "TigsExt.hpp"
-// #include "FileIO.hpp"        // File reading/writing functions
+// #include "FileIO.hpp"           // File reading/writing functions
+#include "Filters.hpp"          // Image and sound filters for loading and saving image/sound files
 
 
 // Globals and Prototypes

@@ -171,7 +171,7 @@ void FusionAPI PrepareToWriteObject(mv* mV, EDITDATA* edPtr, OI* adoi) {
 }
 
 // True if your extension uses image or sound filters(?)
-BOOL FusionAPI GetFilters(mv* mV, EDITDATA* edPtr, DWORD dwFlags, LPVOID pReserved) {
+BOOL FusionAPI GetFilters(mv* mV, EDITDATA* edPtr, DWORD dwFlags, void* pReserved) {
     #pragma MFXExport
 
     // If your extension uses image filters

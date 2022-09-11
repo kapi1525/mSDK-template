@@ -6,7 +6,7 @@ HINSTANCE hInstLib;
 
 
 // DLL entry point
-BOOL FusionAPI DllMain(HINSTANCE hDLL, DWORD dwReason, LPVOID lpReserved) {
+BOOL FusionAPI DllMain(HINSTANCE hDLL, DWORD dwReason, void* lpReserved) {
     switch (dwReason) {
     case DLL_PROCESS_ATTACH:
         hInstLib = hDLL; 	// Store HINSTANCE, it will be needed when loading resources from rc file.
