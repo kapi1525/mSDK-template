@@ -17,7 +17,7 @@ short conditionsInfos[] = {
 
 
 
-long WINAPI DLLExport Condition(RUNDATA* rdPtr, long param1, long param2) {
+long FusionAPI Condition(RUNDATA* rdPtr, long param1, long param2) {
 //  **** Still use this method for 1 or 2 parameters ****	
 //	if (param1==param2)	
 //		return TRUE;
@@ -34,7 +34,7 @@ long WINAPI DLLExport Condition(RUNDATA* rdPtr, long param1, long param2) {
 
 
 
-long (WINAPI * ConditionJumps[])(RUNDATA* rdPtr, long param1, long param2) = { 
+long (FusionAPI * ConditionJumps[])(RUNDATA* rdPtr, long param1, long param2) = { 
     Condition,
     0
 };

@@ -59,9 +59,9 @@ extern "C" DWORD FusionAPI GetInfos(int info) {
     
     case KGI_UNICODE:
         #ifdef UNICODE
-        return TRUE;
+        return true;
         #else
-        return FALSE;
+        return false;
         #endif
 
     default:

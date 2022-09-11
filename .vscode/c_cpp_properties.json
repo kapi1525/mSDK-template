@@ -5,6 +5,9 @@
             "compileCommands": "bin/compile_commands.json",
             "cStandard": "c11",
             "cppStandard": "c++17",
+            "includePath": [
+                "subprojects/mSDK-core/inc/**"
+            ],
             "defines": [
                 "UNICODE",
                 "_UNICODE",
@@ -17,6 +20,9 @@
             "compileCommands": "bin/compile_commands.json",
             "cStandard": "c11",
             "cppStandard": "c++17",
+            "includePath": [
+                "subprojects/mSDK-core/inc/**"
+            ],
             "defines": [
                 "UNICODE",
                 "_UNICODE",
@@ -29,6 +35,9 @@
             "compileCommands": "bin/compile_commands.json",
             "cStandard": "c11",
             "cppStandard": "c++17",
+            "includePath": [
+                "subprojects/mSDK-core/inc/**"
+            ],
             "defines": [
                 "EDITTIME",
                 "HWABETA"
@@ -39,6 +48,9 @@
             "compileCommands": "bin/compile_commands.json",
             "cStandard": "c11",
             "cppStandard": "c++17",
+            "includePath": [
+                "subprojects/mSDK-core/inc/**"
+            ],
             "defines": [
                 "RUNTIME",
                 "HWABETA"

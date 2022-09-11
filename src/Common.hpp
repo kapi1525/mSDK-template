@@ -29,12 +29,12 @@
 
 // Globals and Prototypes
 extern HINSTANCE hInstLib;
-extern short conditionsInfos[];
 extern short actionsInfos[];
+extern short conditionsInfos[];
 extern short expressionsInfos[];
 
-extern long (WINAPI * ConditionJumps[])(RUNDATA* rdPtr, long param1, long param2);
 extern short (WINAPI * ActionJumps[])(RUNDATA* rdPtr, long param1, long param2);
+extern long (WINAPI * ConditionJumps[])(RUNDATA* rdPtr, long param1, long param2);
 extern long (WINAPI * ExpressionJumps[])(RUNDATA* rdPtr, long param);
 
 
