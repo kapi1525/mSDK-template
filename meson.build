@@ -1,5 +1,5 @@
 project(
-  'mSDK-template',
+  'template',
   'cpp',
   version: '0.1.0',
   default_options: [
@@ -51,7 +51,7 @@ resources_runtime = import('windows').compile_resources(
 
 
 extension_edittime_unicode = shared_library(
-  'extension_edittime_unicode',
+  meson.project_name() + '_edittime_unicode',
   files, resources_edittime,
   cpp_args: common + edittime + unicode,
   dependencies: mSDK_dep,
@@ -59,7 +59,7 @@ extension_edittime_unicode = shared_library(
 )
 
 extension_runtime_unicode = shared_library(
-  'extension_runtime_unicode',
+  meson.project_name() + '_runtime_unicode',
   files, resources_runtime,
   cpp_args: common + runtime + unicode,
   dependencies: mSDK_dep,
