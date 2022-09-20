@@ -298,7 +298,7 @@ HMENU FusionAPI GetExpressionMenu(mv* mV, OI* oiPtr, EDITDATA* edPtr) {
 
 
 // Return ACE parameter title to Fusion (Window title of a popup where you enter ACE parameter)
-inline static eventInformations2* GetEventInformations(eventInformations2* eiPtr, short code) {
+inline static EventInformations2* GetEventInformations(EventInformations2* eiPtr, short code) {
     while(eiPtr->infos.code != code)
         eiPtr = EVINFO2_NEXT(eiPtr);
     
@@ -306,7 +306,7 @@ inline static eventInformations2* GetEventInformations(eventInformations2* eiPtr
 }
 
 
-inline void GetCodeTitle(eventInformations2* eiPtr, short code, short param, short mn, LPTSTR strBuf, WORD maxLen) {
+inline void GetCodeTitle(EventInformations2* eiPtr, short code, short param, short mn, LPTSTR strBuf, WORD maxLen) {
     HMENU hMn;
     eiPtr = GetEventInformations(eiPtr, code);      // Finds event in array
 
@@ -328,27 +328,27 @@ inline void GetCodeTitle(eventInformations2* eiPtr, short code, short param, sho
 
 void FusionAPI GetActionTitle(mv* mV, short code, short param, LPTSTR strBuf, short maxLen) {
     #pragma MFXExport
-    GetCodeTitle((eventInformations2*)actionsInfos, code, param, MN_ACTIONS, strBuf, maxLen);
+    GetCodeTitle((EventInformations2*)actionsInfos, code, param, MN_ACTIONS, strBuf, maxLen);
 }
 
 void FusionAPI GetConditionTitle(mv* mV, short code, short param, LPTSTR strBuf, short maxLen) {
     #pragma MFXExport
-    GetCodeTitle((eventInformations2*)conditionsInfos, code, param, MN_CONDITIONS, strBuf, maxLen);
+    GetCodeTitle((EventInformations2*)conditionsInfos, code, param, MN_CONDITIONS, strBuf, maxLen);
 }
 
 void FusionAPI GetExpressionTitle(mv* mV, short code, LPTSTR strBuf, short maxLen) {
     #pragma MFXExport
-    GetCodeTitle((eventInformations2*)expressionsInfos, code, 0, MN_EXPRESSIONS, strBuf, maxLen);
+    GetCodeTitle((EventInformations2*)expressionsInfos, code, 0, MN_EXPRESSIONS, strBuf, maxLen);
 }
 
 
 
 // Return ACE ID from a Menu ID
 inline short GetACECodeFromMenu(short* infos, int count, mv* mV, short menuID) {
-    eventInformations2* eiPtr;
+    EventInformations2* eiPtr;
     int n;
 
-    for (n = count, eiPtr = (eventInformations2*)infos; n > 0 && eiPtr->menu!=menuID; n--) {
+    for (n = count, eiPtr = (EventInformations2*)infos; n > 0 && eiPtr->menu!=menuID; n--) {
         eiPtr = EVINFO2_NEXT(eiPtr);
     }
     if (n > 0) {
@@ -377,19 +377,19 @@ short FusionAPI GetExpressionCodeFromMenu(mv* mV, short menuID) {
 
 
 // Returns infosEvents from ACE ID
-infosEventsV2* FusionAPI GetActionInfos(mv* mV, short code) {
+InfosEventsV2* FusionAPI GetActionInfos(mv* mV, short code) {
     #pragma MFXExport
-    return &GetEventInformations((eventInformations2*)actionsInfos, code)->infos;
+    return &GetEventInformations((EventInformations2*)actionsInfos, code)->infos;
 }
 
-infosEventsV2* FusionAPI GetConditionInfos(mv* mV, short code) {
+InfosEventsV2* FusionAPI GetConditionInfos(mv* mV, short code) {
     #pragma MFXExport
-    return &GetEventInformations((eventInformations2*)conditionsInfos, code)->infos;
+    return &GetEventInformations((EventInformations2*)conditionsInfos, code)->infos;
 }
 
-infosEventsV2* FusionAPI GetExpressionInfos(mv* mV, short code) {
+InfosEventsV2* FusionAPI GetExpressionInfos(mv* mV, short code) {
     #pragma MFXExport
-    return &GetEventInformations((eventInformations2*)expressionsInfos, code)->infos;
+    return &GetEventInformations((EventInformations2*)expressionsInfos, code)->infos;
 }
 
 
@@ -400,7 +400,7 @@ void FusionAPI GetActionString(mv* mV, short code, LPTSTR strPtr, short maxLen) 
 
     // Check compatibility
     if (IS_COMPATIBLE(mV)) {
-        LoadString(hInstLib, GetEventInformations((eventInformations2*)actionsInfos, code)->string, strPtr, maxLen);
+        LoadString(hInstLib, GetEventInformations((EventInformations2*)actionsInfos, code)->string, strPtr, maxLen);
     }
 }
 
@@ -409,7 +409,7 @@ void FusionAPI GetConditionString(mv* mV, short code, LPTSTR strPtr, short maxLe
 
     // Check compatibility
     if (IS_COMPATIBLE(mV)) {
-        LoadString(hInstLib, GetEventInformations((eventInformations2*)conditionsInfos, code)->string, strPtr, maxLen);
+        LoadString(hInstLib, GetEventInformations((EventInformations2*)conditionsInfos, code)->string, strPtr, maxLen);
     }
 }
 
@@ -418,7 +418,7 @@ void FusionAPI GetExpressionString(mv* mV, short code, LPTSTR strPtr, short maxL
 
     // Check compatibility
     if (IS_COMPATIBLE(mV)) {
-        LoadString(hInstLib, GetEventInformations((eventInformations2*)expressionsInfos, code)->string, strPtr, maxLen);
+        LoadString(hInstLib, GetEventInformations((EventInformations2*)expressionsInfos, code)->string, strPtr, maxLen);
     }
 }
 
@@ -431,7 +431,7 @@ void FusionAPI GetExpressionParam(mv* mV, short code, short param, LPTSTR strBuf
     short strID;
 
     // Finds event in array
-    eventInformations2* eiPtr = GetEventInformations((eventInformations2*)expressionsInfos, code);
+    EventInformations2* eiPtr = GetEventInformations((EventInformations2*)expressionsInfos, code);
 
     // If a special string is to be returned
     strID = EVINFO2_PARAMTITLE(eiPtr, param);
