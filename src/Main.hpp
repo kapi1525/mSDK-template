@@ -34,7 +34,7 @@ struct EDITDATA_v1 {
     // short sheight;
 };
 
-// When modyfing EDITDATA and you care about backwards compatibility create new version of EDITDATA and dont remove old version
+// When modyfing EDITDATA if you care about backwards compatibility create new version of EDITDATA and dont remove old version
 // then implement UpdateEditStructure() function to update old EDITDATA into new one
 using EDITDATA = EDITDATA_v1;
 
